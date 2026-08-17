@@ -1,6 +1,7 @@
 import shutil
 from pathlib import Path
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi.responses import FileResponse
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 from app.api.deps import get_current_user, get_db
@@ -67,6 +68,23 @@ def result(job_id: str, user: User = Depends(get_current_user), db: Session = De
         out.terminals = parsed.get("terminals")
         out.metrics = parsed.get("metrics")
     return out
+
+
+_CONTENT_TYPES = {".html": "text/html", ".png": "image/png", ".json": "application/json",
+                  ".txt": "text/plain", ".md": "text/markdown", ".jsonl": "application/json"}
+
+
+@router.get("/{job_id}/files/{file_path:path}")
+def files(job_id: str, file_path: str, user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    job = _get_own_job(db, job_id, user)
+    root = (get_settings().data_dir / job.id).resolve()
+    target = (root / file_path).resolve()
+    if target != root and root not in target.parents:
+        raise HTTPException(404, "file not found")
+    if not target.is_file():
+        raise HTTPException(404, "file not found")
+    suffix = target.suffix.lower()
+    return FileResponse(target, media_type=_CONTENT_TYPES.get(suffix, "application/octet-stream"))
 
 
 @router.get("/{job_id}/trace")

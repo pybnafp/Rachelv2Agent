@@ -64,3 +64,22 @@ def test_result_other_user_404(client, db, auth_headers_admin, auth_headers_user
     tok = client.post("/api/auth/login", json={"username": "m2eve", "password": "pw9"}).json()["access_token"]
     assert client.get(f"/api/jobs/{jid}/result",
                       headers={"Authorization": f"Bearer {tok}"}).status_code == 404
+
+
+# ── T2: /files ──
+
+def test_files_serves_and_blocks_traversal(client, db, auth_headers_user, tmp_path):
+    # data_dir 由 conftest autouse fixture（property 方式）指向 tmp_path；
+    # 简单 setattr 会被 pydantic 实例 __dict__ 遮蔽，反而失效。
+    jid = client.post("/api/jobs", headers=auth_headers_user, json={"smiles": "CCO"}).json()["id"]
+    ws = tmp_path / jid; ws.mkdir(parents=True, exist_ok=True)
+    (ws / "messages.jsonl").write_text('{"a":1}\n', encoding="utf-8")
+    exp = ws / "export"; exp.mkdir(); (exp / "SYNTHESIS_REPORT.html").write_text("<html>r</html>", encoding="utf-8")
+    ok1 = client.get(f"/api/jobs/{jid}/files/messages.jsonl", headers=auth_headers_user)
+    assert ok1.status_code == 200 and ok1.headers["content-type"].startswith(("text/plain", "application/json"))  # .jsonl → json
+    ok2 = client.get(f"/api/jobs/{jid}/files/export/SYNTHESIS_REPORT.html", headers=auth_headers_user)
+    assert ok2.status_code == 200 and "text/html" in ok2.headers["content-type"]
+    bad = client.get(f"/api/jobs/{jid}/files/../../etc/passwd", headers=auth_headers_user)
+    assert bad.status_code in (404, 400)
+    other = client.get(f"/api/jobs/{jid}/files/nope.bin", headers=auth_headers_user)
+    assert other.status_code == 404
