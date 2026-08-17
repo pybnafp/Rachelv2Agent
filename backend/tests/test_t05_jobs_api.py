@@ -10,7 +10,7 @@ def test_submit_canonicalized(client, db, auth_headers_user):
     r = client.post("/api/jobs", headers=auth_headers_user, json={"smiles": "C1=CC=CC=C1"})  # 非规范苯
     assert r.status_code == 201
     assert r.json()["smiles"] == "c1ccccc1"     # RDKit 规范化
-    assert r.json()["status"] in ("queued", "succeeded")  # eager stub 立即完成
+    assert r.json()["status"] in ("queued", "succeeded", "failed")  # eager: T9 前无 driver → failed
 
 
 def test_submit_too_heavy_400(client, db, auth_headers_user, monkeypatch):
