@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api, apiGet } from "./client";
-import type { JobOut, ResultOut } from "../types";
+import type { JobOut, ResultOut, TraceStep } from "../types";
 
 export const useJobs = () =>
   useQuery<JobOut[]>({
@@ -23,6 +23,13 @@ export const useResult = (id: string | undefined, enabled: boolean) =>
   useQuery<ResultOut>({
     queryKey: ["result", id],
     queryFn: () => apiGet<ResultOut>(`/api/jobs/${id}/result`),
+    enabled: !!id && enabled,
+  });
+
+export const useTrace = (id: string | undefined, enabled: boolean) =>
+  useQuery<{ steps: TraceStep[] }>({
+    queryKey: ["trace", id],
+    queryFn: () => apiGet<{ steps: TraceStep[] }>(`/api/jobs/${id}/trace`),
     enabled: !!id && enabled,
   });
 

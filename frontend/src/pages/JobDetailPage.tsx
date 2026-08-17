@@ -9,10 +9,14 @@ import { useJob, useResult } from "../api/hooks";
 import { useAuthStore } from "../stores/auth";
 import { formatDuration } from "../lib/format";
 import RouteTreeCanvas from "../components/RouteTreeCanvas";
+import { AuditTimeline } from "../components/AuditTimeline";
+import { TerminalAuditPanel } from "../components/TerminalAuditPanel";
 
 const TABS = [
   { key: "tree", label: "路线树" },
   { key: "report", label: "报告" },
+  { key: "audit", label: "决策审计" },
+  { key: "terminals", label: "终点审计" },
   { key: "files", label: "文件" },
 ];
 
@@ -141,6 +145,12 @@ export default function JobDetailPage() {
               sandbox="allow-scripts"
               className="w-full h-[70vh] rounded border bg-white"
             />
+          </div>
+          <div data-testid="tab-audit" hidden={active !== "audit"}>
+            <AuditTimeline jobId={id} />
+          </div>
+          <div data-testid="tab-terminals" hidden={active !== "terminals"}>
+            <TerminalAuditPanel terminals={result?.terminals} audit={result?.terminal_audit ?? null} />
           </div>
           <div data-testid="tab-files" hidden={active !== "files"} className="space-y-3">
             <Card title="产物指标">

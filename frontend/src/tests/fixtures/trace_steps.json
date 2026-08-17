@@ -1,0 +1,130 @@
+[
+  {
+    "seq": 1,
+    "command": "init",
+    "args": { "target_smiles": "CC(=O)OC1=CC=CC=C1C(=O)O", "max_steps": 30 },
+    "result_summary": "session initialized for aspirin synthesis",
+    "status": "ok",
+    "tokens": 120,
+    "duration_ms": 800,
+    "created_at": "2026-08-17T10:00:10Z"
+  },
+  {
+    "seq": 2,
+    "command": "next",
+    "args": {},
+    "result_summary": "planned retrosynthetic disconnection at ester bond",
+    "status": "ok",
+    "tokens": 450,
+    "duration_ms": 3200,
+    "created_at": "2026-08-17T10:01:00Z"
+  },
+  {
+    "seq": 3,
+    "command": "reaction_sites",
+    "args": { "node_id": "mol_1" },
+    "result_summary": "found 2 candidate reaction sites",
+    "status": "ok",
+    "tokens": 380,
+    "duration_ms": 2100,
+    "created_at": "2026-08-17T10:02:00Z"
+  },
+  {
+    "seq": 4,
+    "command": "explore_site",
+    "args": { "site_id": "site_0", "depth": 1 },
+    "result_summary": "expanded site_0 into 3 precursor candidates",
+    "status": "ok",
+    "tokens": 520,
+    "duration_ms": 4300,
+    "created_at": "2026-08-17T10:03:00Z"
+  },
+  {
+    "seq": 5,
+    "command": "try_action",
+    "args": { "action_id": "a1", "tool": "retro_hydrolysis" },
+    "result_summary": "action applied, salicylic acid branch opened",
+    "status": "ok",
+    "tokens": 610,
+    "duration_ms": 5400,
+    "created_at": "2026-08-17T10:04:00Z"
+  },
+  {
+    "seq": 6,
+    "command": "try_action",
+    "args": { "action_id": "a9", "tool": "oxidize_benzyl" },
+    "result_summary": "tool error: substrate incompatible with oxidant",
+    "status": "error",
+    "tokens": 300,
+    "duration_ms": 1200,
+    "created_at": "2026-08-17T10:05:00Z"
+  },
+  {
+    "seq": 7,
+    "command": "commit",
+    "args": {
+      "idx": 0,
+      "reasoning": "Salicylic acid route is shortest and all leaves are commercial starting materials.",
+      "confidence": "high",
+      "rejected": [
+        { "action_id": "a2", "reason": "requires controlled substance precursor" },
+        { "action_id": "a5", "reason": "yield below threshold at scale" }
+      ]
+    },
+    "result_summary": "committed route branch #0",
+    "status": "ok",
+    "tokens": 780,
+    "duration_ms": 6100,
+    "created_at": "2026-08-17T10:06:00Z"
+  },
+  {
+    "seq": 8,
+    "command": "accept",
+    "args": { "reason": "commercial starting material" },
+    "result_summary": "accepted phenol leaf as buyable terminal",
+    "status": "ok",
+    "tokens": 240,
+    "duration_ms": 900,
+    "created_at": "2026-08-17T10:07:00Z"
+  },
+  {
+    "seq": 9,
+    "command": "next",
+    "args": {},
+    "result_summary": "no further productive disconnections",
+    "status": "ok",
+    "tokens": 180,
+    "duration_ms": 1500,
+    "created_at": "2026-08-17T10:08:00Z"
+  },
+  {
+    "seq": 10,
+    "command": "finalize",
+    "args": {},
+    "result_summary": "route tree finalized: 8 nodes, 3 terminals",
+    "status": "ok",
+    "tokens": 260,
+    "duration_ms": 1100,
+    "created_at": "2026-08-17T10:09:00Z"
+  },
+  {
+    "seq": 11,
+    "command": "export",
+    "args": { "formats": ["json", "md", "html"] },
+    "result_summary": "artifacts written to export/",
+    "status": "ok",
+    "tokens": 150,
+    "duration_ms": 700,
+    "created_at": "2026-08-17T10:10:00Z"
+  },
+  {
+    "seq": 12,
+    "command": "finish",
+    "args": {},
+    "result_summary": "job finished successfully",
+    "status": "ok",
+    "tokens": 90,
+    "duration_ms": 300,
+    "created_at": "2026-08-17T10:11:00Z"
+  }
+]
