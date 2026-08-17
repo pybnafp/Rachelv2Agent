@@ -1,0 +1,38 @@
+[
+  {
+    "smiles": "CC(=O)CCO",
+    "node_id": "mol_2",
+    "cs_score": 1.585,
+    "classification": "trivial"
+  },
+  {
+    "smiles": "CCOP(OCC)OCC",
+    "node_id": "mol_10",
+    "cs_score": 1.8064,
+    "classification": "trivial"
+  },
+  {
+    "smiles": "Cc1ccc(F)c([N+](=O)[O-])n1",
+    "node_id": "mol_11",
+    "cs_score": 2.5726,
+    "classification": "moderate"
+  },
+  {
+    "smiles": "CO",
+    "node_id": "mol_12",
+    "cs_score": 1.54,
+    "classification": "trivial"
+  },
+  {
+    "smiles": "O=S(Cl)Cl",
+    "node_id": "mol_14",
+    "cs_score": 1.98,
+    "classification": "trivial"
+  },
+  {
+    "smiles": "Cc1nc2c(C)ncc(C)n2n1",
+    "node_id": "mol_16",
+    "cs_score": 3.04,
+    "classification": "moderate"
+  }
+]

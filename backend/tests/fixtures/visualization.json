@@ -1,0 +1,378 @@
+{
+  "nodes": [
+    {
+      "id": "mol_0",
+      "type": "molecule",
+      "smiles": "Cc1ncc(C)n2nc(CCc3ccc(O)c(NC(C)CCO)n3)nc12",
+      "role": "target",
+      "depth": 0,
+      "cs_score": 4.4154,
+      "classification": "moderate"
+    },
+    {
+      "id": "mol_1",
+      "type": "molecule",
+      "smiles": "Cc1ncc(C)n2nc(CCc3ccc(O)c(N)n3)nc12",
+      "role": "intermediate",
+      "depth": 1,
+      "cs_score": 4.0229,
+      "classification": "moderate"
+    },
+    {
+      "id": "mol_2",
+      "type": "molecule",
+      "smiles": "CC(=O)CCO",
+      "role": "terminal",
+      "depth": 1,
+      "cs_score": 1.585,
+      "classification": "trivial"
+    },
+    {
+      "id": "mol_3",
+      "type": "molecule",
+      "smiles": "Cc1ncc(C)n2nc(C=Cc3ccc(O)c(N)n3)nc12",
+      "role": "intermediate",
+      "depth": 2,
+      "cs_score": 4.0229,
+      "classification": "moderate"
+    },
+    {
+      "id": "mol_4",
+      "type": "molecule",
+      "smiles": "Cc1ncc(C)n2nc(C=Cc3ccc(O)c([N+](=O)[O-])n3)nc12",
+      "role": "intermediate",
+      "depth": 3,
+      "cs_score": 4.179,
+      "classification": "moderate"
+    },
+    {
+      "id": "mol_5",
+      "type": "molecule",
+      "smiles": "COc1ccc(C=Cc2nc3c(C)ncc(C)n3n2)nc1[N+](=O)[O-]",
+      "role": "intermediate",
+      "depth": 4,
+      "cs_score": 4.2,
+      "classification": "moderate"
+    },
+    {
+      "id": "mol_6",
+      "type": "molecule",
+      "smiles": "COc1ccc(C=O)nc1[N+](=O)[O-]",
+      "role": "intermediate",
+      "depth": 5,
+      "cs_score": 2.6801,
+      "classification": "moderate"
+    },
+    {
+      "id": "mol_7",
+      "type": "molecule",
+      "smiles": "CCOP(=O)(Cc1nc2c(C)ncc(C)n2n1)OCC",
+      "role": "intermediate",
+      "depth": 5,
+      "cs_score": 3.7264,
+      "classification": "moderate"
+    },
+    {
+      "id": "mol_8",
+      "type": "molecule",
+      "smiles": "COc1ccc(C)nc1[N+](=O)[O-]",
+      "role": "intermediate",
+      "depth": 6,
+      "cs_score": 2.55,
+      "classification": "moderate"
+    },
+    {
+      "id": "mol_9",
+      "type": "molecule",
+      "smiles": "Cc1ncc(C)n2nc(CCl)nc12",
+      "role": "intermediate",
+      "depth": 6,
+      "cs_score": 3.2378,
+      "classification": "moderate"
+    },
+    {
+      "id": "mol_10",
+      "type": "molecule",
+      "smiles": "CCOP(OCC)OCC",
+      "role": "terminal",
+      "depth": 6,
+      "cs_score": 1.8064,
+      "classification": "trivial"
+    },
+    {
+      "id": "mol_11",
+      "type": "molecule",
+      "smiles": "Cc1ccc(F)c([N+](=O)[O-])n1",
+      "role": "terminal",
+      "depth": 7,
+      "cs_score": 2.5726,
+      "classification": "moderate"
+    },
+    {
+      "id": "mol_12",
+      "type": "molecule",
+      "smiles": "CO",
+      "role": "terminal",
+      "depth": 7,
+      "cs_score": 1.54,
+      "classification": "trivial"
+    },
+    {
+      "id": "mol_13",
+      "type": "molecule",
+      "smiles": "Cc1ncc(C)n2nc(CO)nc12",
+      "role": "intermediate",
+      "depth": 7,
+      "cs_score": 3.2378,
+      "classification": "moderate"
+    },
+    {
+      "id": "mol_14",
+      "type": "molecule",
+      "smiles": "O=S(Cl)Cl",
+      "role": "terminal",
+      "depth": 7,
+      "cs_score": 1.98,
+      "classification": "trivial"
+    },
+    {
+      "id": "mol_15",
+      "type": "molecule",
+      "smiles": "Cc1ncc(C)n2nc(C=O)nc12",
+      "role": "intermediate",
+      "depth": 8,
+      "cs_score": 3.2378,
+      "classification": "moderate"
+    },
+    {
+      "id": "mol_16",
+      "type": "molecule",
+      "smiles": "Cc1nc2c(C)ncc(C)n2n1",
+      "role": "terminal",
+      "depth": 9,
+      "cs_score": 3.04,
+      "classification": "moderate"
+    },
+    {
+      "id": "rxn_1",
+      "type": "reaction",
+      "label": "Reductive amination",
+      "depth": 0,
+      "reaction_smiles": "Cc1ncc(C)n2nc(CCc3ccc(O)c(N)n3)nc12.CC(=O)CCO>>Cc1ncc(C)n2nc(CCc3ccc(O)c(NC(C)CCO)n3)nc12"
+    },
+    {
+      "id": "rxn_2",
+      "type": "reaction",
+      "label": "Alkene Hydrogenation (Retro, oxidation reduction)",
+      "depth": 1,
+      "reaction_smiles": "Cc1ncc(C)n2nc(C=Cc3ccc(O)c(N)n3)nc12>>Cc1ncc(C)n2nc(CCc3ccc(O)c(N)n3)nc12"
+    },
+    {
+      "id": "rxn_3",
+      "type": "reaction",
+      "label": "Nitro Reduction (Retro, oxidation reduction)",
+      "depth": 2,
+      "reaction_smiles": "Cc1ncc(C)n2nc(C=Cc3ccc(O)c([N+](=O)[O-])n3)nc12>>Cc1ncc(C)n2nc(C=Cc3ccc(O)c(N)n3)nc12"
+    },
+    {
+      "id": "rxn_4",
+      "type": "reaction",
+      "label": "Demethylation Bbr3 (Retro, protection)",
+      "depth": 3,
+      "reaction_smiles": "COc1ccc(C=Cc2nc3c(C)ncc(C)n3n2)nc1[N+](=O)[O-]>>Cc1ncc(C)n2nc(C=Cc3ccc(O)c([N+](=O)[O-])n3)nc12"
+    },
+    {
+      "id": "rxn_5",
+      "type": "reaction",
+      "label": "Horner-Wadsworth-Emmons olefination",
+      "depth": 4,
+      "reaction_smiles": "COc1ccc(C=O)nc1[N+](=O)[O-].CCOP(=O)(Cc1nc2c(C)ncc(C)n2n1)OCC>>COc1ccc(C=Cc2nc3c(C)ncc(C)n3n2)nc1[N+](=O)[O-]"
+    },
+    {
+      "id": "rxn_6",
+      "type": "reaction",
+      "label": "Benzylic C–H oxidation to aldehyde (DDQ/CAN/SeO2 etc.) (retro)",
+      "depth": 5,
+      "reaction_smiles": "COc1ccc(C)nc1[N+](=O)[O-]>>COc1ccc(C=O)nc1[N+](=O)[O-]"
+    },
+    {
+      "id": "rxn_7",
+      "type": "reaction",
+      "label": "Michaelis-Arbuzov phosphonate formation",
+      "depth": 5,
+      "reaction_smiles": "Cc1ncc(C)n2nc(CCl)nc12.CCOP(OCC)OCC>>CCOP(=O)(Cc1nc2c(C)ncc(C)n2n1)OCC"
+    },
+    {
+      "id": "rxn_8",
+      "type": "reaction",
+      "label": "SNAr O-Nucleophile (Retro, aromatic)",
+      "depth": 6,
+      "reaction_smiles": "Cc1ccc(F)c([N+](=O)[O-])n1.CO>>COc1ccc(C)nc1[N+](=O)[O-]"
+    },
+    {
+      "id": "rxn_9",
+      "type": "reaction",
+      "label": "Alcohol to chloride with thionyl chloride",
+      "depth": 6,
+      "reaction_smiles": "Cc1ncc(C)n2nc(CO)nc12.O=S(Cl)Cl>>Cc1ncc(C)n2nc(CCl)nc12"
+    },
+    {
+      "id": "rxn_10",
+      "type": "reaction",
+      "label": "Aldehyde Reduction (Retro, oxidation reduction)",
+      "depth": 7,
+      "reaction_smiles": "Cc1ncc(C)n2nc(C=O)nc12>>Cc1ncc(C)n2nc(CO)nc12"
+    },
+    {
+      "id": "rxn_11",
+      "type": "reaction",
+      "label": "Benzylic C–H oxidation to aldehyde (DDQ/CAN/SeO2 etc.) (retro)",
+      "depth": 8,
+      "reaction_smiles": "Cc1nc2c(C)ncc(C)n2n1>>Cc1ncc(C)n2nc(C=O)nc12"
+    }
+  ],
+  "edges": [
+    {
+      "source": "mol_0",
+      "target": "rxn_1",
+      "type": "retro_product"
+    },
+    {
+      "source": "rxn_1",
+      "target": "mol_1",
+      "type": "retro_reactant"
+    },
+    {
+      "source": "rxn_1",
+      "target": "mol_2",
+      "type": "retro_reactant"
+    },
+    {
+      "source": "mol_1",
+      "target": "rxn_2",
+      "type": "retro_product"
+    },
+    {
+      "source": "rxn_2",
+      "target": "mol_3",
+      "type": "retro_reactant"
+    },
+    {
+      "source": "mol_3",
+      "target": "rxn_3",
+      "type": "retro_product"
+    },
+    {
+      "source": "rxn_3",
+      "target": "mol_4",
+      "type": "retro_reactant"
+    },
+    {
+      "source": "mol_4",
+      "target": "rxn_4",
+      "type": "retro_product"
+    },
+    {
+      "source": "rxn_4",
+      "target": "mol_5",
+      "type": "retro_reactant"
+    },
+    {
+      "source": "mol_5",
+      "target": "rxn_5",
+      "type": "retro_product"
+    },
+    {
+      "source": "rxn_5",
+      "target": "mol_6",
+      "type": "retro_reactant"
+    },
+    {
+      "source": "rxn_5",
+      "target": "mol_7",
+      "type": "retro_reactant"
+    },
+    {
+      "source": "mol_6",
+      "target": "rxn_6",
+      "type": "retro_product"
+    },
+    {
+      "source": "rxn_6",
+      "target": "mol_8",
+      "type": "retro_reactant"
+    },
+    {
+      "source": "mol_7",
+      "target": "rxn_7",
+      "type": "retro_product"
+    },
+    {
+      "source": "rxn_7",
+      "target": "mol_9",
+      "type": "retro_reactant"
+    },
+    {
+      "source": "rxn_7",
+      "target": "mol_10",
+      "type": "retro_reactant"
+    },
+    {
+      "source": "mol_8",
+      "target": "rxn_8",
+      "type": "retro_product"
+    },
+    {
+      "source": "rxn_8",
+      "target": "mol_11",
+      "type": "retro_reactant"
+    },
+    {
+      "source": "rxn_8",
+      "target": "mol_12",
+      "type": "retro_reactant"
+    },
+    {
+      "source": "mol_9",
+      "target": "rxn_9",
+      "type": "retro_product"
+    },
+    {
+      "source": "rxn_9",
+      "target": "mol_13",
+      "type": "retro_reactant"
+    },
+    {
+      "source": "rxn_9",
+      "target": "mol_14",
+      "type": "retro_reactant"
+    },
+    {
+      "source": "mol_13",
+      "target": "rxn_10",
+      "type": "retro_product"
+    },
+    {
+      "source": "rxn_10",
+      "target": "mol_15",
+      "type": "retro_reactant"
+    },
+    {
+      "source": "mol_15",
+      "target": "rxn_11",
+      "type": "retro_product"
+    },
+    {
+      "source": "rxn_11",
+      "target": "mol_16",
+      "type": "retro_reactant"
+    }
+  ],
+  "meta": {
+    "target": "Cc1ncc(C)n2nc(CCc3ccc(O)c(NC(C)CCO)n3)nc12",
+    "target_name": "n5_9998",
+    "status": "complete",
+    "total_steps": 11,
+    "total_molecules": 17
+  }
+}
