@@ -27,6 +27,7 @@ const ARTIFACTS = [
   { path: "export/terminals.json", name: "terminals.json", label: "起始原料" },
   { path: "export/visualization.json", name: "visualization.json", label: "可视化数据" },
   { path: "export/session.json", name: "session.json", label: "会话快照" },
+  { path: "export/terminal_audit.json", name: "terminal_audit.json", label: "终点审计数据" },
   { path: "messages.jsonl", name: "messages.jsonl", label: "消息日志" },
   { path: "session.json", name: "session.json", label: "任务会话" },
 ];

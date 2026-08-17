@@ -24,7 +24,8 @@ def set_status(db: Session, job_id: str, status: str, error: str = "", stats_pat
     if status == JobStatus.RUNNING and job.started_at is None:
         job.started_at = now
     if status in (JobStatus.SUCCEEDED, JobStatus.PARTIAL, JobStatus.FAILED, JobStatus.CANCELLED):
-        job.finished_at = now
+        if job.finished_at is None:  # 首次终态才落 finished_at，后续补 stats 不刷耗时
+            job.finished_at = now
     db.commit()
     db.refresh(job)
     return job

@@ -110,6 +110,9 @@ describe("JobDetailPage", () => {
     expect(screen.getByTestId("dl-report.txt").getAttribute("href")).toBe(
       "/api/jobs/j1/files/export/report.txt?token=t"
     );
+    expect(screen.getByTestId("dl-terminal_audit.json").getAttribute("href")).toBe(
+      "/api/jobs/j1/files/export/terminal_audit.json?token=t"
+    );
   });
 
   it("audit + terminal tabs present (5 tabs), audit tab shows trace timeline", async () => {
