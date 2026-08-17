@@ -4,12 +4,14 @@ import time as _time
 import anyio
 from pathlib import Path
 from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import FileResponse, StreamingResponse
 from fastapi.security import HTTPAuthorizationCredentials
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 from app.api.deps import bearer, get_current_user, get_db, resolve_token_user
 from app.core.config import get_settings
+from app.db import session as dbs
 from app.db.models import Job, JobStatus, JobStep, User
 from app.schemas.jobs import JobIn, JobOut, JobStepOut, ResultOut
 from app.services.artifacts import parse_export
@@ -118,6 +120,27 @@ def _live_stats(db: Session, job_id: str, last_seq: int) -> dict:
             "duration_ms": sum(r.duration_ms or 0 for r in rows), "last_seq": last_seq}
 
 
+def _poll_once(job_id: str, last_seq: int) -> tuple[list[JobStep], Job | None]:
+    """短生命周期轮询会话：每轮独立 Session/连接，避免流期间长期占用池连接（SQLite 锁 / PG 池耗尽）。
+    新会话天然读到最新数据，无需 expire_all。"""
+    db_poll = dbs.SessionLocal()
+    try:
+        steps = db_poll.scalars(select(JobStep).where(
+            JobStep.job_id == job_id, JobStep.seq > last_seq).order_by(JobStep.seq)).all()
+        job = db_poll.get(Job, job_id)
+        return steps, job
+    finally:
+        db_poll.close()
+
+
+def _stats_once(job_id: str, last_seq: int) -> dict:
+    db_stats = dbs.SessionLocal()
+    try:
+        return _live_stats(db_stats, job_id, last_seq)
+    finally:
+        db_stats.close()
+
+
 @router.get("/{job_id}/events")
 def events(job_id: str, request: Request, token: str | None = None,
            cred: HTTPAuthorizationCredentials | None = Depends(bearer),
@@ -136,25 +159,27 @@ def events(job_id: str, request: Request, token: str | None = None,
         while _time.monotonic() - t0 < SSE_MAX_SEC:
             if await request.is_disconnected():
                 return
-            steps = db.scalars(select(JobStep).where(
-                JobStep.job_id == job.id, JobStep.seq > last_seq).order_by(JobStep.seq)).all()
+            # 每轮短生命周期会话（run_in_threadpool 避免同步 ORM 阻塞事件循环），
+            # 注入的 db 仅用于流开始前的鉴权与 _get_own_job，不进入流循环。
+            steps, current = await run_in_threadpool(_poll_once, job.id, last_seq)
             if steps:
                 payload = [JobStepOut.model_validate(s).model_dump(mode="json") for s in steps]
                 last_seq = steps[-1].seq
                 if last_status is None:
-                    data = {"steps": payload, "stats_live": _live_stats(db, job.id, last_seq)}
-                    yield _sse("snapshot", data)
+                    stats_live = await run_in_threadpool(_stats_once, job.id, last_seq)
+                    yield _sse("snapshot", {"status": current.status if current else None,
+                                            "stats_live": stats_live, "steps": payload})
                     last_status = "init"
                 else:
                     yield _sse("steps", {"steps": payload})
                 idle = 0
             elif last_status is None:
                 # No steps yet (or none ever): still emit an (empty) snapshot first.
-                yield _sse("snapshot", {"steps": [], "stats_live": _live_stats(db, job.id, last_seq)})
+                stats_live = await run_in_threadpool(_stats_once, job.id, last_seq)
+                yield _sse("snapshot", {"status": current.status if current else None,
+                                        "stats_live": stats_live, "steps": []})
                 last_status = "init"
                 idle = 0
-            db.expire_all()
-            current = db.get(Job, job.id)
             if current and current.status != last_status:
                 last_status = current.status
                 yield _sse("status", {"status": current.status, "stats": current.stats or {}})

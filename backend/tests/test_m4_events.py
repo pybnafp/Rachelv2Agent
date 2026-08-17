@@ -44,3 +44,30 @@ def test_resolve_token_user_shared(client, db, auth_headers_user):
     u = resolve_token_user(HTTPAuthorizationCredentials(scheme="Bearer", credentials=tok), None, db)
     assert u.username == "usr"
     assert resolve_token_user(None, "bad", db) is None or True   # 实现选择：返回 None 或抛 401——以 events/files 用法为准
+
+
+def test_events_snapshot_has_status_key(client, db, auth_headers_user):
+    jid = client.post("/api/jobs", headers=auth_headers_user, json={"smiles": "CCO"}).json()["id"]
+    with client.stream("GET", f"/api/jobs/{jid}/events", headers=auth_headers_user) as resp:
+        lines = _sse_lines(resp)
+    snap = next(json.loads(l.removeprefix("data: ")) for l in lines if l.startswith("data: ")
+                and "stats_live" in l)
+    assert "status" in snap
+    assert snap["status"] in {"queued", "running", "succeeded", "partial", "failed", "cancelled"}
+
+
+def test_events_stream_uses_sessionlocal(client, db, monkeypatch, auth_headers_user):
+    # 流期间不得长期占用 Depends(get_db) 会话：每轮轮询应走短生命周期 SessionLocal
+    from app.db import session as dbs
+    calls = {"n": 0}
+    real = dbs.SessionLocal
+
+    def counting_factory():
+        calls["n"] += 1
+        return real()
+
+    monkeypatch.setattr(dbs, "SessionLocal", counting_factory)
+    jid = client.post("/api/jobs", headers=auth_headers_user, json={"smiles": "CCO"}).json()["id"]
+    with client.stream("GET", f"/api/jobs/{jid}/events", headers=auth_headers_user) as resp:
+        _sse_lines(resp)
+    assert calls["n"] >= 2   # 至少一次轮询(_poll_once) + 一次快照 stats(_stats_once)
