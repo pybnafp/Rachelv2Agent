@@ -20,6 +20,8 @@ frontend/dist/
 # 任务产物与运行时数据
 data/jobs/
 output/
+backend/dev.db
+*.db
 
 # Rachel-v2 缓存
 Rachel-v2/**/__pycache__/
