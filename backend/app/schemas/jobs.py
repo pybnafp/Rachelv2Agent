@@ -2,6 +2,18 @@ from datetime import datetime
 from pydantic import BaseModel
 
 
+class JobStepOut(BaseModel):
+    seq: int
+    command: str
+    args: dict
+    result_summary: str
+    status: str
+    tokens: int
+    duration_ms: int
+    created_at: datetime
+    model_config = {"from_attributes": True}
+
+
 class JobIn(BaseModel):
     smiles: str
     name: str = ""

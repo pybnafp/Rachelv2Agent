@@ -17,6 +17,14 @@ def _testing(monkeypatch):
     get_settings.cache_clear()
 
 
+@pytest.fixture(autouse=True)
+def data_dir(tmp_path, monkeypatch):
+    import app.core.config as cfg
+    # pydantic v2: plain class attr is shadowed by instance __dict__;
+    # a property (data descriptor) takes precedence for all instances.
+    monkeypatch.setattr(cfg.Settings, "data_dir", property(lambda self: tmp_path), raising=False)
+
+
 @pytest.fixture
 def client(db):
     from sqlalchemy.orm import sessionmaker
