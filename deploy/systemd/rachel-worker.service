@@ -9,11 +9,10 @@ Type=simple
 User=root
 WorkingDirectory=/root/Rachelv2Agent
 EnvironmentFile=/root/Rachelv2Agent/.env
+Environment=PYTHONPATH=/root/Rachelv2Agent/Rachel-v2
 ExecStart=/root/miniconda3/envs/rachel-v2/bin/celery -A app.worker.celery_app worker --concurrency=1 --loglevel=info
 Restart=on-failure
 RestartSec=3
 
 [Install]
 WantedBy=multi-user.target
-
-Environment=PYTHONPATH=/root/Rachelv2Agent/Rachel-v2

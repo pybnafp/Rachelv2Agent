@@ -24,6 +24,7 @@ npm ci
 npm run build
 
 echo "== [4/5] 部署静态文件 =="
+cd "$APP_DIR/frontend"
 mkdir -p "$WEB_ROOT"
 cp -r dist/* "$WEB_ROOT"/
 

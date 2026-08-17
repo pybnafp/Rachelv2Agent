@@ -81,6 +81,16 @@ else
   echo "   miniconda 已安装，跳过"
 fi
 
+cat > /root/.condarc <<'EOF'
+channels:
+  - conda-forge
+show_channel_urls: true
+default_channels:
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+custom_channels:
+  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+EOF
+
 echo "== [5/10] conda env: $CONDA_ENV（已存在跳过）=="
 if [ ! -x "$PY" ]; then
   "$CONDA_BIN" create -y -n "$CONDA_ENV" python=3.11

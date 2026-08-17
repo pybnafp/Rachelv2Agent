@@ -137,6 +137,10 @@ bash /root/Rachelv2Agent/deploy/update.sh
 
 （pip install → alembic upgrade head → 前端构建拷贝 → 重启两服务 → nginx -t && reload）
 
+> 代码上采用工作树 tar 直传（字节保真，避免 git archive 的 EOL 转换破坏 release
+> manifest 校验）——见 M5 部署记录；`.condarc` 需配置 TUNA conda-forge 镜像
+> （pkgs/r 已失效，只留 main + cloud/conda-forge）。
+
 ### 日志排查
 
 ```bash
