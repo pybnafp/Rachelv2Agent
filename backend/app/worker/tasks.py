@@ -58,6 +58,7 @@ def run_retro_job(self, job_id: str) -> str:
     from app.db.session import SessionLocal
     from app.db.models import JobStatus
     from app.services.jobs import set_status
+    _ensure_engine()
     db = SessionLocal()
     try:
         from app.db.models import Job
@@ -66,7 +67,6 @@ def run_retro_job(self, job_id: str) -> str:
             return JobStatus.FAILED
         if job.status == JobStatus.CANCELLED:  # 取消先于 pickup
             return JobStatus.CANCELLED
-        _ensure_engine()
         set_status(db, job_id, JobStatus.RUNNING)
         workspace = ensure_workspace(job_id)
         result = _build_driver(job, workspace).run()
