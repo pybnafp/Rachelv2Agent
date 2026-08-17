@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #0ea5e9; /* sky-500 */
+  --color-deep: #1e40af; /* blue-800 */
+  --color-bg: #f8fafc; /* slate-50 */
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+}
