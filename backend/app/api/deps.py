@@ -16,6 +16,35 @@ def get_db():
         db.close()
 
 
+def resolve_token_user(
+    cred: HTTPAuthorizationCredentials | None,
+    token: str | None,
+    db: Session,
+) -> User | None:
+    """Resolve Bearer credential or ?token= query (either one) to a User.
+
+    Shared by /files and /events (channels that cannot send Authorization
+    headers, e.g. iframe/<img>/EventSource). Returns None on any failure
+    (missing/invalid token, unknown user); callers raise 401.
+    """
+    from app.core.security import decode_token
+    raw = None
+    if cred is not None and cred.credentials:
+        raw = cred.credentials
+    elif token:
+        raw = token
+    if not raw:
+        return None
+    payload = decode_token(raw)
+    if not payload or "sub" not in payload:
+        return None
+    try:
+        uid = int(payload["sub"])
+    except (TypeError, ValueError):
+        return None
+    return db.get(User, uid)
+
+
 def get_current_user(
     cred: HTTPAuthorizationCredentials | None = Depends(bearer),
     db: Session = Depends(get_db),

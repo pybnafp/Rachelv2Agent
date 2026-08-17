@@ -1,11 +1,14 @@
+import json
 import shutil
+import time as _time
+import anyio
 from pathlib import Path
-from fastapi import APIRouter, Depends, HTTPException
-from fastapi.responses import FileResponse
+from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi.responses import FileResponse, StreamingResponse
 from fastapi.security import HTTPAuthorizationCredentials
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-from app.api.deps import bearer, get_current_user, get_db
+from app.api.deps import bearer, get_current_user, get_db, resolve_token_user
 from app.core.config import get_settings
 from app.db.models import Job, JobStatus, JobStep, User
 from app.schemas.jobs import JobIn, JobOut, JobStepOut, ResultOut
@@ -85,19 +88,9 @@ def files(job_id: str, file_path: str, token: str | None = None,
           cred: HTTPAuthorizationCredentials | None = Depends(bearer),
           db: Session = Depends(get_db)):
     # 双通道认证：iframe/<a>/<img> 无法携带 Authorization 头 → 允许 ?token=<jwt> 等价校验（M2-T10 裁定）
-    from app.core.security import decode_token
-    if cred is not None:
-        jwt = cred.credentials
-    elif token:
-        jwt = token
-    else:
-        raise HTTPException(401, "missing token")
-    payload = decode_token(jwt)
-    if not payload:
-        raise HTTPException(401, "invalid token")
-    user = db.get(User, int(payload["sub"]))
-    if not user:
-        raise HTTPException(401, "user not found")
+    user = resolve_token_user(cred, token, db)
+    if user is None:
+        raise HTTPException(401, "missing or invalid token")
     job = _get_own_job(db, job_id, user)
     root = (get_settings().data_dir / job.id).resolve()
     target = (root / file_path).resolve()
@@ -107,6 +100,77 @@ def files(job_id: str, file_path: str, token: str | None = None,
         raise HTTPException(404, "file not found")
     suffix = target.suffix.lower()
     return FileResponse(target, media_type=_CONTENT_TYPES.get(suffix, "application/octet-stream"))
+
+
+_TERMINAL = {JobStatus.SUCCEEDED, JobStatus.PARTIAL, JobStatus.FAILED, JobStatus.CANCELLED}
+SSE_POLL_SEC = 2.0
+SSE_MAX_SEC = 7200
+_SSE_IDLE_PINGS = 8  # ~16s without any steps/status frame → heartbeat comment
+
+
+def _sse(event: str, data: dict) -> str:
+    return f"event: {event}\ndata: {json.dumps(data)}\n\n"
+
+
+def _live_stats(db: Session, job_id: str, last_seq: int) -> dict:
+    rows = db.scalars(select(JobStep).where(JobStep.job_id == job_id)).all()
+    return {"steps": len(rows), "tokens": sum(r.tokens or 0 for r in rows),
+            "duration_ms": sum(r.duration_ms or 0 for r in rows), "last_seq": last_seq}
+
+
+@router.get("/{job_id}/events")
+def events(job_id: str, request: Request, token: str | None = None,
+           cred: HTTPAuthorizationCredentials | None = Depends(bearer),
+           db: Session = Depends(get_db)):
+    # EventSource 无法带 Authorization 头 → 与 /files 共用 ?token= 双通道鉴权
+    user = resolve_token_user(cred, token, db)
+    if user is None:
+        raise HTTPException(401, "missing or invalid token")
+    job = _get_own_job(db, job_id, user)
+
+    async def gen():
+        last_seq = 0
+        last_status = None
+        idle = 0
+        t0 = _time.monotonic()
+        while _time.monotonic() - t0 < SSE_MAX_SEC:
+            if await request.is_disconnected():
+                return
+            steps = db.scalars(select(JobStep).where(
+                JobStep.job_id == job.id, JobStep.seq > last_seq).order_by(JobStep.seq)).all()
+            if steps:
+                payload = [JobStepOut.model_validate(s).model_dump(mode="json") for s in steps]
+                last_seq = steps[-1].seq
+                if last_status is None:
+                    data = {"steps": payload, "stats_live": _live_stats(db, job.id, last_seq)}
+                    yield _sse("snapshot", data)
+                    last_status = "init"
+                else:
+                    yield _sse("steps", {"steps": payload})
+                idle = 0
+            elif last_status is None:
+                # No steps yet (or none ever): still emit an (empty) snapshot first.
+                yield _sse("snapshot", {"steps": [], "stats_live": _live_stats(db, job.id, last_seq)})
+                last_status = "init"
+                idle = 0
+            db.expire_all()
+            current = db.get(Job, job.id)
+            if current and current.status != last_status:
+                last_status = current.status
+                yield _sse("status", {"status": current.status, "stats": current.stats or {}})
+                if current.status in _TERMINAL:
+                    yield _sse("done", {"status": current.status})
+                    return
+                idle = 0
+            idle += 1
+            if idle >= _SSE_IDLE_PINGS:
+                yield ": ping\n\n"
+                idle = 0
+            await anyio.sleep(SSE_POLL_SEC)
+        yield _sse("done", {"status": "timeout"})
+
+    return StreamingResponse(gen(), media_type="text/event-stream",
+                             headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
 
 
 @router.get("/{job_id}/trace")
