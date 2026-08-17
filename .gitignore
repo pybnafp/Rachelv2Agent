@@ -1,0 +1,29 @@
+# 密钥与环境
+.env
+.env.*
+*.pem
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+# 前端
+node_modules/
+frontend/dist/
+*.vite/
+
+# 任务产物与运行时数据
+data/jobs/
+output/
+
+# Rachel-v2 缓存
+Rachel-v2/**/__pycache__/
+
+# 系统
+.DS_Store
+Thumbs.db
