@@ -6,13 +6,14 @@ import type { TraceStep } from "../types";
 import { aggregateSteps } from "../lib/traceStats";
 
 const HIGHLIGHT_COMMANDS = new Set(["commit", "accept"]);
+const TERMINAL_STATUSES = new Set(["succeeded", "partial", "failed", "cancelled"]);
 
 function hhmmss(iso: string): string {
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return "--:--:--";
-  return [d.getHours(), d.getMinutes(), d.getSeconds()]
+  return [d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds()]
     .map((n) => String(n).padStart(2, "0"))
-    .join(":");
+    .join(":") + " UTC";
 }
 
 function StatsCard({ steps, onRefresh }: { steps: TraceStep[]; onRefresh: () => void }) {
@@ -97,8 +98,11 @@ function ExpandedDetail({ step }: { step: TraceStep }) {
   );
 }
 
-export function AuditTimeline({ jobId }: { jobId: string | undefined }) {
-  const { data, refetch } = useTrace(jobId, !!jobId);
+export function AuditTimeline({ jobId, jobStatus }: { jobId: string | undefined; jobStatus?: string }) {
+  // 终态才拉取 trace：运行中由 ProgressPanel（SSE/轮询）负责实时步骤；
+  // 未传 jobStatus 的调用方（测试/独立使用）保持原有行为
+  const terminal = jobStatus == null || TERMINAL_STATUSES.has(jobStatus);
+  const { data, refetch } = useTrace(jobId, terminal);
   const [expanded, setExpanded] = useState<Set<number>>(new Set());
 
   const steps = data?.steps ?? [];

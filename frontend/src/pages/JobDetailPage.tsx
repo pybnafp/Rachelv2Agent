@@ -150,7 +150,7 @@ export default function JobDetailPage() {
             />
           </div>
           <div data-testid="tab-audit" hidden={active !== "audit"}>
-            <AuditTimeline jobId={id} />
+            <AuditTimeline jobId={id} jobStatus={job.status} />
           </div>
           <div data-testid="tab-terminals" hidden={active !== "terminals"}>
             <TerminalAuditPanel terminals={result?.terminals} audit={result?.terminal_audit ?? null} />

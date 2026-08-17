@@ -44,12 +44,16 @@ export function TerminalAuditPanel({
     }
   }
   const summary = audit?.summary ?? {};
-  const cidText = `${summary.pubchem_cid_closed ?? cidClosed}/${summary.total_terminals ?? results.length} CID 闭合`;
-  const vendorText = `${summary.vendor_closed ?? vendorClosed}/${summary.total_terminals ?? results.length} Vendor 闭合`;
+  // 仅当 summary 缺键时才回退到 results 计数（单一取值路径）
+  const cid = summary.pubchem_cid_closed ?? cidClosed;
+  const vendor = summary.vendor_closed ?? vendorClosed;
+  const total = summary.total_terminals ?? results.length;
+  const cidText = `${cid}/${total} CID 闭合`;
+  const vendorText = `${vendor}/${total} Vendor 闭合`;
 
   return (
     <div className="space-y-3" data-testid="terminal-audit-panel">
-      {audit == null || audit.available === false ? (
+      {!(audit?.available === true) ? (
         <div
           data-testid="audit-unavailable"
           className="rounded-md border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-800"

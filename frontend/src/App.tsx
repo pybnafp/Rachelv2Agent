@@ -6,6 +6,7 @@ import RegisterPage from "./pages/RegisterPage";
 import SubmitPage from "./pages/SubmitPage";
 import JobsPage from "./pages/JobsPage";
 import JobDetailPage from "./pages/JobDetailPage";
+import AdminProvidersPage from "./pages/AdminProvidersPage";
 import Layout from "./components/Layout";
 const qc = new QueryClient({ defaultOptions: { queries: { retry: 1, refetchOnWindowFocus: false } } });
 function Guard({ children }: { children: React.ReactNode }) {
@@ -22,6 +23,7 @@ export default function App() {
           <Route path="/" element={<Guard><Layout><SubmitPage /></Layout></Guard>} />
           <Route path="/jobs" element={<Guard><Layout><JobsPage /></Layout></Guard>} />
           <Route path="/jobs/:id" element={<Guard><Layout><JobDetailPage /></Layout></Guard>} />
+          <Route path="/admin/llm" element={<Guard><Layout><AdminProvidersPage /></Layout></Guard>} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

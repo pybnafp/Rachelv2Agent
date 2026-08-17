@@ -24,6 +24,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <NavLink to="/jobs" className={navLinkClass}>
               任务
             </NavLink>
+            {role === "admin" && (
+              <NavLink to="/admin/llm" className={navLinkClass}>
+                供应商
+              </NavLink>
+            )}
           </nav>
           <div className="ml-auto flex items-center gap-3">
             {role === "admin" && <Badge color="sky">admin</Badge>}
