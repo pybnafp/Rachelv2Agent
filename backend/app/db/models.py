@@ -21,7 +21,7 @@ class User(Base):
     username: Mapped[str] = mapped_column(sa.String(64), unique=True, index=True)
     password_hash: Mapped[str] = mapped_column(sa.String(128))
     role: Mapped[str] = mapped_column(sa.String(16), default="user")
-    created_at: Mapped[datetime] = mapped_column(sa.DateTime, default=utcnow)
+    created_at: Mapped[datetime] = mapped_column(sa.DateTime(timezone=True), default=utcnow)
 
 
 class LlmProvider(Base):
@@ -34,7 +34,7 @@ class LlmProvider(Base):
     temperature: Mapped[float] = mapped_column(default=0.2)
     max_output: Mapped[int] = mapped_column(default=4096)
     is_active: Mapped[bool] = mapped_column(default=False)
-    created_at: Mapped[datetime] = mapped_column(sa.DateTime, default=utcnow)
+    created_at: Mapped[datetime] = mapped_column(sa.DateTime(timezone=True), default=utcnow)
 
 
 class Job(Base):
@@ -48,9 +48,9 @@ class Job(Base):
     error: Mapped[str] = mapped_column(sa.Text, default="")
     stats: Mapped[dict] = mapped_column(JSONType, default=dict)
     celery_task_id: Mapped[str] = mapped_column(sa.String(64), default="")
-    created_at: Mapped[datetime] = mapped_column(sa.DateTime, default=utcnow)
-    started_at: Mapped[datetime | None] = mapped_column(sa.DateTime, nullable=True)
-    finished_at: Mapped[datetime | None] = mapped_column(sa.DateTime, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(sa.DateTime(timezone=True), default=utcnow)
+    started_at: Mapped[datetime | None] = mapped_column(sa.DateTime(timezone=True), nullable=True)
+    finished_at: Mapped[datetime | None] = mapped_column(sa.DateTime(timezone=True), nullable=True)
 
 
 class JobStep(Base):
@@ -64,4 +64,4 @@ class JobStep(Base):
     status: Mapped[str] = mapped_column(sa.String(16), default="ok")
     tokens: Mapped[int] = mapped_column(sa.Integer, default=0)
     duration_ms: Mapped[int] = mapped_column(sa.Integer, default=0)
-    created_at: Mapped[datetime] = mapped_column(sa.DateTime, default=utcnow)
+    created_at: Mapped[datetime] = mapped_column(sa.DateTime(timezone=True), default=utcnow)

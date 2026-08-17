@@ -104,3 +104,58 @@ bash scripts/m2_integration_check.sh [base_url]   # 默认 http://127.0.0.1:8000
 > 说明：不启动 Redis 时 Celery 无法投递（任务停留在 queued 且提交可能 500）。
 > 无 Redis 的本机联调可用 eager 模式内联执行任务（见 M2-T11 报告）；有 Redis 时
 > 需另起 Celery worker。LLM provider 无有效 key 时任务按预期进入 failed 且 error 有值。
+
+## 部署（M5）
+
+服务器为 Ubuntu 22.04，nginx 已有现有站点占用 80/443（**严禁改动**）。
+本项目作为独立 server block 监听 **8080**：静态文件 `/var/www/rachelv2`，
+`/api/` 反代到 `127.0.0.1:8000`（uvicorn，systemd 托管），Celery worker
+并发 1。数据库 PostgreSQL 14，消息队列 Redis（均 apt 安装）。conda 环境
+`/root/miniconda3/envs/rachel-v2`，项目位于 `/root/Rachelv2Agent`。
+
+### 首次初始化
+
+在服务器上执行一次（幂等，可重复运行）：
+
+```bash
+bash /root/Rachelv2Agent/deploy/init_server.sh
+```
+
+脚本完成：apt 依赖 → PG 建角色/库（rachel）→ 生成 `.env`（含随机
+JWT_SECRET 与 PG 密码）→ miniconda（TUNA 镜像）→ conda env →
+`pip install -e "backend[dev]"` → `alembic upgrade head` → 前端构建并
+拷贝到 `/var/www/rachelv2` → systemd 单元（rachel-api / rachel-worker）
+→ nginx 8080 站点启用。
+
+### 日常发布
+
+代码更新到 `/root/Rachelv2Agent` 后，在服务器上执行：
+
+```bash
+bash /root/Rachelv2Agent/deploy/update.sh
+```
+
+（pip install → alembic upgrade head → 前端构建拷贝 → 重启两服务 → nginx -t && reload）
+
+### 日志排查
+
+```bash
+journalctl -u rachel-api -f      # API 日志
+journalctl -u rachel-worker -f   # Celery worker 日志
+```
+
+### 数据库迁移说明
+
+- 模型所有 DateTime 列均为 `DateTime(timezone=True)`，PG 中即
+  `TIMESTAMP WITH TIME ZONE`（迁移 0002 完成 ALTER）。
+- SQLite 忽略 timezone 标志，故本地 dev.db 与测试不受影响，
+  迁移在两种库上均可执行。
+- 服务器上如需手动迁移：`cd /root/Rachelv2Agent/backend &&
+  /root/miniconda3/envs/rachel-v2/bin/alembic upgrade head`
+  （读取 `/root/Rachelv2Agent/.env` 中的 `DATABASE_URL`）。
+
+### PUBCHEM_OFFLINE 开关
+
+`.env` 中 `PUBCHEM_OFFLINE=true` 时所有 PubChem 查询走本地离线
+fixtures，不触网（初始化默认 true）；需要真实在线查询时改为 `false`
+并 `systemctl restart rachel-api rachel-worker`。
