@@ -46,3 +46,17 @@ def db():
     s = S()
     yield s
     s.close()
+
+
+@pytest.fixture
+def auth_headers_admin(client, db):
+    client.post("/api/auth/register", json={"username": "adm", "password": "pw1"})  # 首个= admin
+    tok = client.post("/api/auth/login", json={"username": "adm", "password": "pw1"}).json()["access_token"]
+    return {"Authorization": f"Bearer {tok}"}
+
+
+@pytest.fixture
+def auth_headers_user(client, db, auth_headers_admin):
+    client.post("/api/auth/register", json={"username": "usr", "password": "pw2"})
+    tok = client.post("/api/auth/login", json={"username": "usr", "password": "pw2"}).json()["access_token"]
+    return {"Authorization": f"Bearer {tok}"}
