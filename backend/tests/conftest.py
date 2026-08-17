@@ -25,6 +25,7 @@ def client(db):
         yield db
 
     app.dependency_overrides[get_db] = _override_get_db
+    app.state.test_db = db
     with TestClient(app) as c:
         yield c
 
