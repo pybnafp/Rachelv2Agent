@@ -6,6 +6,7 @@ import { Tabs } from "../components/ui/Tabs";
 import { StatusBadge } from "../components/StatusBadge";
 import { MoleculeView } from "../components/MoleculeView";
 import { useJob, useResult } from "../api/hooks";
+import { useAuthStore } from "../stores/auth";
 import { formatDuration } from "../lib/format";
 import RouteTreeCanvas from "../components/RouteTreeCanvas";
 
@@ -15,6 +16,17 @@ const TABS = [
   { key: "files", label: "文件" },
 ];
 
+// iframe/<a>/<img> 无法携带 Authorization 头 → 走后端 ?token= 双通道（M2-T10 裁定）
+const ARTIFACTS = [
+  { path: "export/report.txt", name: "report.txt", label: "报告文本" },
+  { path: "export/tree.json", name: "tree.json", label: "合成树JSON" },
+  { path: "export/terminals.json", name: "terminals.json", label: "起始原料" },
+  { path: "export/visualization.json", name: "visualization.json", label: "可视化数据" },
+  { path: "export/session.json", name: "session.json", label: "会话快照" },
+  { path: "messages.jsonl", name: "messages.jsonl", label: "消息日志" },
+  { path: "session.json", name: "session.json", label: "任务会话" },
+];
+
 export default function JobDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -22,6 +34,9 @@ export default function JobDetailPage() {
   const hasResult = job?.status === "succeeded" || job?.status === "partial";
   const { data: result } = useResult(id, !!hasResult);
   const [active, setActive] = useState("tree");
+  const token = useAuthStore((s) => s.token) ?? "";
+  const fileUrl = (p: string) => `/api/jobs/${id}/files/${p}?token=${encodeURIComponent(token)}`;
+  const reportUrl = fileUrl("export/SYNTHESIS_REPORT.html");
 
   if (isLoading) {
     return (
@@ -103,10 +118,27 @@ export default function JobDetailPage() {
               </div>
             )}
           </div>
-          <div data-testid="tab-report" hidden={active !== "report"} className="rounded-lg border border-dashed border-slate-300 p-8 text-center text-sm text-slate-400">
-            报告将在此嵌入
+          <div data-testid="tab-report" hidden={active !== "report"} className="space-y-2">
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-medium text-slate-700">合成报告</p>
+              <a
+                data-testid="report-open"
+                href={reportUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-sky-600 hover:underline"
+              >
+                新窗口打开
+              </a>
+            </div>
+            <iframe
+              data-testid="report-iframe"
+              title="synthesis report"
+              src={reportUrl}
+              className="w-full h-[70vh] rounded border bg-white"
+            />
           </div>
-          <div data-testid="tab-files" hidden={active !== "files"}>
+          <div data-testid="tab-files" hidden={active !== "files"} className="space-y-3">
             <Card title="产物指标">
               {result?.metrics ? (
                 <dl className="grid grid-cols-3 gap-4 text-sm">
@@ -126,6 +158,24 @@ export default function JobDetailPage() {
               ) : (
                 <p className="text-sm text-slate-500">产物不完整</p>
               )}
+            </Card>
+            <Card title="产物文件下载">
+              <ul className="divide-y divide-slate-100">
+                {ARTIFACTS.map((f) => (
+                  <li key={f.path} className="flex items-center justify-between py-2">
+                    <a
+                      data-testid={`dl-${f.name}`}
+                      href={fileUrl(f.path)}
+                      download
+                      className="font-mono text-sm text-sky-600 hover:underline"
+                    >
+                      {f.name}
+                    </a>
+                    <span className="text-xs text-slate-500">{f.label}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-2 text-xs text-slate-400">文件不存在时下载会失败。</p>
             </Card>
           </div>
         </div>

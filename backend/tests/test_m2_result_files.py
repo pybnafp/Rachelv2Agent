@@ -83,3 +83,24 @@ def test_files_serves_and_blocks_traversal(client, db, auth_headers_user, tmp_pa
     assert bad.status_code in (404, 400)
     other = client.get(f"/api/jobs/{jid}/files/nope.bin", headers=auth_headers_user)
     assert other.status_code == 404
+
+
+# ── T10: token 双通道（iframe/<a> 无法带 Authorization 头）──
+
+def test_files_token_query_param(client, db, auth_headers_user, tmp_path):
+    jid = client.post("/api/jobs", headers=auth_headers_user, json={"smiles": "CCO"}).json()["id"]
+    ws = tmp_path / jid; ws.mkdir(parents=True, exist_ok=True)
+    (ws / "export").mkdir()
+    (ws / "export" / "SYNTHESIS_REPORT.html").write_text("<html>r</html>", encoding="utf-8")
+    login = client.post("/api/auth/login", json={"username": "usr", "password": "pw2"}).json()
+    tok = login["access_token"]
+    r = client.get(f"/api/jobs/{jid}/files/export/SYNTHESIS_REPORT.html?token={tok}")
+    assert r.status_code == 200 and "text/html" in r.headers["content-type"]
+
+
+def test_files_token_garbage_401(client, db, auth_headers_user, tmp_path):
+    jid = client.post("/api/jobs", headers=auth_headers_user, json={"smiles": "CCO"}).json()["id"]
+    r = client.get(f"/api/jobs/{jid}/files/messages.jsonl?token=garbage")
+    assert r.status_code == 401
+    r2 = client.get(f"/api/jobs/{jid}/files/messages.jsonl")
+    assert r2.status_code == 401

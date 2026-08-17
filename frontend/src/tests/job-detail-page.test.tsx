@@ -84,6 +84,32 @@ describe("JobDetailPage", () => {
     expect(screen.getByText("6")).toBeInTheDocument();
   });
 
+  it("report tab embeds synthesis report iframe with token query", async () => {
+    renderPage(mkJob({}), { job: mkJob({}), metrics: { n_nodes: 1, n_edges: 1, n_terminals: 1 } });
+    await screen.findByTestId("tab-report");
+    await user.click(screen.getByRole("tab", { name: "报告" }));
+    const iframe = screen.getByTestId("report-iframe");
+    expect(iframe).toHaveAttribute("src", "/api/jobs/j1/files/export/SYNTHESIS_REPORT.html?token=t");
+    const open = screen.getByTestId("report-open");
+    expect(open).toHaveAttribute("href", "/api/jobs/j1/files/export/SYNTHESIS_REPORT.html?token=t");
+    expect(open).toHaveAttribute("target", "_blank");
+  });
+
+  it("files tab lists download links with token query", async () => {
+    renderPage(mkJob({}), { job: mkJob({}), metrics: { n_nodes: 1, n_edges: 1, n_terminals: 1 } });
+    await screen.findByTestId("tab-files");
+    await user.click(screen.getByRole("tab", { name: "文件" }));
+    const links = screen.getAllByTestId(/^dl-/);
+    expect(links.length).toBeGreaterThanOrEqual(7);
+    for (const a of links) {
+      expect(a.getAttribute("href")).toContain("?token=t");
+      expect(a).toHaveAttribute("download");
+    }
+    expect(screen.getByTestId("dl-report.txt").getAttribute("href")).toBe(
+      "/api/jobs/j1/files/export/report.txt?token=t"
+    );
+  });
+
   it("failed job shows error block with message", async () => {
     renderPage(mkJob({ status: "failed", error: "llm exploded" }));
     expect(await screen.findByTestId("job-error")).toHaveTextContent("llm exploded");

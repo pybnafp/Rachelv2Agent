@@ -2,9 +2,10 @@ import shutil
 from pathlib import Path
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import FileResponse
+from fastapi.security import HTTPAuthorizationCredentials
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-from app.api.deps import get_current_user, get_db
+from app.api.deps import bearer, get_current_user, get_db
 from app.core.config import get_settings
 from app.db.models import Job, JobStatus, JobStep, User
 from app.schemas.jobs import JobIn, JobOut, JobStepOut, ResultOut
@@ -75,7 +76,23 @@ _CONTENT_TYPES = {".html": "text/html", ".png": "image/png", ".json": "applicati
 
 
 @router.get("/{job_id}/files/{file_path:path}")
-def files(job_id: str, file_path: str, user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+def files(job_id: str, file_path: str, token: str | None = None,
+          cred: HTTPAuthorizationCredentials | None = Depends(bearer),
+          db: Session = Depends(get_db)):
+    # 双通道认证：iframe/<a>/<img> 无法携带 Authorization 头 → 允许 ?token=<jwt> 等价校验（M2-T10 裁定）
+    from app.core.security import decode_token
+    if cred is not None:
+        jwt = cred.credentials
+    elif token:
+        jwt = token
+    else:
+        raise HTTPException(401, "missing token")
+    payload = decode_token(jwt)
+    if not payload:
+        raise HTTPException(401, "invalid token")
+    user = db.get(User, int(payload["sub"]))
+    if not user:
+        raise HTTPException(401, "user not found")
     job = _get_own_job(db, job_id, user)
     root = (get_settings().data_dir / job.id).resolve()
     target = (root / file_path).resolve()
