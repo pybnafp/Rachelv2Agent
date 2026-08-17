@@ -65,6 +65,7 @@ conda run -n rachel-v2 python scripts/smoke_retro.py
 | `DEFAULT_LLM_NAME` | `default_llm_name` | `deepseek` | 默认激活 provider |
 | `MAX_HEAVY_ATOMS` | `max_heavy_atoms` | 80 | 提交护栏 |
 | `MAX_RUNNING_PER_USER` | `max_running_per_user` | 3 | 并发护栏 |
+| `PUBCHEM_OFFLINE` | `pubchem_offline` | false | 无外网的服务器设 `true`：终点审计走离线本地分类，不请求 PubChem；审计产物写入 `export/terminal_audit.json` |
 | `TESTING` | `testing` | false | 测试标记 |
 
 ## 部署基线
