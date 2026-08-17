@@ -1,6 +1,7 @@
 # 密钥与环境
 .env
 .env.*
+!.env.example
 *.pem
 
 # Python

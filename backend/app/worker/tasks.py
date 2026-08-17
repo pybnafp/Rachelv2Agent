@@ -57,7 +57,7 @@ def run_retro_job(self, job_id: str) -> str:
         return result.status
     except Exception as e:
         traceback.print_exc()
-        set_status(db, job_id, "failed", error=str(e))
-        return "failed"
+        set_status(db, job_id, JobStatus.FAILED, error=str(e))
+        return JobStatus.FAILED
     finally:
         db.close()

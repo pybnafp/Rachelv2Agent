@@ -1,3 +1,4 @@
+import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request
@@ -22,14 +23,16 @@ def create_app() -> FastAPI:
                 dbs.init_engine()
                 Base.metadata.create_all(dbs.engine)
             except Exception:
-                pass  # DB unreachable: app still boots; retry via deployed migration/seed
+                logging.warning("DB init failed (app still boots); run migrations/seed later",
+                                exc_info=True)
         try:
             import app.db.session as dbs
             from app.api.admin import seed_default_provider
             with dbs.SessionLocal() as session:
                 seed_default_provider(session)
         except Exception:
-            pass
+            logging.warning("seed_default_provider failed; app continues without seed",
+                            exc_info=True)
         yield
 
     app = FastAPI(title="Rachel-v2 Web Platform", lifespan=lifespan)
