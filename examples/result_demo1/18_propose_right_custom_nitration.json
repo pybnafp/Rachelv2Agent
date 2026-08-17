@@ -1,0 +1,114 @@
+{
+  "action_id": "custom:llm_custom:0",
+  "source": "custom_precursors",
+  "source_label": "custom[llm_custom:0]",
+  "action_label": "right electrophile from simpler dichloromethylpyridine by nitration",
+  "precursors": [
+    "Cc1ccc(Cl)nc1Cl"
+  ],
+  "reaction_type": "regioselective C5 nitration of 2,6-dichloro-3-methylpyridine",
+  "reaction_name": "regioselective C5 nitration of 2,6-dichloro-3-methylpyridine",
+  "why_existing_actions_rejected": "Built-in nitration hard-blocked on skeleton_imbalance; Sandmeyer via mol_3 creates an aminonitro precursor rather than a simpler halopyridine precursor.",
+  "rationale_summary": "This one-step FGI installs the nitro group on the preformed dichloro-methyl pyridine core. The two chlorides, methyl group, and pyridine skeleton are preserved, and the nitro group supplies the activation required for the later SNAr.",
+  "risk_tags": [
+    "regioselective_heteroaryl_nitration",
+    "site_fidelity_check",
+    "harsh_conditions",
+    "route_sketch_derived",
+    "duplicates_existing_candidate"
+  ],
+  "route_sketch_id": "sketch:mol_1:0",
+  "route_strategy_brief": {
+    "id": "sketch:mol_1:0",
+    "macro_strategy": "Disconnect the C5 nitro group by regioselective nitration of 2,6-dichloro-3-methylpyridine. The methyl substituent and pyridine/halogen pattern define the regioisomer; this replaces the previous mol_3 Sandmeyer detour.",
+    "next_executable_step": "propose_action",
+    "problem": "The desired simpler precursor for the right electrophile is the corresponding dichloromethylpyridine, but the built-in nitration action returned skeleton_imbala"
+  },
+  "duplicate_of": "fgi:0",
+  "duplicate_warning": "custom candidate has the same canonical precursor set as an existing candidate",
+  "hint": "Registered only. Use try_action(action_id) to sandbox this custom precursor set.",
+  "prompt_brief": {
+    "stage": "propose_action",
+    "events": [
+      "stage.propose_action",
+      "action.custom_precursors",
+      "strategy.route_sketch_used_for_custom_action",
+      "action.duplicates_existing_action",
+      "strategy.route_plan_active",
+      "strategy.route_plan_revised",
+      "strategy.route_sketch_active",
+      "strategy.route_sketch_requested",
+      "site.fused_heteroaryl_site_sensitive"
+    ],
+    "next_actions": [
+      "try_action(custom_id)"
+    ],
+    "quality_guardrails": [
+      "Chemical plausibility and route quality outrank template score, CS score, and local convenience.",
+      "Each committed step must be one real chemical event with a plausible mechanism and correct site.",
+      "Preserve scaffold topology; explicitly justify any ring construction, opening, or scaffold change.",
+      "Account for key C/N/S/halogen/protecting-group atoms and missing small molecules before commit.",
+      "Install reactive temporary handles late; protection/deprotection must be explicit tree steps.",
+      "Drive toward simple, stable, purchasable precursors when chemistry remains credible; accept honest advanced terminals over speculative low-confidence deep disconnections.",
+      "If system actions miss a sound route, use route_sketch for strategic gaps or propose a complete one-step custom action, then validate and audit it before commit.",
+      "Do not accept a nontrivial advanced terminal until a short target-oriented rescue sketch has asked whether simpler precursors, selectivity, and one executable next step exist."
+    ],
+    "active_experience_card_ids": [
+      "exp_custom_precursor_after_rejection",
+      "exp_route_sketch_for_weak_action_space",
+      "exp_route_plan_revision"
+    ],
+    "experience_prompts": [
+      {
+        "id": "exp_custom_precursor_after_rejection",
+        "one_line": "LLM 自提前体只应在系统动作不满足化学逻辑后使用，并必须继承同一步 sandbox 审计。",
+        "action_prompt": "调用 propose_action 前写清 rejected action ids、拒绝原因、reaction/site、risk tags 和一步反应逻辑。",
+        "avoid": "不要用自提前体绕过 action comparison、try_action 或 commit audit。"
+      },
+      {
+        "id": "exp_route_sketch_for_weak_action_space",
+        "one_line": "系统 action space 弱时，先自由构思目标导向路线，再只把下一步真实化学事件转成 action。",
+        "action_prompt": "写明目标核心、可用手柄、关键断键、被拒 action-space 原因和 next_executable_step；若下一步未列出，再 propose_action -> try_action。",
+        "avoid": "不要把 route sketch 降级为 validation gate，也不要用长程想法一次性跳过 sandbox。"
+      },
+      {
+        "id": "exp_route_plan_revision",
+        "one_line": "发现更优路线或原 plan 与证据冲突时，应短修订 route_plan，而不是静默漂移。",
+        "action_prompt": "用 route_plan(...) 记录 revision_reason、更新 thesis、关键断键和保留结构，再继续标准 action/sandbox loop。",
+        "avoid": "不要把旧 plan 和新选择混在 reasoning 里却不更新状态。"
+      }
+    ],
+    "route_plan_brief": {
+      "id": "plan:ad36b3b7",
+      "revision": 0,
+      "route_thesis": "Keep the convergent late SNAr target disconnection, but do not stop at mol_3 or mol_5 if a chemically credible, simpler halopyridine precursor can be registered and validated. Replace the mol_3 Sandmeyer detour with direct C5 nitration of the right dichloromet",
+      "key_disconnections": [
+        "target C-N bond by activated SNAr",
+        "right nitrochloro electrophile from simpler dichloromethylpyridine by nitration rather than via aminonitro mol_3",
+        "left activated aryl fluoride mol_5 from more common dichloronitropyridine or halopyridine precursor"
+      ],
+      "preferred_precursor_logic": [
+        "preserve pyridine cores",
+        "use nitration only when regioisomer is explicit",
+        "use custom actions only to replace hard-block template artifacts"
+      ],
+      "protect_or_preserve": [
+        "pyridine skeletons",
+        "aryl halides",
+        "nitro/methoxy handles"
+      ],
+      "terminal_rescue_policy": "Before accepting advanced terminal, attempt a short mechanistic rollback to simpler credible precursors.",
+      "last_revision_reason": "terminal continuation requested"
+    },
+    "route_strategy_brief": {
+      "id": "sketch:mol_1:0",
+      "macro_strategy": "Disconnect the C5 nitro group by regioselective nitration of 2,6-dichloro-3-methylpyridine. The methyl substituent and pyridine/halogen pattern define the regioisomer; this replaces the previous mol_3 Sandmeyer detour.",
+      "next_executable_step": "propose_action",
+      "problem": "The desired simpler precursor for the right electrophile is the corresponding dichloromethylpyridine, but the built-in nitration action returned skeleton_imbala"
+    },
+    "self_prompt": [
+      "Write one real chemical event with complete precursor SMILES, reaction name, route_sketch_id, site, and atom accounting.",
+      "State rejected action ids and why the custom precursor is more route-coherent."
+    ]
+  }
+}

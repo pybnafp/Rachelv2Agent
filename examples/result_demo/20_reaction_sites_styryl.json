@@ -1,0 +1,825 @@
+{
+  "primary_disclosure": "site_reaction_map",
+  "site_expand_command": "explore_site(site_id)",
+  "action_count_meaning": "Number of concrete action instances at this site.",
+  "site_reaction_map": [
+    {
+      "site_id": "bond:0",
+      "site_type": "bond",
+      "site_hint": "benzylic_sp3_c-aryl_sp2_c bond",
+      "action_count": 3,
+      "reaction_count": 3,
+      "source_summary": [
+        "bond",
+        "smart_capping"
+      ],
+      "risk_hint": "functional_group_compatibility, heuristic_cap",
+      "reactions": [
+        {
+          "reaction_id": "reaction:negishi_coupling",
+          "reaction_name": "Negishi Coupling",
+          "action_count": 1,
+          "source_summary": [
+            "bond"
+          ],
+          "risk_hint": "functional_group_compatibility"
+        },
+        {
+          "reaction_id": "reaction:kumada_coupling",
+          "reaction_name": "Kumada Coupling",
+          "action_count": 1,
+          "source_summary": [
+            "bond"
+          ],
+          "risk_hint": "functional_group_compatibility"
+        },
+        {
+          "reaction_id": "reaction:benzylic_alkylation_sn2",
+          "reaction_name": "Benzylic alkylation (SN2)",
+          "action_count": 1,
+          "source_summary": [
+            "smart_capping"
+          ],
+          "risk_hint": "heuristic_cap"
+        }
+      ],
+      "next_step": "explore_site('bond:0')",
+      "competition_hint": "same-site competition: 3 reactions"
+    },
+    {
+      "site_id": "bond:4",
+      "site_type": "bond",
+      "site_hint": "aryl_sp2_c-benzylic_sp3_c bond",
+      "action_count": 3,
+      "reaction_count": 3,
+      "source_summary": [
+        "bond",
+        "smart_capping"
+      ],
+      "risk_hint": "functional_group_compatibility, heuristic_cap",
+      "reactions": [
+        {
+          "reaction_id": "reaction:negishi_coupling",
+          "reaction_name": "Negishi Coupling",
+          "action_count": 1,
+          "source_summary": [
+            "bond"
+          ],
+          "risk_hint": "functional_group_compatibility"
+        },
+        {
+          "reaction_id": "reaction:kumada_coupling",
+          "reaction_name": "Kumada Coupling",
+          "action_count": 1,
+          "source_summary": [
+            "bond"
+          ],
+          "risk_hint": "functional_group_compatibility"
+        },
+        {
+          "reaction_id": "reaction:benzylic_alkylation_sn2",
+          "reaction_name": "Benzylic alkylation (SN2)",
+          "action_count": 1,
+          "source_summary": [
+            "smart_capping"
+          ],
+          "risk_hint": "heuristic_cap"
+        }
+      ],
+      "next_step": "explore_site('bond:4')",
+      "competition_hint": "same-site competition: 3 reactions"
+    },
+    {
+      "site_id": "bond:8",
+      "site_type": "bond",
+      "site_hint": "aryl_sp2_c-unclear bond",
+      "action_count": 5,
+      "reaction_count": 5,
+      "source_summary": [
+        "bond",
+        "smart_capping"
+      ],
+      "risk_hint": "functional_group_compatibility, heuristic_cap",
+      "reactions": [
+        {
+          "reaction_id": "reaction:negishi_coupling",
+          "reaction_name": "Negishi Coupling",
+          "action_count": 1,
+          "source_summary": [
+            "bond"
+          ],
+          "risk_hint": "functional_group_compatibility"
+        },
+        {
+          "reaction_id": "reaction:kumada_coupling",
+          "reaction_name": "Kumada Coupling",
+          "action_count": 1,
+          "source_summary": [
+            "bond"
+          ],
+          "risk_hint": "functional_group_compatibility"
+        },
+        {
+          "reaction_id": "reaction:azole_n_alkylation_sn2",
+          "reaction_name": "Azole N Alkylation SN2",
+          "action_count": 1,
+          "source_summary": [
+            "bond"
+          ],
+          "risk_hint": "functional_group_compatibility"
+        },
+        {
+          "reaction_id": "reaction:heck_reaction",
+          "reaction_name": "Heck Reaction",
+          "action_count": 1,
+          "source_summary": [
+            "bond"
+          ],
+          "risk_hint": "functional_group_compatibility"
+        },
+        {
+          "reaction_id": "reaction:benzylic_alkylation_sn2",
+          "reaction_name": "Benzylic alkylation (SN2)",
+          "action_count": 1,
+          "source_summary": [
+            "smart_capping"
+          ],
+          "risk_hint": "heuristic_cap"
+        }
+      ],
+      "next_step": "explore_site('bond:8')",
+      "competition_hint": "same-site competition: 5 reactions"
+    },
+    {
+      "site_id": "bond:10",
+      "site_type": "bond",
+      "site_hint": "unclear-aryl_sp2_c bond",
+      "action_count": 4,
+      "reaction_count": 4,
+      "source_summary": [
+        "bond",
+        "smart_capping"
+      ],
+      "risk_hint": "functional_group_compatibility, heuristic_cap",
+      "reactions": [
+        {
+          "reaction_id": "reaction:negishi_coupling",
+          "reaction_name": "Negishi Coupling",
+          "action_count": 1,
+          "source_summary": [
+            "bond"
+          ],
+          "risk_hint": "functional_group_compatibility"
+        },
+        {
+          "reaction_id": "reaction:kumada_coupling",
+          "reaction_name": "Kumada Coupling",
+          "action_count": 1,
+          "source_summary": [
+            "bond"
+          ],
+          "risk_hint": "functional_group_compatibility"
+        },
+        {
+          "reaction_id": "reaction:heck_reaction",
+          "reaction_name": "Heck Reaction",
+          "action_count": 1,
+          "source_summary": [
+            "bond"
+          ],
+          "risk_hint": "functional_group_compatibility"
+        },
+        {
+          "reaction_id": "reaction:benzylic_alkylation_sn2",
+          "reaction_name": "Benzylic alkylation (SN2)",
+          "action_count": 1,
+          "source_summary": [
+            "smart_capping"
+          ],
+          "risk_hint": "heuristic_cap"
+        }
+      ],
+      "next_step": "explore_site('bond:10')",
+      "competition_hint": "same-site competition: 4 reactions"
+    },
+    {
+      "site_id": "bond:16",
+      "site_type": "bond",
+      "site_hint": "aryl_sp2_c-aryl_amino_n bond",
+      "action_count": 3,
+      "reaction_count": 3,
+      "source_summary": [
+        "bond",
+        "smart_capping"
+      ],
+      "risk_hint": "functional_group_compatibility, heuristic_cap",
+      "reactions": [
+        {
+          "reaction_id": "reaction:ullmann_n_arylation",
+          "reaction_name": "Ullmann N Arylation",
+          "action_count": 1,
+          "source_summary": [
+            "bond"
+          ],
+          "risk_hint": "functional_group_compatibility"
+        },
+        {
+          "reaction_id": "reaction:photoredox_c_n_coupling",
+          "reaction_name": "Photoredox C-N coupling",
+          "action_count": 1,
+          "source_summary": [
+            "bond"
+          ],
+          "risk_hint": "functional_group_compatibility"
+        },
+        {
+          "reaction_id": "reaction:buchwald_hartwig_amination",
+          "reaction_name": "Buchwald-Hartwig amination",
+          "action_count": 1,
+          "source_summary": [
+            "smart_capping"
+          ],
+          "risk_hint": "heuristic_cap"
+        }
+      ],
+      "next_step": "explore_site('bond:16')",
+      "competition_hint": "same-site competition: 3 reactions"
+    },
+    {
+      "site_id": "bond:9",
+      "site_type": "bond",
+      "site_hint": "unclear-unclear bond",
+      "action_count": 4,
+      "reaction_count": 4,
+      "source_summary": [
+        "bond",
+        "smart_capping"
+      ],
+      "risk_hint": "functional_group_compatibility, heuristic_cap",
+      "reactions": [
+        {
+          "reaction_id": "reaction:wittig",
+          "reaction_name": "Wittig",
+          "action_count": 1,
+          "source_summary": [
+            "bond"
+          ],
+          "risk_hint": "functional_group_compatibility"
+        },
+        {
+          "reaction_id": "reaction:julia_olefination",
+          "reaction_name": "Julia Olefination",
+          "action_count": 1,
+          "source_summary": [
+            "bond"
+          ],
+          "risk_hint": "functional_group_compatibility"
+        },
+        {
+          "reaction_id": "reaction:peterson_olefination",
+          "reaction_name": "Peterson Olefination",
+          "action_count": 1,
+          "source_summary": [
+            "bond"
+          ],
+          "risk_hint": "functional_group_compatibility"
+        },
+        {
+          "reaction_id": "reaction:simple_break",
+          "reaction_name": "simple_break",
+          "action_count": 1,
+          "source_summary": [
+            "smart_capping"
+          ],
+          "risk_hint": "heuristic_cap"
+        }
+      ],
+      "next_step": "explore_site('bond:9')",
+      "competition_hint": "same-site competition: 4 reactions"
+    },
+    {
+      "site_id": "bond:6",
+      "site_type": "bond",
+      "site_hint": "heteroaryl_n-heteroaryl_n ring bond",
+      "action_count": 2,
+      "reaction_count": 2,
+      "source_summary": [
+        "bond",
+        "smart_capping"
+      ],
+      "risk_hint": "ring_bond, functional_group_compatibility, heuristic_cap",
+      "reactions": [
+        {
+          "reaction_id": "reaction:1_2_4_triazole_from_amidrazone_acyl_chloride",
+          "reaction_name": "1 2 4 Triazole From Amidrazone Acyl Chloride",
+          "action_count": 1,
+          "source_summary": [
+            "bond"
+          ],
+          "risk_hint": "ring_bond, functional_group_compatibility"
+        },
+        {
+          "reaction_id": "reaction:simple_break",
+          "reaction_name": "simple_break",
+          "action_count": 1,
+          "source_summary": [
+            "smart_capping"
+          ],
+          "risk_hint": "ring_bond, heuristic_cap"
+        }
+      ],
+      "next_step": "explore_site('bond:6')",
+      "competition_hint": "same-site competition: 2 reactions"
+    },
+    {
+      "site_id": "bond:19",
+      "site_type": "bond",
+      "site_hint": "heteroaryl_n-aryl_sp2_c ring bond",
+      "action_count": 2,
+      "reaction_count": 2,
+      "source_summary": [
+        "bond",
+        "smart_capping"
+      ],
+      "risk_hint": "ring_bond, functional_group_compatibility, heuristic_cap",
+      "reactions": [
+        {
+          "reaction_id": "reaction:1_2_4_triazole_from_amidrazone_acyl_chloride",
+          "reaction_name": "1 2 4 Triazole From Amidrazone Acyl Chloride",
+          "action_count": 1,
+          "source_summary": [
+            "bond"
+          ],
+          "risk_hint": "ring_bond, functional_group_compatibility"
+        },
+        {
+          "reaction_id": "reaction:simple_break",
+          "reaction_name": "simple_break",
+          "action_count": 1,
+          "source_summary": [
+            "smart_capping"
+          ],
+          "risk_hint": "ring_bond, heuristic_cap"
+        }
+      ],
+      "next_step": "explore_site('bond:19')",
+      "competition_hint": "same-site competition: 2 reactions"
+    },
+    {
+      "site_id": "bond:21",
+      "site_type": "bond",
+      "site_hint": "heteroaryl_n-aryl_sp2_c ring bond",
+      "action_count": 2,
+      "reaction_count": 2,
+      "source_summary": [
+        "bond",
+        "smart_capping"
+      ],
+      "risk_hint": "ring_bond, functional_group_compatibility, heuristic_cap",
+      "reactions": [
+        {
+          "reaction_id": "reaction:1_2_4_triazole_from_amidrazone_acyl_chloride",
+          "reaction_name": "1 2 4 Triazole From Amidrazone Acyl Chloride",
+          "action_count": 1,
+          "source_summary": [
+            "bond"
+          ],
+          "risk_hint": "ring_bond, functional_group_compatibility"
+        },
+        {
+          "reaction_id": "reaction:simple_break",
+          "reaction_name": "simple_break",
+          "action_count": 1,
+          "source_summary": [
+            "smart_capping"
+          ],
+          "risk_hint": "ring_bond, heuristic_cap"
+        }
+      ],
+      "next_step": "explore_site('bond:21')",
+      "competition_hint": "same-site competition: 2 reactions"
+    },
+    {
+      "site_id": "fgi:0",
+      "site_type": "fgi",
+      "site_hint": "FGI: Chichibabin",
+      "action_count": 1,
+      "reaction_count": 1,
+      "source_summary": [
+        "fgi"
+      ],
+      "risk_hint": "none",
+      "reactions": [
+        {
+          "reaction_id": "reaction:chichibabin",
+          "reaction_name": "Chichibabin",
+          "action_count": 1,
+          "source_summary": [
+            "fgi"
+          ],
+          "risk_hint": "none"
+        }
+      ],
+      "next_step": "explore_site('fgi:0')"
+    },
+    {
+      "site_id": "fgi:1",
+      "site_type": "fgi",
+      "site_hint": "FGI: Nitro Reduction",
+      "action_count": 1,
+      "reaction_count": 1,
+      "source_summary": [
+        "fgi"
+      ],
+      "risk_hint": "none",
+      "reactions": [
+        {
+          "reaction_id": "reaction:nitro_reduction",
+          "reaction_name": "Nitro Reduction",
+          "action_count": 1,
+          "source_summary": [
+            "fgi"
+          ],
+          "risk_hint": "none"
+        }
+      ],
+      "next_step": "explore_site('fgi:1')"
+    },
+    {
+      "site_id": "fgi:2",
+      "site_type": "fgi",
+      "site_hint": "FGI: Alkyne Hydrogenation To Alkene",
+      "action_count": 1,
+      "reaction_count": 1,
+      "source_summary": [
+        "fgi"
+      ],
+      "risk_hint": "none",
+      "reactions": [
+        {
+          "reaction_id": "reaction:alkyne_hydrogenation_to_alkene",
+          "reaction_name": "Alkyne Hydrogenation To Alkene",
+          "action_count": 1,
+          "source_summary": [
+            "fgi"
+          ],
+          "risk_hint": "none"
+        }
+      ],
+      "next_step": "explore_site('fgi:2')"
+    },
+    {
+      "site_id": "fgi:3",
+      "site_type": "fgi",
+      "site_hint": "FGI: Demethylation Bbr3",
+      "action_count": 1,
+      "reaction_count": 1,
+      "source_summary": [
+        "fgi"
+      ],
+      "risk_hint": "none",
+      "reactions": [
+        {
+          "reaction_id": "reaction:demethylation_bbr3",
+          "reaction_name": "Demethylation Bbr3",
+          "action_count": 1,
+          "source_summary": [
+            "fgi"
+          ],
+          "risk_hint": "none"
+        }
+      ],
+      "next_step": "explore_site('fgi:3')"
+    },
+    {
+      "site_id": "fgi:4",
+      "site_type": "fgi",
+      "site_hint": "FGI: E2 Elimination",
+      "action_count": 1,
+      "reaction_count": 1,
+      "source_summary": [
+        "fgi"
+      ],
+      "risk_hint": "none",
+      "reactions": [
+        {
+          "reaction_id": "reaction:e2_elimination",
+          "reaction_name": "E2 Elimination",
+          "action_count": 1,
+          "source_summary": [
+            "fgi"
+          ],
+          "risk_hint": "none"
+        }
+      ],
+      "next_step": "explore_site('fgi:4')"
+    },
+    {
+      "site_id": "fgi:5",
+      "site_type": "fgi",
+      "site_hint": "FGI: Hofmann Rearrangement",
+      "action_count": 1,
+      "reaction_count": 1,
+      "source_summary": [
+        "fgi"
+      ],
+      "risk_hint": "none",
+      "reactions": [
+        {
+          "reaction_id": "reaction:hofmann_rearrangement",
+          "reaction_name": "Hofmann Rearrangement",
+          "action_count": 1,
+          "source_summary": [
+            "fgi"
+          ],
+          "risk_hint": "none"
+        }
+      ],
+      "next_step": "explore_site('fgi:5')"
+    },
+    {
+      "site_id": "fgi:6",
+      "site_type": "fgi",
+      "site_hint": "FGI: Acid Dehydration",
+      "action_count": 1,
+      "reaction_count": 1,
+      "source_summary": [
+        "fgi"
+      ],
+      "risk_hint": "none",
+      "reactions": [
+        {
+          "reaction_id": "reaction:acid_dehydration",
+          "reaction_name": "Acid Dehydration",
+          "action_count": 1,
+          "source_summary": [
+            "fgi"
+          ],
+          "risk_hint": "none"
+        }
+      ],
+      "next_step": "explore_site('fgi:6')"
+    },
+    {
+      "site_id": "fgi:7",
+      "site_type": "fgi",
+      "site_hint": "FGI: Mesylate Elimination",
+      "action_count": 1,
+      "reaction_count": 1,
+      "source_summary": [
+        "fgi"
+      ],
+      "risk_hint": "none",
+      "reactions": [
+        {
+          "reaction_id": "reaction:mesylate_elimination",
+          "reaction_name": "Mesylate Elimination",
+          "action_count": 1,
+          "source_summary": [
+            "fgi"
+          ],
+          "risk_hint": "none"
+        }
+      ],
+      "next_step": "explore_site('fgi:7')"
+    },
+    {
+      "site_id": "fgi:8",
+      "site_type": "fgi",
+      "site_hint": "FGI: Bamford-Stevens",
+      "action_count": 1,
+      "reaction_count": 1,
+      "source_summary": [
+        "fgi"
+      ],
+      "risk_hint": "none",
+      "reactions": [
+        {
+          "reaction_id": "reaction:bamford_stevens",
+          "reaction_name": "Bamford-Stevens",
+          "action_count": 1,
+          "source_summary": [
+            "fgi"
+          ],
+          "risk_hint": "none"
+        }
+      ],
+      "next_step": "explore_site('fgi:8')"
+    },
+    {
+      "site_id": "fgi:9",
+      "site_type": "fgi",
+      "site_hint": "FGI: Boc Deprotect TFA",
+      "action_count": 1,
+      "reaction_count": 1,
+      "source_summary": [
+        "fgi"
+      ],
+      "risk_hint": "none",
+      "reactions": [
+        {
+          "reaction_id": "reaction:boc_deprotect_tfa",
+          "reaction_name": "Boc Deprotect TFA",
+          "action_count": 1,
+          "source_summary": [
+            "fgi"
+          ],
+          "risk_hint": "none"
+        }
+      ],
+      "next_step": "explore_site('fgi:9')"
+    },
+    {
+      "site_id": "fgi:10",
+      "site_type": "fgi",
+      "site_hint": "FGI: Fmoc deprotection",
+      "action_count": 1,
+      "reaction_count": 1,
+      "source_summary": [
+        "fgi"
+      ],
+      "risk_hint": "none",
+      "reactions": [
+        {
+          "reaction_id": "reaction:fmoc_deprotection",
+          "reaction_name": "Fmoc deprotection",
+          "action_count": 1,
+          "source_summary": [
+            "fgi"
+          ],
+          "risk_hint": "none"
+        }
+      ],
+      "next_step": "explore_site('fgi:10')"
+    },
+    {
+      "site_id": "fgi:11",
+      "site_type": "fgi",
+      "site_hint": "FGI: Cbz deprotection",
+      "action_count": 1,
+      "reaction_count": 1,
+      "source_summary": [
+        "fgi"
+      ],
+      "risk_hint": "none",
+      "reactions": [
+        {
+          "reaction_id": "reaction:cbz_deprotection",
+          "reaction_name": "Cbz deprotection",
+          "action_count": 1,
+          "source_summary": [
+            "fgi"
+          ],
+          "risk_hint": "none"
+        }
+      ],
+      "next_step": "explore_site('fgi:11')"
+    },
+    {
+      "site_id": "fgi:12",
+      "site_type": "fgi",
+      "site_hint": "FGI: Alloc deprotection",
+      "action_count": 1,
+      "reaction_count": 1,
+      "source_summary": [
+        "fgi"
+      ],
+      "risk_hint": "none",
+      "reactions": [
+        {
+          "reaction_id": "reaction:alloc_deprotection",
+          "reaction_name": "Alloc deprotection",
+          "action_count": 1,
+          "source_summary": [
+            "fgi"
+          ],
+          "risk_hint": "none"
+        }
+      ],
+      "next_step": "explore_site('fgi:12')"
+    },
+    {
+      "site_id": "fgi:13",
+      "site_type": "fgi",
+      "site_hint": "FGI: Troc deprotection",
+      "action_count": 1,
+      "reaction_count": 1,
+      "source_summary": [
+        "fgi"
+      ],
+      "risk_hint": "none",
+      "reactions": [
+        {
+          "reaction_id": "reaction:troc_deprotection",
+          "reaction_name": "Troc deprotection",
+          "action_count": 1,
+          "source_summary": [
+            "fgi"
+          ],
+          "risk_hint": "none"
+        }
+      ],
+      "next_step": "explore_site('fgi:13')"
+    }
+  ],
+  "site_count": 23,
+  "total_reaction_count": 42,
+  "next_step": "explore_site(site_id)",
+  "hint": "Choose a site_id, then call explore_site(site_id).",
+  "prompt_brief": {
+    "stage": "reaction_sites",
+    "events": [
+      "stage.reaction_sites",
+      "site.same_site_competition",
+      "strategy.route_plan_active",
+      "strategy.route_mode_triage",
+      "strategy.route_plan_revision_requested",
+      "site.fused_heteroaryl_site_sensitive"
+    ],
+    "next_actions": [
+      "explore_site(site_id)"
+    ],
+    "quality_guardrails": [
+      "Chemical plausibility and route quality outrank template score, CS score, and local convenience.",
+      "Each committed step must be one real chemical event with a plausible mechanism and correct site.",
+      "Preserve scaffold topology; explicitly justify any ring construction, opening, or scaffold change.",
+      "At route-plan initialization, record the likely route paradigm, evidence, strategic risks, and revision triggers.",
+      "Do not mistake local action-space for the full retrosynthesis space; if listed actions only express local FGI while core construction is unresolved, revise route_plan or use route_sketch.",
+      "If terminal review exposes a hidden core-construction problem, revise route_plan before accepting or committing.",
+      "Account for key C/N/S/halogen/protecting-group atoms and missing small molecules before commit.",
+      "Install reactive temporary handles late; protection/deprotection must be explicit tree steps.",
+      "Drive toward simple, stable, purchasable precursors when chemistry remains credible; accept honest advanced terminals over speculative low-confidence deep disconnections.",
+      "If system actions miss a sound route, use route_sketch for strategic gaps or propose a complete one-step custom action, then validate and audit it before commit.",
+      "Do not accept a nontrivial advanced terminal until a short target-oriented rescue sketch has asked whether simpler precursors, selectivity, and one executable next step exist.",
+      "If rescue continuation is active, resolve that forced precursor review before accepting the molecule or finalizing the route."
+    ],
+    "active_experience_card_ids": [
+      "exp_route_mode_triage_before_first_plan",
+      "exp_electron_poor_pyridine_electronic_state_strategy",
+      "exp_route_plan_revision",
+      "exp_global_route_plan_persistence"
+    ],
+    "experience_prompts": [
+      {
+        "id": "exp_route_mode_triage_before_first_plan",
+        "one_line": "Before the first complex-target plan, classify the route hypothesis instead of jumping directly to a local disconnection.",
+        "action_prompt": "Compare late FGI/editing, scaffold assembly, electronic-state strategy, and hybrid routes; write the current choice plus evidence, risks, and revision triggers into route_plan.",
+        "avoid": "Do not treat the listed local action-space as the complete retrosynthesis space, and do not let a route-mode decision remain only in hidden reasoning."
+      },
+      {
+        "id": "exp_electron_poor_pyridine_electronic_state_strategy",
+        "one_line": "Highly substituted electron-poor pyridines should not automatically be treated as preserved mature cores for late EAS/halogenation.",
+        "action_prompt": "Compare late FGI with scaffold assembly or an electronic-state strategy. If the final aromatic pyridine is too deactivated for selective editing, consider pyridone/lactam, dihydropyridine, or related non-final electronic states before aromatization/chlorination, and record the choice in route_plan.",
+        "avoid": "Do not accept an advanced halogenated or nitrated pyridine terminal as route closure unless it explains how the difficult core is actually constructed."
+      },
+      {
+        "id": "exp_route_plan_revision",
+        "one_line": "发现更优路线或原 plan 与证据冲突时，应短修订 route_plan，而不是静默漂移。",
+        "action_prompt": "用 route_plan(...) 记录 revision_reason、更新 thesis、关键断键和保留结构，再继续标准 action/sandbox loop。",
+        "avoid": "不要把旧 plan 和新选择混在 reasoning 里却不更新状态。"
+      },
+      {
+        "id": "exp_global_route_plan_persistence",
+        "one_line": "长期 route_plan 是全路线 thesis；每一步要检查当前 action 是否支持它。",
+        "action_prompt": "读取 route_plan_brief，优先保持核心、手柄和终端救援逻辑一致；局部选择偏离时先说明原因。",
+        "avoid": "不要只按当前模板贪心选择而忘记全局路线目标。"
+      }
+    ],
+    "route_plan_brief": {
+      "id": "plan:deea6efc",
+      "revision": 0,
+      "route_thesis": "Use a hybrid route: preserve the mature fused triazolopyrimidine-like core and the aminopyridinol side fragment as late-stage heteroaryl building blocks; disconnect the benzylic/ethyl linker and N-aryl aminoalcohol handle before considering deeper core assembl",
+      "route_mode": "hybrid",
+      "key_disconnections": [
+        "Csp3-Csp2 or Csp3-heteroaryl bond at the ethyl linker connecting the fused core to the pyridinol fragment.",
+        "C-N bond between pyridinol ring nitrogen substituent and the 1-methyl-3-hydroxypropyl fragment or its protected electrop"
+      ],
+      "preferred_precursor_logic": [
+        "Prefer halomethyl/vinyl/aldehyde-type heteroaryl handles for linker assembly only if forward chemistry is credible.",
+        "Prefer commercially plausible protected aminopyridinol or aminoalcohol fragments over unprotected high-functionality intermediates."
+      ],
+      "protect_or_preserve": [
+        "Preserve fused heteroaryl core unless a well-defined annulation is proposed.",
+        "Preserve phenol or protect it explicitly before alkylation/acylation conditions."
+      ],
+      "mode_evidence": [
+        "The target contains two heteroaromatic systems plus a flexible ethyl linker and a secondary aminoalcohol handle; preserving heteroaryl cores",
+        "Late FGI/editing can address phenol and aminoalcohol compatibility, while scaffold assembly remains available if the fused bicyclic core is"
+      ],
+      "strategic_risks": [
+        "Action-space may over-disconnect stable heteroaryl cores without a credible forward construction.",
+        "Phenol and secondary amine/alcohol handles may require explicit protection if used before C-C/N-C bond formation."
+      ],
+      "revision_triggers": [
+        "A selected precursor still hides the same hard heteroaryl-core construction problem as an advanced terminal.",
+        "Sandbox validation shows the linker disconnection or N-alkylation logic is route-incoherent."
+      ],
+      "terminal_rescue_policy": "Before accepting advanced terminal, attempt a short mechanistic rollback to simpler credible precursors.",
+      "last_revision_reason": "initial"
+    },
+    "self_prompt": [
+      "Choose a real reaction site, not a reaction name in isolation.",
+      "Prioritize convergence, site fidelity, handle timing, and functional-group compatibility."
+    ]
+  }
+}

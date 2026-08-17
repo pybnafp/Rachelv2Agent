@@ -1,0 +1,14 @@
+{
+  "target": "Cc1ncc(C)n2nc(CCc3ccc(O)c(NC(C)CCO)n3)nc12",
+  "status": "in_progress",
+  "steps_executed": 11,
+  "pending_count": 0,
+  "total_molecules": 17,
+  "total_steps": 11,
+  "max_depth": 9,
+  "elapsed_sec": 0.0,
+  "tree_complete": true,
+  "active_rescue_continuations": [],
+  "blocked_rescue_count": 0,
+  "total_rescue_continuations": 0
+}

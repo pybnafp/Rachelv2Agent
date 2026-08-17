@@ -1,0 +1,218 @@
+{
+  "status": {
+    "target": "COc1ncc(Cl)cc1Nc1nc(Cl)c(C)cc1[N+](=O)[O-]",
+    "status": "in_progress",
+    "steps_executed": 0,
+    "pending_count": 0,
+    "total_molecules": 1,
+    "total_steps": 0,
+    "max_depth": 0,
+    "elapsed_sec": 0.2,
+    "tree_complete": false
+  },
+  "current": {
+    "action": "awaiting_decision",
+    "decision_tier": "standard",
+    "smiles": "COc1ncc(Cl)cc1Nc1nc(Cl)c(C)cc1[N+](=O)[O-]",
+    "node_id": "mol_0",
+    "depth": 0,
+    "cs_score": 3.5471,
+    "classification": "moderate",
+    "is_terminal": false,
+    "is_target": true,
+    "depth_limited": false,
+    "steps_executed": 0,
+    "steps_remaining": 80,
+    "molecule_brief": {
+      "formula": "C12H10Cl2N4O3",
+      "mw": 329.14,
+      "heavy_atoms": 21,
+      "rings": 2,
+      "aromatic_rings": 2,
+      "stereocenters": 0,
+      "rotatable_bonds": 4
+    },
+    "functional_group_brief": [
+      {
+        "name": "aryl_ether",
+        "count": 1
+      },
+      {
+        "name": "methoxy",
+        "count": 1
+      },
+      {
+        "name": "secondary_aromatic_amine",
+        "count": 1
+      },
+      {
+        "name": "nitro",
+        "count": 1
+      },
+      {
+        "name": "pyridine_N",
+        "count": 2
+      },
+      {
+        "name": "chloride",
+        "count": 2
+      },
+      {
+        "name": "aryl_chloride",
+        "count": 2
+      },
+      {
+        "name": "aromatic_6",
+        "count": 2
+      },
+      {
+        "name": "pyridine",
+        "count": 2
+      }
+    ],
+    "complexity_brief": {
+      "cs_score": 3.5471,
+      "classification": "moderate",
+      "is_terminal": false
+    },
+    "n_bonds": 4,
+    "n_fgi": 7,
+    "warnings": [],
+    "primary_disclosure": "reaction_opportunity_brief",
+    "reaction_opportunity_brief": {
+      "site_count": 11,
+      "total_reaction_count": 24,
+      "action_count": 24,
+      "competing_site_count": 4,
+      "high_competition_sites": [
+        {
+          "site_id": "bond:8",
+          "site_hint": "aryl_sp2_c-aryl_amino_n bond",
+          "reaction_count": 5,
+          "action_count": 5,
+          "reaction_names": [
+            "Chan Lam",
+            "Ullmann N Arylation",
+            "Photoredox C-N coupling",
+            "SNAr N-Nucleophile",
+            "Buchwald-Hartwig amination"
+          ],
+          "risk_hint": "functional_group_compatibility, heuristic_cap",
+          "next_step": "explore_site('bond:8')"
+        },
+        {
+          "site_id": "bond:9",
+          "site_hint": "aryl_amino_n-aryl_sp2_c bond",
+          "reaction_count": 4,
+          "action_count": 4,
+          "reaction_names": [
+            "SNAr Amine",
+            "Ullmann N Arylation",
+            "Photoredox C-N coupling",
+            "Buchwald-Hartwig amination"
+          ],
+          "risk_hint": "functional_group_compatibility, heuristic_cap",
+          "next_step": "explore_site('bond:9')"
+        },
+        {
+          "site_id": "bond:14",
+          "site_hint": "aryl_sp2_c-benzylic_sp3_c bond",
+          "reaction_count": 4,
+          "action_count": 4,
+          "reaction_names": [
+            "Minisci Alkylation",
+            "Negishi Coupling",
+            "Kumada Coupling",
+            "Benzylic alkylation (SN2)"
+          ],
+          "risk_hint": "functional_group_compatibility, heuristic_cap",
+          "next_step": "explore_site('bond:14')"
+        }
+      ],
+      "reaction_names": [
+        "SNAr Amine",
+        "Ullmann N Arylation",
+        "Photoredox C-N coupling",
+        "Buchwald-Hartwig amination",
+        "Minisci Alkylation",
+        "Negishi Coupling",
+        "Kumada Coupling",
+        "Benzylic alkylation (SN2)",
+        "Chan Lam",
+        "SNAr N-Nucleophile",
+        "Ullmann O Arylation",
+        "Chan Lam O Arylation",
+        "SNAr O-Nucleophile",
+        "SNAr / Ullmann etherification",
+        "Nitration",
+        "Sandmeyer",
+        "Boc Deprotect TFA",
+        "Fmoc deprotection",
+        "Cbz deprotection",
+        "Alloc deprotection",
+        "Troc deprotection"
+      ],
+      "first_layer_command": "reaction_sites()"
+    },
+    "commands": {
+      "first_layer": "reaction_sites()",
+      "second_layer": "explore_site(site_id)",
+      "sandbox": "try_action(action_id)",
+      "custom_action": "propose_action(...)",
+      "terminal": "accept_terminal(reason=...)"
+    },
+    "hint": "Use reaction_opportunity_brief for molecule-level triage; call reaction_sites() for the full first-layer site menu, then explore_site(site_id) and try_action(action_id).",
+    "prompt_brief": {
+      "stage": "context_compact",
+      "events": [
+        "stage.context_compact"
+      ],
+      "next_actions": [
+        "reaction_sites()"
+      ],
+      "quality_guardrails": [
+        "Chemical plausibility and route quality outrank template score, CS score, and local convenience.",
+        "Each committed step must be one real chemical event with a plausible mechanism and correct site.",
+        "Preserve scaffold topology; explicitly justify any ring construction, opening, or scaffold change.",
+        "Account for key C/N/S/halogen/protecting-group atoms and missing small molecules before commit.",
+        "Install reactive temporary handles late; protection/deprotection must be explicit tree steps.",
+        "Drive toward simple, stable, purchasable precursors when chemistry remains credible; accept honest advanced terminals over speculative low-confidence deep disconnections.",
+        "If system actions miss a sound route, use route_sketch for strategic gaps or propose a complete one-step custom action, then validate and audit it before commit.",
+        "Do not accept a nontrivial advanced terminal until a short target-oriented rescue sketch has asked whether simpler precursors, selectivity, and one executable next step exist."
+      ],
+      "active_experience_card_ids": [
+        "exp_advanced_terminal_short_route_rescue",
+        "exp_snar_electron_poor_heteroaryl",
+        "exp_topology_first"
+      ],
+      "experience_prompts": [
+        {
+          "id": "exp_advanced_terminal_short_route_rescue",
+          "one_line": "接受高级 terminal 前，先反问：这个小目标能否由更简单前体经 1-2 步机理选择性路线到达？",
+          "action_prompt": "寻找更简单前体、官能团回退、氧化态调整、保护/脱保护或区域/化学选择性来源；actionable rescue 必须有完整 precursor SMILES、一个真实化学事件和选择性来源。route_sketch(..., terminal_review=True) 后，把一个可信下一步走 propose_action -> try_action，或用 no-actionable 理由显式例外。",
+          "avoid": "不要只写 reaction family name（如 annulation/SNAr/oxidation）；也不要在 terminal_review sketch 后未经 custom sandbox attempt 就普通 accept。"
+        },
+        {
+          "id": "exp_snar_electron_poor_heteroaryl",
+          "one_line": "电子贫化杂芳氟与合适 N-亲核体匹配时，SNAr 可优先于金属 C-N 偶联。",
+          "action_prompt": "检查离去基、邻/对位活化、N-亲核体位阻和竞争亲核位点。",
+          "avoid": "不要在 SNAr 明显匹配时机械转向 Buchwald、Ullmann 或 Chan-Lam。"
+        },
+        {
+          "id": "exp_topology_first",
+          "one_line": "先确认环大小、并环方式和骨架原子数，再讨论反应类别。",
+          "action_prompt": "在 commit 前说明 preserved scaffold、changed site，以及是否无端增减环原子。",
+          "avoid": "不要因为模板命中就跳过拓扑审计。"
+        }
+      ],
+      "self_prompt": [
+        "Form a molecule-level route hypothesis before choosing a site.",
+        "Prefer real convergent handles and preserve mature scaffolds unless deep construction is justified."
+      ]
+    },
+    "audit_state_summary": {
+      "linear_steps": 0,
+      "linear_target": 15
+    }
+  }
+}

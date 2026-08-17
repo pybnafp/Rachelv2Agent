@@ -1,0 +1,11 @@
+{
+  "ok": true,
+  "action": "accepted_terminal",
+  "terminal_rescue": {
+    "route_sketch_id": "sketch:mol_16:0",
+    "terminal_review": true,
+    "rescue_attempt_count": 0,
+    "force_accept_without_rescue": true,
+    "rescue_not_actionable_reason": "No credible parseable one-step rescue for the fused core was available; deeper construction would be speculative with the current action-space."
+  }
+}

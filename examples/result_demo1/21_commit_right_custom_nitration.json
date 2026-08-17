@@ -1,0 +1,40 @@
+{
+  "error": "validation gate hard-blocked commit",
+  "gate_failed": true,
+  "gate_reason": "validation_hard_block",
+  "validation_gate": {
+    "gate_state": "hard_block",
+    "commit_policy": "block",
+    "hard_blocks": [
+      {
+        "code": "skeleton_imbalance",
+        "source": "atom_balance",
+        "message": "product has more skeleton atoms (C/N/S) than the precursor set",
+        "evidence": {
+          "note": "adjusted excess: N=1, O=2; adjusted deficit: H=1; product has more skeleton atoms (C/N/S) than precursors"
+        }
+      }
+    ],
+    "soft_warnings": [],
+    "override_allowed": [],
+    "missing_evidence": [
+      {
+        "code": "template_not_attempted",
+        "source": "template_execution",
+        "message": "no executable forward template was available; this is missing evidence, not a hard block",
+        "evidence": {
+          "template_id": "",
+          "tanimoto_to_target": 0.3438
+        }
+      }
+    ],
+    "llm_override_allowed": false,
+    "recommended_action": "Choose another candidate or fix the precursor set; do not override this validation hard block.",
+    "score": 0.536,
+    "legacy_pass": false,
+    "legacy_hard_fail_reasons": [
+      "skeleton_imbalance"
+    ]
+  },
+  "validation_override": {}
+}

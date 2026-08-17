@@ -1,0 +1,22 @@
+{
+  "output_dir": "E:\\Python\\skills\\Rachel-v2\\walkthrough_runs\\20260706_n1_6397_extended_rescue\\export",
+  "relative_dir": "walkthrough_runs\\20260706_n1_6397_extended_rescue\\export",
+  "files": [
+    "E:\\Python\\skills\\Rachel-v2\\walkthrough_runs\\20260706_n1_6397_extended_rescue\\export\\SYNTHESIS_REPORT.md",
+    "E:\\Python\\skills\\Rachel-v2\\walkthrough_runs\\20260706_n1_6397_extended_rescue\\export\\SYNTHESIS_REPORT.html",
+    "E:\\Python\\skills\\Rachel-v2\\walkthrough_runs\\20260706_n1_6397_extended_rescue\\export\\images\\synthesis_tree.png",
+    "E:\\Python\\skills\\Rachel-v2\\walkthrough_runs\\20260706_n1_6397_extended_rescue\\export\\report.txt",
+    "E:\\Python\\skills\\Rachel-v2\\walkthrough_runs\\20260706_n1_6397_extended_rescue\\export\\tree.json",
+    "E:\\Python\\skills\\Rachel-v2\\walkthrough_runs\\20260706_n1_6397_extended_rescue\\export\\tree.txt",
+    "E:\\Python\\skills\\Rachel-v2\\walkthrough_runs\\20260706_n1_6397_extended_rescue\\export\\terminals.json",
+    "E:\\Python\\skills\\Rachel-v2\\walkthrough_runs\\20260706_n1_6397_extended_rescue\\export\\visualization.json",
+    "E:\\Python\\skills\\Rachel-v2\\walkthrough_runs\\20260706_n1_6397_extended_rescue\\export\\session.json"
+  ],
+  "n_files": 9,
+  "n_images": 18,
+  "html_report": "E:\\Python\\skills\\Rachel-v2\\walkthrough_runs\\20260706_n1_6397_extended_rescue\\export\\SYNTHESIS_REPORT.html",
+  "md_report": "E:\\Python\\skills\\Rachel-v2\\walkthrough_runs\\20260706_n1_6397_extended_rescue\\export\\SYNTHESIS_REPORT.md",
+  "visualization_ok": true,
+  "visualization_error": null,
+  "summary": "n1_6397_extended_rescue: 6 步, 5 种起始原料, 可视化=✓ (11 分子图 + 6 反应图), 输出到 walkthrough_runs\\20260706_n1_6397_extended_rescue\\export"
+}

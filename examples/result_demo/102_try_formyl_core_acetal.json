@@ -1,0 +1,189 @@
+{
+  "success": true,
+  "precursors": [
+    "COC(OC)c1nc2c(C)ncc(C)n2n1"
+  ],
+  "precursor_details": [
+    {
+      "smiles": "COC(OC)c1nc2c(C)ncc(C)n2n1",
+      "cs_score": 3.5464,
+      "classification": "moderate",
+      "is_terminal": false,
+      "heavy_atoms": 16
+    }
+  ],
+  "forward_validation": {
+    "ok": true,
+    "pass": true,
+    "feasibility_score": 0.9534,
+    "hard_fail_reasons": null,
+    "gate": {
+      "gate_state": "warning",
+      "commit_policy": "allow_with_warning",
+      "hard_blocks": [],
+      "soft_warnings": [
+        {
+          "code": "atom_balance_unresolved",
+          "source": "atom_balance",
+          "message": "atom balance has unexplained remainder, but not a hard skeleton/severe block",
+          "evidence": {
+            "note": "adjusted deficit: C=2"
+          }
+        }
+      ],
+      "override_allowed": [],
+      "missing_evidence": [],
+      "llm_override_allowed": false,
+      "recommended_action": "Commit may proceed only after addressing the warnings in reasoning.",
+      "score": 0.9534,
+      "legacy_pass": true,
+      "legacy_hard_fail_reasons": null
+    }
+  },
+  "validation_micro": {
+    "template_attempted": true,
+    "template_match": 1.0,
+    "scaffold_alignment": 0.923
+  },
+  "reaction_type": "fgi",
+  "template_id": "B33_dimethyl_acetal_deprotect_retro",
+  "template_name": "Dimethyl Acetal Deprotect (Retro, protection)",
+  "hint": "这是沙盒结果，未写入树。满意请调 commit_decision()。",
+  "attempt_idx": 2,
+  "source": "fgi[4]",
+  "action_id": "fgi:4",
+  "action_summary": {
+    "source": "fgi",
+    "source_label": "fgi[4]",
+    "action_label": "",
+    "reaction_id": "",
+    "reaction_type": "Dimethyl Acetal Deprotect",
+    "template_id": "B33_dimethyl_acetal_deprotect_retro",
+    "template_name": "Dimethyl Acetal Deprotect (Retro, protection)",
+    "precursors_preview": [
+      "COC(OC)c1nc2c(C)ncc(C)n2n1"
+    ],
+    "execution": {
+      "mode": "fgi_template",
+      "template_id": "B33_dimethyl_acetal_deprotect_retro",
+      "expected_precursors": [
+        "COC(OC)c1nc2c(C)ncc(C)n2n1"
+      ]
+    },
+    "why_existing_actions_rejected": "",
+    "rationale_summary": "",
+    "duplicate_of": "",
+    "route_sketch_id": "",
+    "route_strategy_brief": {},
+    "rescue_id": "",
+    "rescue_step_idx": null,
+    "continuation_precursor": "",
+    "bond_idx": null,
+    "alt_idx": null,
+    "fgi_idx": 4,
+    "smart_idx": null,
+    "actual_bond_idx": null,
+    "atoms": [],
+    "risk_tags": []
+  },
+  "prompt_brief": {
+    "stage": "try_action",
+    "events": [
+      "stage.try_action",
+      "action.system_template",
+      "sandbox.success",
+      "validation.pass",
+      "validation.warning",
+      "strategy.route_plan_active",
+      "strategy.route_mode_triage",
+      "strategy.route_plan_revision_requested",
+      "site.fused_heteroaryl_site_sensitive"
+    ],
+    "next_actions": [
+      "sandbox_list",
+      "try_action(action_id) for another same-site competitor"
+    ],
+    "quality_guardrails": [
+      "Chemical plausibility and route quality outrank template score, CS score, and local convenience.",
+      "Each committed step must be one real chemical event with a plausible mechanism and correct site.",
+      "Preserve scaffold topology; explicitly justify any ring construction, opening, or scaffold change.",
+      "At route-plan initialization, record the likely route paradigm, evidence, strategic risks, and revision triggers.",
+      "Do not mistake local action-space for the full retrosynthesis space; if listed actions only express local FGI while core construction is unresolved, revise route_plan or use route_sketch.",
+      "If terminal review exposes a hidden core-construction problem, revise route_plan before accepting or committing.",
+      "Account for key C/N/S/halogen/protecting-group atoms and missing small molecules before commit.",
+      "Install reactive temporary handles late; protection/deprotection must be explicit tree steps.",
+      "Drive toward simple, stable, purchasable precursors when chemistry remains credible; accept honest advanced terminals over speculative low-confidence deep disconnections.",
+      "If system actions miss a sound route, use route_sketch for strategic gaps or propose a complete one-step custom action, then validate and audit it before commit.",
+      "Do not accept a nontrivial advanced terminal until a short target-oriented rescue sketch has asked whether simpler precursors, selectivity, and one executable next step exist.",
+      "If rescue continuation is active, resolve that forced precursor review before accepting the molecule or finalizing the route."
+    ],
+    "active_experience_card_ids": [
+      "exp_electron_poor_pyridine_electronic_state_strategy",
+      "exp_route_mode_triage_before_first_plan",
+      "exp_route_plan_revision",
+      "exp_template_pass_not_enough"
+    ],
+    "experience_prompts": [
+      {
+        "id": "exp_electron_poor_pyridine_electronic_state_strategy",
+        "one_line": "Highly substituted electron-poor pyridines should not automatically be treated as preserved mature cores for late EAS/halogenation.",
+        "action_prompt": "Compare late FGI with scaffold assembly or an electronic-state strategy. If the final aromatic pyridine is too deactivated for selective editing, consider pyridone/lactam, dihydropyridine, or related non-final electronic states before aromatization/chlorination, and record the choice in route_plan.",
+        "avoid": "Do not accept an advanced halogenated or nitrated pyridine terminal as route closure unless it explains how the difficult core is actually constructed."
+      },
+      {
+        "id": "exp_route_mode_triage_before_first_plan",
+        "one_line": "Before the first complex-target plan, classify the route hypothesis instead of jumping directly to a local disconnection.",
+        "action_prompt": "Compare late FGI/editing, scaffold assembly, electronic-state strategy, and hybrid routes; write the current choice plus evidence, risks, and revision triggers into route_plan.",
+        "avoid": "Do not treat the listed local action-space as the complete retrosynthesis space, and do not let a route-mode decision remain only in hidden reasoning."
+      },
+      {
+        "id": "exp_route_plan_revision",
+        "one_line": "发现更优路线或原 plan 与证据冲突时，应短修订 route_plan，而不是静默漂移。",
+        "action_prompt": "用 route_plan(...) 记录 revision_reason、更新 thesis、关键断键和保留结构，再继续标准 action/sandbox loop。",
+        "avoid": "不要把旧 plan 和新选择混在 reasoning 里却不更新状态。"
+      },
+      {
+        "id": "exp_template_pass_not_enough",
+        "one_line": "pass=true 只说明系统没有拦截，不证明机理、碳账、位点和时序合理。",
+        "action_prompt": "在 commit 前补充机理、拓扑、碳源、手柄时序和主要替代方案审计。",
+        "avoid": "不要把 template_match 或 confidence 当成 commit 理由。"
+      }
+    ],
+    "route_plan_brief": {
+      "id": "plan:deea6efc",
+      "revision": 0,
+      "route_thesis": "Use a hybrid route: preserve the mature fused triazolopyrimidine-like core and the aminopyridinol side fragment as late-stage heteroaryl building blocks; disconnect the benzylic/ethyl linker and N-aryl aminoalcohol handle before considering deeper core assembl",
+      "route_mode": "hybrid",
+      "key_disconnections": [
+        "Csp3-Csp2 or Csp3-heteroaryl bond at the ethyl linker connecting the fused core to the pyridinol fragment.",
+        "C-N bond between pyridinol ring nitrogen substituent and the 1-methyl-3-hydroxypropyl fragment or its protected electrop"
+      ],
+      "preferred_precursor_logic": [
+        "Prefer halomethyl/vinyl/aldehyde-type heteroaryl handles for linker assembly only if forward chemistry is credible.",
+        "Prefer commercially plausible protected aminopyridinol or aminoalcohol fragments over unprotected high-functionality intermediates."
+      ],
+      "protect_or_preserve": [
+        "Preserve fused heteroaryl core unless a well-defined annulation is proposed.",
+        "Preserve phenol or protect it explicitly before alkylation/acylation conditions."
+      ],
+      "mode_evidence": [
+        "The target contains two heteroaromatic systems plus a flexible ethyl linker and a secondary aminoalcohol handle; preserving heteroaryl cores",
+        "Late FGI/editing can address phenol and aminoalcohol compatibility, while scaffold assembly remains available if the fused bicyclic core is"
+      ],
+      "strategic_risks": [
+        "Action-space may over-disconnect stable heteroaryl cores without a credible forward construction.",
+        "Phenol and secondary amine/alcohol handles may require explicit protection if used before C-C/N-C bond formation."
+      ],
+      "revision_triggers": [
+        "A selected precursor still hides the same hard heteroaryl-core construction problem as an advanced terminal.",
+        "Sandbox validation shows the linker disconnection or N-alkylation logic is route-incoherent."
+      ],
+      "terminal_rescue_policy": "Before accepting advanced terminal, attempt a short mechanistic rollback to simpler credible precursors.",
+      "last_revision_reason": "initial"
+    },
+    "self_prompt": [
+      "Treat sandbox success as evidence only; inspect forward validation, atom accounting, and site fidelity.",
+      "Reject attempts that rely only on a reaction family name, hidden steps, missing selectivity, or incomplete atom accounting."
+    ]
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "primary_disclosure": "site_reaction_map",
+  "site_expand_command": "explore_site(site_id)",
+  "action_count_meaning": "Number of concrete action instances at this site.",
+  "site_reaction_map": [
+    {
+      "site_id": "bond:1",
+      "site_type": "bond",
+      "site_hint": "unclear-aryl_sp2_c bond",
+      "action_count": 4,
+      "reaction_count": 4,
+      "source_summary": [
+        "bond",
+        "smart_capping"
+      ],
+      "risk_hint": "functional_group_compatibility, heuristic_cap",
+      "reactions": [
+        {
+          "reaction_id": "reaction:ullmann_o_arylation",
+          "reaction_name": "Ullmann O Arylation",
+          "action_count": 1,
+          "source_summary": [
+            "bond"
+          ],
+          "risk_hint": "functional_group_compatibility"
+        },
+        {
+          "reaction_id": "reaction:chan_lam_o_arylation",
+          "reaction_name": "Chan Lam O Arylation",
+          "action_count": 1,
+          "source_summary": [
+            "bond"
+          ],
+          "risk_hint": "functional_group_compatibility"
+        },
+        {
+          "reaction_id": "reaction:snar_o_nucleophile",
+          "reaction_name": "SNAr O-Nucleophile",
+          "action_count": 1,
+          "source_summary": [
+            "bond"
+          ],
+          "risk_hint": "none"
+        },
+        {
+          "reaction_id": "reaction:snar_ullmann_etherification",
+          "reaction_name": "SNAr / Ullmann etherification",
+          "action_count": 1,
+          "source_summary": [
+            "smart_capping"
+          ],
+          "risk_hint": "heuristic_cap"
+        }
+      ],
+      "next_step": "explore_site('bond:1')",
+      "competition_hint": "same-site competition: 4 reactions"
+    },
+    {
+      "site_id": "fgi:0",
+      "site_type": "fgi",
+      "site_hint": "FGI: Nitration",
+      "action_count": 1,
+      "reaction_count": 1,
+      "source_summary": [
+        "fgi"
+      ],
+      "risk_hint": "none",
+      "reactions": [
+        {
+          "reaction_id": "reaction:nitration",
+          "reaction_name": "Nitration",
+          "action_count": 1,
+          "source_summary": [
+            "fgi"
+          ],
+          "risk_hint": "none"
+        }
+      ],
+      "next_step": "explore_site('fgi:0')"
+    },
+    {
+      "site_id": "fgi:1",
+      "site_type": "fgi",
+      "site_hint": "FGI: Sandmeyer",
+      "action_count": 1,
+      "reaction_count": 1,
+      "source_summary": [
+        "fgi"
+      ],
+      "risk_hint": "none",
+      "reactions": [
+        {
+          "reaction_id": "reaction:sandmeyer",
+          "reaction_name": "Sandmeyer",
+          "action_count": 1,
+          "source_summary": [
+            "fgi"
+          ],
+          "risk_hint": "none"
+        }
+      ],
+      "next_step": "explore_site('fgi:1')"
+    }
+  ],
+  "site_count": 3,
+  "total_reaction_count": 6,
+  "next_step": "explore_site(site_id)",
+  "hint": "Choose a site_id, then call explore_site(site_id).",
+  "prompt_brief": {
+    "stage": "reaction_sites",
+    "events": [
+      "stage.reaction_sites",
+      "site.same_site_competition",
+      "strategy.route_plan_active",
+      "strategy.route_plan_revised"
+    ],
+    "next_actions": [
+      "explore_site(site_id)"
+    ],
+    "quality_guardrails": [
+      "Chemical plausibility and route quality outrank template score, CS score, and local convenience.",
+      "Each committed step must be one real chemical event with a plausible mechanism and correct site.",
+      "Preserve scaffold topology; explicitly justify any ring construction, opening, or scaffold change.",
+      "Account for key C/N/S/halogen/protecting-group atoms and missing small molecules before commit.",
+      "Install reactive temporary handles late; protection/deprotection must be explicit tree steps.",
+      "Drive toward simple, stable, purchasable precursors when chemistry remains credible; accept honest advanced terminals over speculative low-confidence deep disconnections.",
+      "If system actions miss a sound route, use route_sketch for strategic gaps or propose a complete one-step custom action, then validate and audit it before commit.",
+      "Do not accept a nontrivial advanced terminal until a short target-oriented rescue sketch has asked whether simpler precursors, selectivity, and one executable next step exist."
+    ],
+    "active_experience_card_ids": [
+      "exp_snar_electron_poor_heteroaryl",
+      "exp_global_route_plan_persistence",
+      "exp_route_plan_revision"
+    ],
+    "experience_prompts": [
+      {
+        "id": "exp_snar_electron_poor_heteroaryl",
+        "one_line": "电子贫化杂芳氟与合适 N-亲核体匹配时，SNAr 可优先于金属 C-N 偶联。",
+        "action_prompt": "检查离去基、邻/对位活化、N-亲核体位阻和竞争亲核位点。",
+        "avoid": "不要在 SNAr 明显匹配时机械转向 Buchwald、Ullmann 或 Chan-Lam。"
+      },
+      {
+        "id": "exp_global_route_plan_persistence",
+        "one_line": "长期 route_plan 是全路线 thesis；每一步要检查当前 action 是否支持它。",
+        "action_prompt": "读取 route_plan_brief，优先保持核心、手柄和终端救援逻辑一致；局部选择偏离时先说明原因。",
+        "avoid": "不要只按当前模板贪心选择而忘记全局路线目标。"
+      },
+      {
+        "id": "exp_route_plan_revision",
+        "one_line": "发现更优路线或原 plan 与证据冲突时，应短修订 route_plan，而不是静默漂移。",
+        "action_prompt": "用 route_plan(...) 记录 revision_reason、更新 thesis、关键断键和保留结构，再继续标准 action/sandbox loop。",
+        "avoid": "不要把旧 plan 和新选择混在 reasoning 里却不更新状态。"
+      }
+    ],
+    "route_plan_brief": {
+      "id": "plan:ad36b3b7",
+      "revision": 0,
+      "route_thesis": "Keep the convergent late SNAr target disconnection, but do not stop at mol_3 or mol_5 if a chemically credible, simpler halopyridine precursor can be registered and validated. Replace the mol_3 Sandmeyer detour with direct C5 nitration of the right dichloromet",
+      "key_disconnections": [
+        "target C-N bond by activated SNAr",
+        "right nitrochloro electrophile from simpler dichloromethylpyridine by nitration rather than via aminonitro mol_3",
+        "left activated aryl fluoride mol_5 from more common dichloronitropyridine or halopyridine precursor"
+      ],
+      "preferred_precursor_logic": [
+        "preserve pyridine cores",
+        "use nitration only when regioisomer is explicit",
+        "use custom actions only to replace hard-block template artifacts"
+      ],
+      "protect_or_preserve": [
+        "pyridine skeletons",
+        "aryl halides",
+        "nitro/methoxy handles"
+      ],
+      "terminal_rescue_policy": "Before accepting advanced terminal, attempt a short mechanistic rollback to simpler credible precursors.",
+      "last_revision_reason": "terminal continuation requested"
+    },
+    "self_prompt": [
+      "Choose a real reaction site, not a reaction name in isolation.",
+      "Prioritize convergence, site fidelity, handle timing, and functional-group compatibility."
+    ]
+  }
+}

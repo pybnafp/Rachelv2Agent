@@ -1,0 +1,239 @@
+{
+  "nodes": [
+    {
+      "id": "mol_0",
+      "type": "molecule",
+      "smiles": "COc1ncc(Cl)cc1Nc1nc(Cl)c(C)cc1[N+](=O)[O-]",
+      "role": "target",
+      "depth": 0,
+      "cs_score": 3.5471,
+      "classification": "moderate"
+    },
+    {
+      "id": "mol_1",
+      "type": "molecule",
+      "smiles": "Cc1cc([N+](=O)[O-])c(Cl)nc1Cl",
+      "role": "intermediate",
+      "depth": 1,
+      "cs_score": 2.71,
+      "classification": "moderate"
+    },
+    {
+      "id": "mol_2",
+      "type": "molecule",
+      "smiles": "COc1ncc(Cl)cc1N",
+      "role": "intermediate",
+      "depth": 1,
+      "cs_score": 2.4164,
+      "classification": "trivial"
+    },
+    {
+      "id": "mol_3",
+      "type": "molecule",
+      "smiles": "Cc1ccc(Cl)nc1Cl",
+      "role": "terminal",
+      "depth": 2,
+      "cs_score": 2.1761,
+      "classification": "trivial"
+    },
+    {
+      "id": "mol_4",
+      "type": "molecule",
+      "smiles": "O=[N+]([O-])O",
+      "role": "terminal",
+      "depth": 2,
+      "cs_score": 2.0,
+      "classification": "trivial"
+    },
+    {
+      "id": "mol_5",
+      "type": "molecule",
+      "smiles": "COc1ncc(Cl)cc1[N+](=O)[O-]",
+      "role": "intermediate",
+      "depth": 2,
+      "cs_score": 2.71,
+      "classification": "moderate"
+    },
+    {
+      "id": "mol_6",
+      "type": "molecule",
+      "smiles": "O=[N+]([O-])c1cc(Cl)cnc1F",
+      "role": "intermediate",
+      "depth": 3,
+      "cs_score": 2.7417,
+      "classification": "moderate"
+    },
+    {
+      "id": "mol_7",
+      "type": "molecule",
+      "smiles": "CO",
+      "role": "terminal",
+      "depth": 3,
+      "cs_score": 1.54,
+      "classification": "trivial"
+    },
+    {
+      "id": "mol_8",
+      "type": "molecule",
+      "smiles": "O=[N+]([O-])c1cc(Cl)cnc1Cl",
+      "role": "intermediate",
+      "depth": 4,
+      "cs_score": 2.6817,
+      "classification": "moderate"
+    },
+    {
+      "id": "mol_9",
+      "type": "molecule",
+      "smiles": "[F-]",
+      "role": "terminal",
+      "depth": 4,
+      "cs_score": 2.0,
+      "classification": "trivial"
+    },
+    {
+      "id": "mol_10",
+      "type": "molecule",
+      "smiles": "Clc1ccc(Cl)nc1",
+      "role": "terminal",
+      "depth": 5,
+      "cs_score": 2.1139,
+      "classification": "trivial"
+    },
+    {
+      "id": "rxn_1",
+      "type": "reaction",
+      "label": "SNAr amination of activated chloronitropyridine",
+      "depth": 0,
+      "reaction_smiles": "Cc1cc([N+](=O)[O-])c(Cl)nc1Cl.COc1ncc(Cl)cc1N>>COc1ncc(Cl)cc1Nc1nc(Cl)c(C)cc1[N+](=O)[O-]"
+    },
+    {
+      "id": "rxn_2",
+      "type": "reaction",
+      "label": "regioselective C5 nitration of 2,6-dichloro-3-methylpyridine",
+      "depth": 1,
+      "reaction_smiles": "Cc1ccc(Cl)nc1Cl.O=[N+]([O-])O>>Cc1cc([N+](=O)[O-])c(Cl)nc1Cl"
+    },
+    {
+      "id": "rxn_3",
+      "type": "reaction",
+      "label": "Nitro Reduction (Retro, oxidation reduction)",
+      "depth": 1,
+      "reaction_smiles": "COc1ncc(Cl)cc1[N+](=O)[O-]>>COc1ncc(Cl)cc1N"
+    },
+    {
+      "id": "rxn_4",
+      "type": "reaction",
+      "label": "SNAr O-Nucleophile (Retro, aromatic)",
+      "depth": 2,
+      "reaction_smiles": "O=[N+]([O-])c1cc(Cl)cnc1F.CO>>COc1ncc(Cl)cc1[N+](=O)[O-]"
+    },
+    {
+      "id": "rxn_5",
+      "type": "reaction",
+      "label": "activated halogen exchange fluorination",
+      "depth": 3,
+      "reaction_smiles": "O=[N+]([O-])c1cc(Cl)cnc1Cl.[F-]>>O=[N+]([O-])c1cc(Cl)cnc1F"
+    },
+    {
+      "id": "rxn_6",
+      "type": "reaction",
+      "label": "regioselective nitration of dichloropyridine",
+      "depth": 4,
+      "reaction_smiles": "Clc1ccc(Cl)nc1.O=[N+]([O-])O>>O=[N+]([O-])c1cc(Cl)cnc1Cl"
+    }
+  ],
+  "edges": [
+    {
+      "source": "mol_0",
+      "target": "rxn_1",
+      "type": "retro_product"
+    },
+    {
+      "source": "rxn_1",
+      "target": "mol_1",
+      "type": "retro_reactant"
+    },
+    {
+      "source": "rxn_1",
+      "target": "mol_2",
+      "type": "retro_reactant"
+    },
+    {
+      "source": "mol_1",
+      "target": "rxn_2",
+      "type": "retro_product"
+    },
+    {
+      "source": "rxn_2",
+      "target": "mol_3",
+      "type": "retro_reactant"
+    },
+    {
+      "source": "rxn_2",
+      "target": "mol_4",
+      "type": "retro_reactant"
+    },
+    {
+      "source": "mol_2",
+      "target": "rxn_3",
+      "type": "retro_product"
+    },
+    {
+      "source": "rxn_3",
+      "target": "mol_5",
+      "type": "retro_reactant"
+    },
+    {
+      "source": "mol_5",
+      "target": "rxn_4",
+      "type": "retro_product"
+    },
+    {
+      "source": "rxn_4",
+      "target": "mol_6",
+      "type": "retro_reactant"
+    },
+    {
+      "source": "rxn_4",
+      "target": "mol_7",
+      "type": "retro_reactant"
+    },
+    {
+      "source": "mol_6",
+      "target": "rxn_5",
+      "type": "retro_product"
+    },
+    {
+      "source": "rxn_5",
+      "target": "mol_8",
+      "type": "retro_reactant"
+    },
+    {
+      "source": "rxn_5",
+      "target": "mol_9",
+      "type": "retro_reactant"
+    },
+    {
+      "source": "mol_8",
+      "target": "rxn_6",
+      "type": "retro_product"
+    },
+    {
+      "source": "rxn_6",
+      "target": "mol_10",
+      "type": "retro_reactant"
+    },
+    {
+      "source": "rxn_6",
+      "target": "mol_4",
+      "type": "retro_reactant"
+    }
+  ],
+  "meta": {
+    "target": "COc1ncc(Cl)cc1Nc1nc(Cl)c(C)cc1[N+](=O)[O-]",
+    "target_name": "n1_6397_extended_rescue",
+    "status": "complete",
+    "total_steps": 6,
+    "total_molecules": 11
+  }
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "smiles": "Cc1ccc(Cl)nc1Cl",
+    "node_id": "mol_3",
+    "cs_score": 2.1761,
+    "classification": "trivial"
+  },
+  {
+    "smiles": "O=[N+]([O-])O",
+    "node_id": "mol_4",
+    "cs_score": 2.0,
+    "classification": "trivial"
+  },
+  {
+    "smiles": "CO",
+    "node_id": "mol_7",
+    "cs_score": 1.54,
+    "classification": "trivial"
+  },
+  {
+    "smiles": "[F-]",
+    "node_id": "mol_9",
+    "cs_score": 2.0,
+    "classification": "trivial"
+  },
+  {
+    "smiles": "Clc1ccc(Cl)nc1",
+    "node_id": "mol_10",
+    "cs_score": 2.1139,
+    "classification": "trivial"
+  }
+]

@@ -1,0 +1,28 @@
+└── 🎯 Cc1ncc(C)n2nc(CCc3ccc(O)c(NC(C)CCO)n3)nc12 CS=4.4 [mol_0]
+      ↓ Reductive amination
+    ├── ○ Cc1ncc(C)n2nc(CCc3ccc(O)c(N)n3)nc12 CS=4.0 [mol_1]
+    │     ↓ fgi
+    │   └── ○ Cc1ncc(C)n2nc(C=Cc3ccc(O)c(N)n3)nc12 CS=4.0 [mol_3]
+    │         ↓ fgi
+    │       └── ○ Cc1ncc(C)n2nc(C=Cc3ccc(O)c([N+](=O)[O-])n3)nc12 CS=4.2 [mol_4]
+    │             ↓ fgi
+    │           └── ○ COc1ccc(C=Cc2nc3c(C)ncc(C)n3n2)nc1[N+](=O)[O-] CS=4.2 [mol_5]
+    │                 ↓ Horner-Wadsworth-Emmons olefination
+    │               ├── ○ COc1ccc(C=O)nc1[N+](=O)[O-] CS=2.7 [mol_6]
+    │               │     ↓ fgi
+    │               │   └── ○ COc1ccc(C)nc1[N+](=O)[O-] CS=2.5 [mol_8]
+    │               │         ↓ SNAr O-Nucleophile
+    │               │       ├── ✓ Cc1ccc(F)c([N+](=O)[O-])n1 CS=2.6 [mol_11]
+    │               │       └── ✓ CO CS=1.5 [mol_12]
+    │               └── ○ CCOP(=O)(Cc1nc2c(C)ncc(C)n2n1)OCC CS=3.7 [mol_7]
+    │                     ↓ Michaelis-Arbuzov phosphonate formation
+    │                   ├── ○ Cc1ncc(C)n2nc(CCl)nc12 CS=3.2 [mol_9]
+    │                   │     ↓ Alcohol to chloride with thionyl chloride
+    │                   │   ├── ○ Cc1ncc(C)n2nc(CO)nc12 CS=3.2 [mol_13]
+    │                   │   │     ↓ fgi
+    │                   │   │   └── ○ Cc1ncc(C)n2nc(C=O)nc12 CS=3.2 [mol_15]
+    │                   │   │         ↓ fgi
+    │                   │   │       └── ✓ Cc1nc2c(C)ncc(C)n2n1 CS=3.0 [mol_16]
+    │                   │   └── ✓ O=S(Cl)Cl CS=2.0 [mol_14]
+    │                   └── ✓ CCOP(OCC)OCC CS=1.8 [mol_10]
+    └── ✓ CC(=O)CCO CS=1.6 [mol_2]

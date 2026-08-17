@@ -1,0 +1,353 @@
+{
+  "site_id": "bond:1",
+  "site_type": "bond",
+  "site_hint": "unclear-aryl_sp2_c bond",
+  "action_count": 4,
+  "reaction_count": 4,
+  "source_summary": [
+    "bond",
+    "smart_capping"
+  ],
+  "risk_tags": [
+    "functional_group_compatibility",
+    "heuristic_cap"
+  ],
+  "risk_hint": "functional_group_compatibility, heuristic_cap",
+  "reactions": [
+    {
+      "reaction_id": "reaction:ullmann_o_arylation",
+      "reaction_name": "Ullmann O Arylation",
+      "action_count": 1,
+      "source_summary": [
+        "bond"
+      ],
+      "risk_hint": "functional_group_compatibility"
+    },
+    {
+      "reaction_id": "reaction:chan_lam_o_arylation",
+      "reaction_name": "Chan Lam O Arylation",
+      "action_count": 1,
+      "source_summary": [
+        "bond"
+      ],
+      "risk_hint": "functional_group_compatibility"
+    },
+    {
+      "reaction_id": "reaction:snar_o_nucleophile",
+      "reaction_name": "SNAr O-Nucleophile",
+      "action_count": 1,
+      "source_summary": [
+        "bond"
+      ],
+      "risk_hint": "none"
+    },
+    {
+      "reaction_id": "reaction:snar_ullmann_etherification",
+      "reaction_name": "SNAr / Ullmann etherification",
+      "action_count": 1,
+      "source_summary": [
+        "smart_capping"
+      ],
+      "risk_hint": "heuristic_cap"
+    }
+  ],
+  "actions": [
+    {
+      "action_id": "site:bond:1:alt:0",
+      "site_id": "bond:1",
+      "reaction": {
+        "id": "reaction:ullmann_o_arylation",
+        "name": "Ullmann O Arylation"
+      },
+      "source": "bond",
+      "source_label": "bond[0].alt[0]",
+      "template_id": "H18_ullmann_O_arylation_retro",
+      "template_name": "Ullmann O Arylation (Retro, aromatic)",
+      "precursors_preview": [
+        "Cc1ccc(Br)c([N+](=O)[O-])n1",
+        "CO"
+      ],
+      "bond_idx": 0,
+      "alt_idx": 0,
+      "actual_bond_idx": 1,
+      "atoms": [
+        1,
+        2
+      ],
+      "role_pair": [
+        "unclear",
+        "aryl_sp2_c"
+      ],
+      "bond_type": "SINGLE",
+      "in_ring": false,
+      "heuristic_score": 0.5,
+      "risk_tags": [
+        "functional_group_compatibility"
+      ],
+      "execution": {
+        "mode": "retro_template",
+        "template_id": "H18_ullmann_O_arylation_retro",
+        "bond": [
+          1,
+          2
+        ],
+        "expected_precursors": [
+          "Cc1ccc(Br)c([N+](=O)[O-])n1",
+          "CO"
+        ]
+      }
+    },
+    {
+      "action_id": "site:bond:1:alt:1",
+      "site_id": "bond:1",
+      "reaction": {
+        "id": "reaction:chan_lam_o_arylation",
+        "name": "Chan Lam O Arylation"
+      },
+      "source": "bond",
+      "source_label": "bond[0].alt[1]",
+      "template_id": "H19_chan_lam_O_arylation_retro",
+      "template_name": "Chan Lam O Arylation (Retro, aromatic)",
+      "precursors_preview": [
+        "Cc1ccc(B(O)O)c([N+](=O)[O-])n1",
+        "CO"
+      ],
+      "bond_idx": 0,
+      "alt_idx": 1,
+      "actual_bond_idx": 1,
+      "atoms": [
+        1,
+        2
+      ],
+      "role_pair": [
+        "unclear",
+        "aryl_sp2_c"
+      ],
+      "bond_type": "SINGLE",
+      "in_ring": false,
+      "heuristic_score": 0.5,
+      "risk_tags": [
+        "functional_group_compatibility"
+      ],
+      "execution": {
+        "mode": "retro_template",
+        "template_id": "H19_chan_lam_O_arylation_retro",
+        "bond": [
+          1,
+          2
+        ],
+        "expected_precursors": [
+          "Cc1ccc(B(O)O)c([N+](=O)[O-])n1",
+          "CO"
+        ]
+      }
+    },
+    {
+      "action_id": "site:bond:1:alt:2",
+      "site_id": "bond:1",
+      "reaction": {
+        "id": "reaction:snar_o_nucleophile",
+        "name": "SNAr O-Nucleophile"
+      },
+      "source": "bond",
+      "source_label": "bond[0].alt[2]",
+      "template_id": "H21_snar_cyclization_O_retro",
+      "template_name": "SNAr O-Nucleophile (Retro, aromatic)",
+      "precursors_preview": [
+        "Cc1ccc(F)c([N+](=O)[O-])n1",
+        "CO"
+      ],
+      "bond_idx": 0,
+      "alt_idx": 2,
+      "actual_bond_idx": 1,
+      "atoms": [
+        1,
+        2
+      ],
+      "role_pair": [
+        "unclear",
+        "aryl_sp2_c"
+      ],
+      "bond_type": "SINGLE",
+      "in_ring": false,
+      "heuristic_score": 0.5,
+      "execution": {
+        "mode": "retro_template",
+        "template_id": "H21_snar_cyclization_O_retro",
+        "bond": [
+          1,
+          2
+        ],
+        "expected_precursors": [
+          "Cc1ccc(F)c([N+](=O)[O-])n1",
+          "CO"
+        ]
+      }
+    },
+    {
+      "action_id": "site:bond:1:smart:0",
+      "site_id": "bond:1",
+      "reaction": {
+        "id": "reaction:snar_ullmann_etherification",
+        "name": "SNAr / Ullmann etherification"
+      },
+      "source": "smart_capping",
+      "source_label": "bond[0].smart_capping[0]",
+      "template_name": "SNAr / Ullmann etherification",
+      "precursors_preview": [
+        "CO",
+        "Cc1ccc(F)c([N+](=O)[O-])n1"
+      ],
+      "bond_idx": 0,
+      "smart_idx": 0,
+      "actual_bond_idx": 1,
+      "atoms": [
+        1,
+        2
+      ],
+      "role_pair": [
+        "unclear",
+        "aryl_sp2_c"
+      ],
+      "bond_type": "SINGLE",
+      "in_ring": false,
+      "heuristic_score": 0.5,
+      "confidence": 0.65,
+      "risk_tags": [
+        "heuristic_cap"
+      ],
+      "execution": {
+        "mode": "explicit_precursors",
+        "expected_precursors": [
+          "CO",
+          "Cc1ccc(F)c([N+](=O)[O-])n1"
+        ]
+      }
+    }
+  ],
+  "next_step": "try_action(action_id)",
+  "competition_hint": "same-site competition: 4 reactions",
+  "actual_bond_idx": 1,
+  "atoms": [
+    1,
+    2
+  ],
+  "role_pair": [
+    "unclear",
+    "aryl_sp2_c"
+  ],
+  "bond_type": "SINGLE",
+  "in_ring": false,
+  "heuristic_score": 0.5,
+  "bond_fg_context": {
+    "atom_i": [
+      "methoxy"
+    ],
+    "atom_j": [
+      "aromatic_6",
+      "pyridine"
+    ],
+    "spanning": [
+      "aryl_ether"
+    ],
+    "nearby": []
+  },
+  "prompt_brief": {
+    "stage": "explore_site",
+    "events": [
+      "stage.explore_site",
+      "action.system_template",
+      "action.smart_capping",
+      "site.same_site_competition",
+      "strategy.route_plan_active",
+      "strategy.route_mode_triage",
+      "strategy.route_plan_revision_requested"
+    ],
+    "next_actions": [
+      "try_action(action_id)",
+      "route_sketch(...) then propose_action(...) if all listed actions are chemically weak"
+    ],
+    "quality_guardrails": [
+      "Chemical plausibility and route quality outrank template score, CS score, and local convenience.",
+      "Each committed step must be one real chemical event with a plausible mechanism and correct site.",
+      "Preserve scaffold topology; explicitly justify any ring construction, opening, or scaffold change.",
+      "At route-plan initialization, record the likely route paradigm, evidence, strategic risks, and revision triggers.",
+      "Do not mistake local action-space for the full retrosynthesis space; if listed actions only express local FGI while core construction is unresolved, revise route_plan or use route_sketch.",
+      "If terminal review exposes a hidden core-construction problem, revise route_plan before accepting or committing.",
+      "Account for key C/N/S/halogen/protecting-group atoms and missing small molecules before commit.",
+      "Install reactive temporary handles late; protection/deprotection must be explicit tree steps.",
+      "Drive toward simple, stable, purchasable precursors when chemistry remains credible; accept honest advanced terminals over speculative low-confidence deep disconnections.",
+      "If system actions miss a sound route, use route_sketch for strategic gaps or propose a complete one-step custom action, then validate and audit it before commit.",
+      "Do not accept a nontrivial advanced terminal until a short target-oriented rescue sketch has asked whether simpler precursors, selectivity, and one executable next step exist.",
+      "If rescue continuation is active, resolve that forced precursor review before accepting the molecule or finalizing the route."
+    ],
+    "active_experience_card_ids": [
+      "exp_electron_poor_pyridine_electronic_state_strategy",
+      "exp_route_mode_triage_before_first_plan",
+      "exp_route_plan_revision",
+      "exp_snar_electron_poor_heteroaryl"
+    ],
+    "experience_prompts": [
+      {
+        "id": "exp_electron_poor_pyridine_electronic_state_strategy",
+        "one_line": "Highly substituted electron-poor pyridines should not automatically be treated as preserved mature cores for late EAS/halogenation.",
+        "action_prompt": "Compare late FGI with scaffold assembly or an electronic-state strategy. If the final aromatic pyridine is too deactivated for selective editing, consider pyridone/lactam, dihydropyridine, or related non-final electronic states before aromatization/chlorination, and record the choice in route_plan.",
+        "avoid": "Do not accept an advanced halogenated or nitrated pyridine terminal as route closure unless it explains how the difficult core is actually constructed."
+      },
+      {
+        "id": "exp_route_mode_triage_before_first_plan",
+        "one_line": "Before the first complex-target plan, classify the route hypothesis instead of jumping directly to a local disconnection.",
+        "action_prompt": "Compare late FGI/editing, scaffold assembly, electronic-state strategy, and hybrid routes; write the current choice plus evidence, risks, and revision triggers into route_plan.",
+        "avoid": "Do not treat the listed local action-space as the complete retrosynthesis space, and do not let a route-mode decision remain only in hidden reasoning."
+      },
+      {
+        "id": "exp_route_plan_revision",
+        "one_line": "发现更优路线或原 plan 与证据冲突时，应短修订 route_plan，而不是静默漂移。",
+        "action_prompt": "用 route_plan(...) 记录 revision_reason、更新 thesis、关键断键和保留结构，再继续标准 action/sandbox loop。",
+        "avoid": "不要把旧 plan 和新选择混在 reasoning 里却不更新状态。"
+      },
+      {
+        "id": "exp_snar_electron_poor_heteroaryl",
+        "one_line": "电子贫化杂芳氟与合适 N-亲核体匹配时，SNAr 可优先于金属 C-N 偶联。",
+        "action_prompt": "检查离去基、邻/对位活化、N-亲核体位阻和竞争亲核位点。",
+        "avoid": "不要在 SNAr 明显匹配时机械转向 Buchwald、Ullmann 或 Chan-Lam。"
+      }
+    ],
+    "route_plan_brief": {
+      "id": "plan:deea6efc",
+      "revision": 0,
+      "route_thesis": "Use a hybrid route: preserve the mature fused triazolopyrimidine-like core and the aminopyridinol side fragment as late-stage heteroaryl building blocks; disconnect the benzylic/ethyl linker and N-aryl aminoalcohol handle before considering deeper core assembl",
+      "route_mode": "hybrid",
+      "key_disconnections": [
+        "Csp3-Csp2 or Csp3-heteroaryl bond at the ethyl linker connecting the fused core to the pyridinol fragment.",
+        "C-N bond between pyridinol ring nitrogen substituent and the 1-methyl-3-hydroxypropyl fragment or its protected electrop"
+      ],
+      "preferred_precursor_logic": [
+        "Prefer halomethyl/vinyl/aldehyde-type heteroaryl handles for linker assembly only if forward chemistry is credible.",
+        "Prefer commercially plausible protected aminopyridinol or aminoalcohol fragments over unprotected high-functionality intermediates."
+      ],
+      "protect_or_preserve": [
+        "Preserve fused heteroaryl core unless a well-defined annulation is proposed.",
+        "Preserve phenol or protect it explicitly before alkylation/acylation conditions."
+      ],
+      "mode_evidence": [
+        "The target contains two heteroaromatic systems plus a flexible ethyl linker and a secondary aminoalcohol handle; preserving heteroaryl cores",
+        "Late FGI/editing can address phenol and aminoalcohol compatibility, while scaffold assembly remains available if the fused bicyclic core is"
+      ],
+      "strategic_risks": [
+        "Action-space may over-disconnect stable heteroaryl cores without a credible forward construction.",
+        "Phenol and secondary amine/alcohol handles may require explicit protection if used before C-C/N-C bond formation."
+      ],
+      "revision_triggers": [
+        "A selected precursor still hides the same hard heteroaryl-core construction problem as an advanced terminal.",
+        "Sandbox validation shows the linker disconnection or N-alkylation logic is route-incoherent."
+      ],
+      "terminal_rescue_policy": "Before accepting advanced terminal, attempt a short mechanistic rollback to simpler credible precursors.",
+      "last_revision_reason": "initial"
+    },
+    "self_prompt": [
+      "Compare same-site actions by mechanism, site fidelity, precursor realism, and risk tags.",
+      "For site identity, read atoms, actual_bond_idx, role_pair, bond_type, in_ring, and bond_fg_context for local connectivity and FG context before adding any extra graph audit."
+    ]
+  }
+}

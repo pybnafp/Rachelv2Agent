@@ -1,0 +1,11 @@
+{
+  "target": "COc1ncc(Cl)cc1Nc1nc(Cl)c(C)cc1[N+](=O)[O-]",
+  "status": "complete",
+  "steps_executed": 6,
+  "pending_count": 0,
+  "total_molecules": 11,
+  "total_steps": 6,
+  "max_depth": 5,
+  "elapsed_sec": 0.6,
+  "tree_complete": true
+}

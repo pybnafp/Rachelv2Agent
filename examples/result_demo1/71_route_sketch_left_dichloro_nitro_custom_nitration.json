@@ -1,0 +1,110 @@
+{
+  "ok": true,
+  "route_sketch_id": "sketch:mol_8:0",
+  "node_id": "mol_8",
+  "smiles": "O=[N+]([O-])c1cc(Cl)cnc1Cl",
+  "route_strategy_brief": {
+    "id": "sketch:mol_8:0",
+    "macro_strategy": "Use regioselective nitration of dichloropyridine to install the nitro group on the same preformed halopyridine core. This gives a simpler halopyridine terminal plus nitric acid/nitronium source.",
+    "next_executable_step": "propose_action",
+    "problem": "Continue the dichloronitropyridine precursor by removing the nitro group to the corresponding dichloropyridine, but custom validation must include the nitro ato"
+  },
+  "prompt_brief": {
+    "stage": "route_sketch",
+    "events": [
+      "stage.route_sketch",
+      "strategy.advanced_terminal_rescue_requested",
+      "strategy.route_plan_active",
+      "strategy.route_plan_revised",
+      "strategy.route_sketch_active",
+      "strategy.route_sketch_requested"
+    ],
+    "next_actions": [
+      "propose_action(...) for the next unlisted real step",
+      "explore_site(site_id) if a listed site remains viable"
+    ],
+    "quality_guardrails": [
+      "Chemical plausibility and route quality outrank template score, CS score, and local convenience.",
+      "Each committed step must be one real chemical event with a plausible mechanism and correct site.",
+      "Preserve scaffold topology; explicitly justify any ring construction, opening, or scaffold change.",
+      "Account for key C/N/S/halogen/protecting-group atoms and missing small molecules before commit.",
+      "Install reactive temporary handles late; protection/deprotection must be explicit tree steps.",
+      "Drive toward simple, stable, purchasable precursors when chemistry remains credible; accept honest advanced terminals over speculative low-confidence deep disconnections.",
+      "If system actions miss a sound route, use route_sketch for strategic gaps or propose a complete one-step custom action, then validate and audit it before commit.",
+      "Do not accept a nontrivial advanced terminal until a short target-oriented rescue sketch has asked whether simpler precursors, selectivity, and one executable next step exist."
+    ],
+    "active_experience_card_ids": [
+      "exp_advanced_terminal_short_route_rescue",
+      "exp_route_sketch_for_weak_action_space",
+      "exp_custom_precursor_after_rejection",
+      "exp_global_route_plan_persistence",
+      "exp_route_plan_revision"
+    ],
+    "experience_prompts": [
+      {
+        "id": "exp_advanced_terminal_short_route_rescue",
+        "one_line": "接受高级 terminal 前，先反问：这个小目标能否由更简单前体经 1-2 步机理选择性路线到达？",
+        "action_prompt": "寻找更简单前体、官能团回退、氧化态调整、保护/脱保护或区域/化学选择性来源；actionable rescue 必须有完整 precursor SMILES、一个真实化学事件和选择性来源。route_sketch(..., terminal_review=True) 后，把一个可信下一步走 propose_action -> try_action，或用 no-actionable 理由显式例外。",
+        "avoid": "不要只写 reaction family name（如 annulation/SNAr/oxidation）；也不要在 terminal_review sketch 后未经 custom sandbox attempt 就普通 accept。"
+      },
+      {
+        "id": "exp_route_sketch_for_weak_action_space",
+        "one_line": "系统 action space 弱时，先自由构思目标导向路线，再只把下一步真实化学事件转成 action。",
+        "action_prompt": "写明目标核心、可用手柄、关键断键、被拒 action-space 原因和 next_executable_step；若下一步未列出，再 propose_action -> try_action。",
+        "avoid": "不要把 route sketch 降级为 validation gate，也不要用长程想法一次性跳过 sandbox。"
+      },
+      {
+        "id": "exp_custom_precursor_after_rejection",
+        "one_line": "LLM 自提前体只应在系统动作不满足化学逻辑后使用，并必须继承同一步 sandbox 审计。",
+        "action_prompt": "调用 propose_action 前写清 rejected action ids、拒绝原因、reaction/site、risk tags 和一步反应逻辑。",
+        "avoid": "不要用自提前体绕过 action comparison、try_action 或 commit audit。"
+      },
+      {
+        "id": "exp_global_route_plan_persistence",
+        "one_line": "长期 route_plan 是全路线 thesis；每一步要检查当前 action 是否支持它。",
+        "action_prompt": "读取 route_plan_brief，优先保持核心、手柄和终端救援逻辑一致；局部选择偏离时先说明原因。",
+        "avoid": "不要只按当前模板贪心选择而忘记全局路线目标。"
+      },
+      {
+        "id": "exp_route_plan_revision",
+        "one_line": "发现更优路线或原 plan 与证据冲突时，应短修订 route_plan，而不是静默漂移。",
+        "action_prompt": "用 route_plan(...) 记录 revision_reason、更新 thesis、关键断键和保留结构，再继续标准 action/sandbox loop。",
+        "avoid": "不要把旧 plan 和新选择混在 reasoning 里却不更新状态。"
+      }
+    ],
+    "route_plan_brief": {
+      "id": "plan:ad36b3b7",
+      "revision": 0,
+      "route_thesis": "Keep the convergent late SNAr target disconnection, but do not stop at mol_3 or mol_5 if a chemically credible, simpler halopyridine precursor can be registered and validated. Replace the mol_3 Sandmeyer detour with direct C5 nitration of the right dichloromet",
+      "key_disconnections": [
+        "target C-N bond by activated SNAr",
+        "right nitrochloro electrophile from simpler dichloromethylpyridine by nitration rather than via aminonitro mol_3",
+        "left activated aryl fluoride mol_5 from more common dichloronitropyridine or halopyridine precursor"
+      ],
+      "preferred_precursor_logic": [
+        "preserve pyridine cores",
+        "use nitration only when regioisomer is explicit",
+        "use custom actions only to replace hard-block template artifacts"
+      ],
+      "protect_or_preserve": [
+        "pyridine skeletons",
+        "aryl halides",
+        "nitro/methoxy handles"
+      ],
+      "terminal_rescue_policy": "Before accepting advanced terminal, attempt a short mechanistic rollback to simpler credible precursors.",
+      "last_revision_reason": "terminal continuation requested"
+    },
+    "route_strategy_brief": {
+      "id": "sketch:mol_8:0",
+      "macro_strategy": "Use regioselective nitration of dichloropyridine to install the nitro group on the same preformed halopyridine core. This gives a simpler halopyridine terminal plus nitric acid/nitronium source.",
+      "next_executable_step": "propose_action",
+      "problem": "Continue the dichloronitropyridine precursor by removing the nitro group to the corresponding dichloropyridine, but custom validation must include the nitro ato"
+    },
+    "self_prompt": [
+      "Consider 1-3 target-oriented short hypotheses, then record exactly one next executable chemical event.",
+      "For advanced-terminal review, actionable means a complete precursor set, one real event, and a selectivity source; otherwise use no-actionable."
+    ]
+  },
+  "next_step": "propose_action(...)",
+  "hint": "Strategy recorded only. Convert exactly one next chemical event through the normal action/sandbox flow."
+}

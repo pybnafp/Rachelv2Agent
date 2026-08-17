@@ -1,0 +1,11 @@
+{
+  "ok": true,
+  "action": "accepted_terminal",
+  "terminal_rescue": {
+    "route_sketch_id": "sketch:mol_3:0",
+    "terminal_review": true,
+    "rescue_attempt_count": 0,
+    "force_accept_without_rescue": true,
+    "rescue_not_actionable_reason": "No tested one-step rescue gives a cleaner, more stable, or more convergent precursor than the dichloromethylpyridine core."
+  }
+}

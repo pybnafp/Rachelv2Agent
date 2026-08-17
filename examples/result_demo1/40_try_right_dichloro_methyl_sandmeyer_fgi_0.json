@@ -1,0 +1,163 @@
+{
+  "success": true,
+  "precursors": [
+    "Cc1ccc(N)nc1Cl"
+  ],
+  "precursor_details": [
+    {
+      "smiles": "Cc1ccc(N)nc1Cl",
+      "cs_score": 2.1761,
+      "classification": "trivial",
+      "is_terminal": false,
+      "heavy_atoms": 9
+    }
+  ],
+  "forward_validation": {
+    "ok": true,
+    "pass": true,
+    "feasibility_score": 0.9223,
+    "hard_fail_reasons": null,
+    "gate": {
+      "gate_state": "warning",
+      "commit_policy": "allow_with_warning",
+      "hard_blocks": [],
+      "soft_warnings": [
+        {
+          "code": "atom_balance_unresolved",
+          "source": "atom_balance",
+          "message": "atom balance has unexplained remainder, but not a hard skeleton/severe block",
+          "evidence": {
+            "note": "adjusted excess: Cl=1; adjusted deficit: N=1"
+          }
+        }
+      ],
+      "override_allowed": [],
+      "missing_evidence": [],
+      "llm_override_allowed": false,
+      "recommended_action": "Commit may proceed only after addressing the warnings in reasoning.",
+      "score": 0.9223,
+      "legacy_pass": true,
+      "legacy_hard_fail_reasons": null
+    }
+  },
+  "validation_micro": {
+    "template_attempted": true,
+    "template_match": 1.0,
+    "scaffold_alignment": 0.889
+  },
+  "reaction_type": "fgi",
+  "template_id": "H04_sandmeyer_retro",
+  "template_name": "Sandmeyer (Retro, aromatic)",
+  "hint": "这是沙盒结果，未写入树。满意请调 commit_decision()。",
+  "attempt_idx": 2,
+  "source": "fgi[0]",
+  "action_id": "fgi:0",
+  "action_summary": {
+    "source": "fgi",
+    "source_label": "fgi[0]",
+    "action_label": "",
+    "reaction_id": "",
+    "reaction_type": "Sandmeyer",
+    "template_id": "H04_sandmeyer_retro",
+    "template_name": "Sandmeyer (Retro, aromatic)",
+    "precursors_preview": [
+      "Cc1ccc(N)nc1Cl"
+    ],
+    "execution": {
+      "mode": "fgi_template",
+      "template_id": "H04_sandmeyer_retro",
+      "expected_precursors": [
+        "Cc1ccc(N)nc1Cl"
+      ]
+    },
+    "why_existing_actions_rejected": "",
+    "rationale_summary": "",
+    "duplicate_of": "",
+    "route_sketch_id": "",
+    "route_strategy_brief": {},
+    "bond_idx": null,
+    "alt_idx": null,
+    "fgi_idx": 0,
+    "smart_idx": null,
+    "actual_bond_idx": null,
+    "atoms": [],
+    "risk_tags": []
+  },
+  "prompt_brief": {
+    "stage": "try_action",
+    "events": [
+      "stage.try_action",
+      "action.system_template",
+      "sandbox.success",
+      "validation.pass",
+      "validation.warning",
+      "strategy.route_plan_active",
+      "strategy.route_plan_revised"
+    ],
+    "next_actions": [
+      "sandbox_list",
+      "try_action(action_id) for another same-site competitor"
+    ],
+    "quality_guardrails": [
+      "Chemical plausibility and route quality outrank template score, CS score, and local convenience.",
+      "Each committed step must be one real chemical event with a plausible mechanism and correct site.",
+      "Preserve scaffold topology; explicitly justify any ring construction, opening, or scaffold change.",
+      "Account for key C/N/S/halogen/protecting-group atoms and missing small molecules before commit.",
+      "Install reactive temporary handles late; protection/deprotection must be explicit tree steps.",
+      "Drive toward simple, stable, purchasable precursors when chemistry remains credible; accept honest advanced terminals over speculative low-confidence deep disconnections.",
+      "If system actions miss a sound route, use route_sketch for strategic gaps or propose a complete one-step custom action, then validate and audit it before commit.",
+      "Do not accept a nontrivial advanced terminal until a short target-oriented rescue sketch has asked whether simpler precursors, selectivity, and one executable next step exist."
+    ],
+    "active_experience_card_ids": [
+      "exp_route_plan_revision",
+      "exp_template_pass_not_enough",
+      "exp_global_route_plan_persistence"
+    ],
+    "experience_prompts": [
+      {
+        "id": "exp_route_plan_revision",
+        "one_line": "发现更优路线或原 plan 与证据冲突时，应短修订 route_plan，而不是静默漂移。",
+        "action_prompt": "用 route_plan(...) 记录 revision_reason、更新 thesis、关键断键和保留结构，再继续标准 action/sandbox loop。",
+        "avoid": "不要把旧 plan 和新选择混在 reasoning 里却不更新状态。"
+      },
+      {
+        "id": "exp_template_pass_not_enough",
+        "one_line": "pass=true 只说明系统没有拦截，不证明机理、碳账、位点和时序合理。",
+        "action_prompt": "在 commit 前补充机理、拓扑、碳源、手柄时序和主要替代方案审计。",
+        "avoid": "不要把 template_match 或 confidence 当成 commit 理由。"
+      },
+      {
+        "id": "exp_global_route_plan_persistence",
+        "one_line": "长期 route_plan 是全路线 thesis；每一步要检查当前 action 是否支持它。",
+        "action_prompt": "读取 route_plan_brief，优先保持核心、手柄和终端救援逻辑一致；局部选择偏离时先说明原因。",
+        "avoid": "不要只按当前模板贪心选择而忘记全局路线目标。"
+      }
+    ],
+    "route_plan_brief": {
+      "id": "plan:ad36b3b7",
+      "revision": 0,
+      "route_thesis": "Keep the convergent late SNAr target disconnection, but do not stop at mol_3 or mol_5 if a chemically credible, simpler halopyridine precursor can be registered and validated. Replace the mol_3 Sandmeyer detour with direct C5 nitration of the right dichloromet",
+      "key_disconnections": [
+        "target C-N bond by activated SNAr",
+        "right nitrochloro electrophile from simpler dichloromethylpyridine by nitration rather than via aminonitro mol_3",
+        "left activated aryl fluoride mol_5 from more common dichloronitropyridine or halopyridine precursor"
+      ],
+      "preferred_precursor_logic": [
+        "preserve pyridine cores",
+        "use nitration only when regioisomer is explicit",
+        "use custom actions only to replace hard-block template artifacts"
+      ],
+      "protect_or_preserve": [
+        "pyridine skeletons",
+        "aryl halides",
+        "nitro/methoxy handles"
+      ],
+      "terminal_rescue_policy": "Before accepting advanced terminal, attempt a short mechanistic rollback to simpler credible precursors.",
+      "last_revision_reason": "terminal continuation requested"
+    },
+    "self_prompt": [
+      "Treat sandbox success as evidence only; inspect forward validation, atom accounting, and site fidelity.",
+      "Reject attempts that rely only on a reaction family name, hidden steps, missing selectivity, or incomplete atom accounting."
+    ]
+  }
+}

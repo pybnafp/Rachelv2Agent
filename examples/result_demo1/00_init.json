@@ -1,0 +1,8 @@
+{
+  "ok": true,
+  "session_id": "ad36b3b7",
+  "session_file": "E:\\Python\\skills\\Rachel-v2\\walkthrough_runs\\20260706_n1_6397_extended_rescue\\session.json",
+  "target": "COc1ncc(Cl)cc1Nc1nc(Cl)c(C)cc1[N+](=O)[O-]",
+  "name": "n1_6397_extended_rescue",
+  "hint": "调用 next 获取第一个分子的上下文"
+}

@@ -1,0 +1,12 @@
+{
+  "tree": "└── 🎯 COc1ncc(Cl)cc1Nc1nc(Cl)c(C)cc1[N+](=O)[O-] CS=3.5 [mol_0]\n      ↓ SNAr amination of activated chloronitropyridine\n    ├── ○ Cc1cc([N+](=O)[O-])c(Cl)nc1Cl CS=2.7 [mol_1]\n    │     ↓ regioselective C5 nitration of 2,6-dichloro-3-methylpyridine\n    │   ├── ✓ Cc1ccc(Cl)nc1Cl CS=2.2 [mol_3]\n    │   └── ✓ O=[N+]([O-])O CS=2.0 [mol_4]\n    └── ○ COc1ncc(Cl)cc1N CS=2.4 [mol_2]\n          ↓ fgi\n        └── ○ COc1ncc(Cl)cc1[N+](=O)[O-] CS=2.7 [mol_5]\n              ↓ SNAr O-Nucleophile\n            ├── ○ O=[N+]([O-])c1cc(Cl)cnc1F CS=2.7 [mol_6]\n            │     ↓ activated halogen exchange fluorination\n            │   ├── ○ O=[N+]([O-])c1cc(Cl)cnc1Cl CS=2.7 [mol_8]\n            │   │     ↓ regioselective nitration of dichloropyridine\n            │   │   ├── ✓ Clc1ccc(Cl)nc1 CS=2.1 [mol_10]\n            │   │   └── ✓ O=[N+]([O-])O CS=2.0 [mol_4]\n            │   └── ✓ [F-] CS=2.0 [mol_9]\n            └── ✓ CO CS=1.5 [mol_7]",
+  "terminal_count": 5,
+  "pending_count": 0,
+  "terminals": [
+    "Cc1ccc(Cl)nc1Cl",
+    "O=[N+]([O-])O",
+    "CO",
+    "[F-]",
+    "Clc1ccc(Cl)nc1"
+  ]
+}

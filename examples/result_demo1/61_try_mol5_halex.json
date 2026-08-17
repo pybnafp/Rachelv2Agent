@@ -1,0 +1,310 @@
+{
+  "success": true,
+  "precursors": [
+    "O=[N+]([O-])c1cc(Cl)cnc1Cl",
+    "[F-]"
+  ],
+  "precursor_details": [
+    {
+      "smiles": "O=[N+]([O-])c1cc(Cl)cnc1Cl",
+      "cs_score": 2.6817,
+      "classification": "moderate",
+      "is_terminal": false,
+      "heavy_atoms": 11
+    },
+    {
+      "smiles": "[F-]",
+      "cs_score": 2.0,
+      "classification": "trivial",
+      "is_terminal": true,
+      "heavy_atoms": 1
+    }
+  ],
+  "forward_validation": {
+    "ok": true,
+    "pass": true,
+    "feasibility_score": 0.8959,
+    "hard_fail_reasons": null,
+    "gate": {
+      "gate_state": "missing_evidence",
+      "commit_policy": "allow_with_note",
+      "hard_blocks": [],
+      "soft_warnings": [
+        {
+          "code": "atom_balance_unresolved",
+          "source": "atom_balance",
+          "message": "atom balance has unexplained remainder, but not a hard skeleton/severe block",
+          "evidence": {
+            "note": "adjusted deficit: Cl=1"
+          }
+        }
+      ],
+      "override_allowed": [],
+      "missing_evidence": [
+        {
+          "code": "template_not_attempted",
+          "source": "template_execution",
+          "message": "no executable forward template was available; this is missing evidence, not a hard block",
+          "evidence": {
+            "template_id": "",
+            "tanimoto_to_target": 0.6667
+          }
+        }
+      ],
+      "llm_override_allowed": false,
+      "recommended_action": "Treat validation as inconclusive; do not use template absence as positive evidence.",
+      "score": 0.8959,
+      "legacy_pass": true,
+      "legacy_hard_fail_reasons": null
+    }
+  },
+  "validation_micro": {
+    "template_attempted": false,
+    "template_match": 0.6667,
+    "scaffold_alignment": 1.0
+  },
+  "atom_balance": {
+    "balanced": false,
+    "message": ""
+  },
+  "reaction_type": "activated halogen exchange fluorination",
+  "site_audit": {
+    "ok": true,
+    "site_retentive": true,
+    "strict_audit_required": true,
+    "major_precursor_index": 0,
+    "major_precursor": "O=[N+]([O-])c1cc(Cl)cnc1Cl",
+    "same_ring_core": true,
+    "murcko_equal": true,
+    "mcs_coverage": 0.9091,
+    "changed_site_count": 1,
+    "changed_sites": [
+      {
+        "site_label": "scaf_5:C(product_atom=9, precursor_atom=9)",
+        "scaffold_idx": 5,
+        "product_substituents": [
+          "[*]F"
+        ],
+        "precursor_substituents": [
+          "[*]Cl"
+        ],
+        "status": "changed"
+      }
+    ],
+    "preserved_sites": [
+      {
+        "site_label": "scaf_0:C(product_atom=3, precursor_atom=3)",
+        "scaffold_idx": 0,
+        "product_substituents": [
+          "[*][N+](=O)[O-]"
+        ],
+        "precursor_substituents": [
+          "[*][N+](=O)[O-]"
+        ],
+        "status": "preserved"
+      },
+      {
+        "site_label": "scaf_2:C(product_atom=5, precursor_atom=5)",
+        "scaffold_idx": 2,
+        "product_substituents": [
+          "[*]Cl"
+        ],
+        "precursor_substituents": [
+          "[*]Cl"
+        ],
+        "status": "preserved"
+      }
+    ],
+    "site_rows": [
+      {
+        "site_label": "scaf_0:C(product_atom=3, precursor_atom=3)",
+        "scaffold_idx": 0,
+        "product_substituents": [
+          "[*][N+](=O)[O-]"
+        ],
+        "precursor_substituents": [
+          "[*][N+](=O)[O-]"
+        ],
+        "status": "preserved"
+      },
+      {
+        "site_label": "scaf_2:C(product_atom=5, precursor_atom=5)",
+        "scaffold_idx": 2,
+        "product_substituents": [
+          "[*]Cl"
+        ],
+        "precursor_substituents": [
+          "[*]Cl"
+        ],
+        "status": "preserved"
+      },
+      {
+        "site_label": "scaf_5:C(product_atom=9, precursor_atom=9)",
+        "scaffold_idx": 5,
+        "product_substituents": [
+          "[*]F"
+        ],
+        "precursor_substituents": [
+          "[*]Cl"
+        ],
+        "status": "changed"
+      }
+    ],
+    "pass": true,
+    "summary": "Site-retentive audit passed: only scaf_5:C(product_atom=9, precursor_atom=9) changed from ['[*]Cl'] to ['[*]F']; preserved sites=['scaf_0:C(product_atom=3, precursor_atom=3)', 'scaf_2:C(product_atom=5, precursor_atom=5)']"
+  },
+  "hint": "这是沙盒结果，未写入树。满意请调 commit_decision()。",
+  "attempt_idx": 0,
+  "source": "llm_proposed",
+  "input_precursors": [
+    "O=[N+]([O-])c1cc(Cl)cnc1Cl",
+    "[F-]"
+  ],
+  "action_id": "custom:llm_custom:0",
+  "action_summary": {
+    "source": "custom_precursors",
+    "source_label": "custom[llm_custom:0]",
+    "action_label": "mol5 from dichloronitropyridine plus fluoride",
+    "reaction_id": "reaction:activated_halogen_exchange_fluorination",
+    "reaction_type": "activated halogen exchange fluorination",
+    "template_id": "",
+    "template_name": "activated halogen exchange fluorination",
+    "precursors_preview": [
+      "O=[N+]([O-])c1cc(Cl)cnc1Cl",
+      "[F-]"
+    ],
+    "execution": {
+      "mode": "custom_precursors",
+      "expected_precursors": [
+        "O=[N+]([O-])c1cc(Cl)cnc1Cl",
+        "[F-]"
+      ]
+    },
+    "why_existing_actions_rejected": "Nitration hard-blocks or requires harsher regioselective EAS; Sandmeyer gives an aminonitrofluoro precursor. Neither captures the simpler dichloro-nitro pyridine plus fluoride route.",
+    "rationale_summary": "Fluoride substitutes the activated chloro leaving group on the nitro/pyridine-activated ring to give the aryl fluoride. The pyridine core, nitro group and the nonreacting aryl chloride are preserved.",
+    "duplicate_of": "",
+    "route_sketch_id": "sketch:mol_6:0",
+    "route_strategy_brief": {
+      "id": "sketch:mol_6:0",
+      "macro_strategy": "Disconnect the aryl C-F bond as Halex/SNAr fluorination of O=[N+]([O-])c1cc(Cl)cnc1Cl. The nitro group and pyridine N activate the chloro position toward fluoride substitution, while the other chloride is preserved.",
+      "next_executable_step": "propose_action",
+      "problem": "mol_5 was previously accepted as an advanced terminal, but a chemically plausible simpler precursor is the corresponding dichloronitropyridine plus fluoride sou"
+    },
+    "bond_idx": null,
+    "alt_idx": null,
+    "fgi_idx": null,
+    "smart_idx": null,
+    "actual_bond_idx": null,
+    "atoms": [],
+    "risk_tags": [
+      "halex",
+      "site_fidelity_check",
+      "preserve_aryl_chloride",
+      "activated_snar_fluorination",
+      "route_sketch_derived",
+      "llm_custom_precursor"
+    ]
+  },
+  "prompt_brief": {
+    "stage": "try_action",
+    "events": [
+      "stage.try_action",
+      "strategy.advanced_terminal_rescue_requested",
+      "strategy.route_sketch_requested",
+      "action.custom_precursors",
+      "strategy.route_sketch_used_for_custom_action",
+      "sandbox.success",
+      "validation.pass",
+      "validation.missing_evidence",
+      "validation.template_not_attempted",
+      "strategy.route_plan_active",
+      "strategy.route_plan_revised",
+      "strategy.route_sketch_active"
+    ],
+    "next_actions": [
+      "sandbox_list",
+      "try_action(action_id) for another same-site competitor"
+    ],
+    "quality_guardrails": [
+      "Chemical plausibility and route quality outrank template score, CS score, and local convenience.",
+      "Each committed step must be one real chemical event with a plausible mechanism and correct site.",
+      "Preserve scaffold topology; explicitly justify any ring construction, opening, or scaffold change.",
+      "Account for key C/N/S/halogen/protecting-group atoms and missing small molecules before commit.",
+      "Install reactive temporary handles late; protection/deprotection must be explicit tree steps.",
+      "Drive toward simple, stable, purchasable precursors when chemistry remains credible; accept honest advanced terminals over speculative low-confidence deep disconnections.",
+      "If system actions miss a sound route, use route_sketch for strategic gaps or propose a complete one-step custom action, then validate and audit it before commit.",
+      "Do not accept a nontrivial advanced terminal until a short target-oriented rescue sketch has asked whether simpler precursors, selectivity, and one executable next step exist."
+    ],
+    "active_experience_card_ids": [
+      "exp_advanced_terminal_short_route_rescue",
+      "exp_route_sketch_for_weak_action_space",
+      "exp_custom_precursor_after_rejection",
+      "exp_template_pass_not_enough",
+      "exp_global_route_plan_persistence"
+    ],
+    "experience_prompts": [
+      {
+        "id": "exp_advanced_terminal_short_route_rescue",
+        "one_line": "接受高级 terminal 前，先反问：这个小目标能否由更简单前体经 1-2 步机理选择性路线到达？",
+        "action_prompt": "寻找更简单前体、官能团回退、氧化态调整、保护/脱保护或区域/化学选择性来源；actionable rescue 必须有完整 precursor SMILES、一个真实化学事件和选择性来源。route_sketch(..., terminal_review=True) 后，把一个可信下一步走 propose_action -> try_action，或用 no-actionable 理由显式例外。",
+        "avoid": "不要只写 reaction family name（如 annulation/SNAr/oxidation）；也不要在 terminal_review sketch 后未经 custom sandbox attempt 就普通 accept。"
+      },
+      {
+        "id": "exp_route_sketch_for_weak_action_space",
+        "one_line": "系统 action space 弱时，先自由构思目标导向路线，再只把下一步真实化学事件转成 action。",
+        "action_prompt": "写明目标核心、可用手柄、关键断键、被拒 action-space 原因和 next_executable_step；若下一步未列出，再 propose_action -> try_action。",
+        "avoid": "不要把 route sketch 降级为 validation gate，也不要用长程想法一次性跳过 sandbox。"
+      },
+      {
+        "id": "exp_custom_precursor_after_rejection",
+        "one_line": "LLM 自提前体只应在系统动作不满足化学逻辑后使用，并必须继承同一步 sandbox 审计。",
+        "action_prompt": "调用 propose_action 前写清 rejected action ids、拒绝原因、reaction/site、risk tags 和一步反应逻辑。",
+        "avoid": "不要用自提前体绕过 action comparison、try_action 或 commit audit。"
+      },
+      {
+        "id": "exp_template_pass_not_enough",
+        "one_line": "pass=true 只说明系统没有拦截，不证明机理、碳账、位点和时序合理。",
+        "action_prompt": "在 commit 前补充机理、拓扑、碳源、手柄时序和主要替代方案审计。",
+        "avoid": "不要把 template_match 或 confidence 当成 commit 理由。"
+      },
+      {
+        "id": "exp_global_route_plan_persistence",
+        "one_line": "长期 route_plan 是全路线 thesis；每一步要检查当前 action 是否支持它。",
+        "action_prompt": "读取 route_plan_brief，优先保持核心、手柄和终端救援逻辑一致；局部选择偏离时先说明原因。",
+        "avoid": "不要只按当前模板贪心选择而忘记全局路线目标。"
+      }
+    ],
+    "route_plan_brief": {
+      "id": "plan:ad36b3b7",
+      "revision": 0,
+      "route_thesis": "Keep the convergent late SNAr target disconnection, but do not stop at mol_3 or mol_5 if a chemically credible, simpler halopyridine precursor can be registered and validated. Replace the mol_3 Sandmeyer detour with direct C5 nitration of the right dichloromet",
+      "key_disconnections": [
+        "target C-N bond by activated SNAr",
+        "right nitrochloro electrophile from simpler dichloromethylpyridine by nitration rather than via aminonitro mol_3",
+        "left activated aryl fluoride mol_5 from more common dichloronitropyridine or halopyridine precursor"
+      ],
+      "preferred_precursor_logic": [
+        "preserve pyridine cores",
+        "use nitration only when regioisomer is explicit",
+        "use custom actions only to replace hard-block template artifacts"
+      ],
+      "protect_or_preserve": [
+        "pyridine skeletons",
+        "aryl halides",
+        "nitro/methoxy handles"
+      ],
+      "terminal_rescue_policy": "Before accepting advanced terminal, attempt a short mechanistic rollback to simpler credible precursors.",
+      "last_revision_reason": "terminal continuation requested"
+    },
+    "route_strategy_brief": {
+      "id": "sketch:mol_6:0",
+      "macro_strategy": "Disconnect the aryl C-F bond as Halex/SNAr fluorination of O=[N+]([O-])c1cc(Cl)cnc1Cl. The nitro group and pyridine N activate the chloro position toward fluoride substitution, while the other chloride is preserved.",
+      "next_executable_step": "propose_action",
+      "problem": "mol_5 was previously accepted as an advanced terminal, but a chemically plausible simpler precursor is the corresponding dichloronitropyridine plus fluoride sou"
+    },
+    "self_prompt": [
+      "Treat sandbox success as evidence only; inspect forward validation, atom accounting, and site fidelity.",
+      "Reject attempts that rely only on a reaction family name, hidden steps, missing selectivity, or incomplete atom accounting."
+    ]
+  }
+}

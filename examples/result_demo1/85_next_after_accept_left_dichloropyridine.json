@@ -1,0 +1,4 @@
+{
+  "action": "queue_empty",
+  "hint": "队列已空。调用 finalize 完成编排。"
+}

@@ -1,0 +1,337 @@
+{
+  "site_id": "bond:9",
+  "site_type": "bond",
+  "site_hint": "aryl_amino_n-aryl_sp2_c bond",
+  "action_count": 4,
+  "reaction_count": 4,
+  "source_summary": [
+    "bond",
+    "smart_capping"
+  ],
+  "risk_tags": [
+    "functional_group_compatibility",
+    "heuristic_cap"
+  ],
+  "risk_hint": "functional_group_compatibility, heuristic_cap",
+  "reactions": [
+    {
+      "reaction_id": "reaction:snar_amine",
+      "reaction_name": "SNAr Amine",
+      "action_count": 1,
+      "source_summary": [
+        "bond"
+      ],
+      "risk_hint": "functional_group_compatibility"
+    },
+    {
+      "reaction_id": "reaction:ullmann_n_arylation",
+      "reaction_name": "Ullmann N Arylation",
+      "action_count": 1,
+      "source_summary": [
+        "bond"
+      ],
+      "risk_hint": "functional_group_compatibility"
+    },
+    {
+      "reaction_id": "reaction:photoredox_c_n_coupling",
+      "reaction_name": "Photoredox C-N coupling",
+      "action_count": 1,
+      "source_summary": [
+        "bond"
+      ],
+      "risk_hint": "functional_group_compatibility"
+    },
+    {
+      "reaction_id": "reaction:buchwald_hartwig_amination",
+      "reaction_name": "Buchwald-Hartwig amination",
+      "action_count": 1,
+      "source_summary": [
+        "smart_capping"
+      ],
+      "risk_hint": "heuristic_cap"
+    }
+  ],
+  "actions": [
+    {
+      "action_id": "site:bond:9:alt:0",
+      "site_id": "bond:9",
+      "reaction": {
+        "id": "reaction:snar_amine",
+        "name": "SNAr Amine"
+      },
+      "source": "bond",
+      "source_label": "bond[0].alt[0]",
+      "template_id": "H10_snar_amine_retro",
+      "template_name": "SNAr Amine (Retro, aromatic)",
+      "precursors_preview": [
+        "*c1nc(Cl)c(C)cc1[N+](=O)[O-]",
+        "COc1ncc(Cl)cc1N"
+      ],
+      "bond_idx": 0,
+      "alt_idx": 0,
+      "actual_bond_idx": 9,
+      "atoms": [
+        9,
+        10
+      ],
+      "role_pair": [
+        "aryl_amino_n",
+        "aryl_sp2_c"
+      ],
+      "bond_type": "SINGLE",
+      "in_ring": false,
+      "heuristic_score": 0.5773,
+      "risk_tags": [
+        "functional_group_compatibility"
+      ],
+      "execution": {
+        "mode": "retro_template",
+        "template_id": "H10_snar_amine_retro",
+        "bond": [
+          9,
+          10
+        ],
+        "expected_precursors": [
+          "*c1nc(Cl)c(C)cc1[N+](=O)[O-]",
+          "COc1ncc(Cl)cc1N"
+        ]
+      }
+    },
+    {
+      "action_id": "site:bond:9:alt:1",
+      "site_id": "bond:9",
+      "reaction": {
+        "id": "reaction:ullmann_n_arylation",
+        "name": "Ullmann N Arylation"
+      },
+      "source": "bond",
+      "source_label": "bond[0].alt[1]",
+      "template_id": "E20_ullmann_N_arylation_retro",
+      "template_name": "Ullmann N Arylation (Retro, nitrogen)",
+      "precursors_preview": [
+        "Cc1cc([N+](=O)[O-])c(Br)nc1Cl",
+        "COc1ncc(Cl)cc1N"
+      ],
+      "bond_idx": 0,
+      "alt_idx": 1,
+      "actual_bond_idx": 9,
+      "atoms": [
+        9,
+        10
+      ],
+      "role_pair": [
+        "aryl_amino_n",
+        "aryl_sp2_c"
+      ],
+      "bond_type": "SINGLE",
+      "in_ring": false,
+      "heuristic_score": 0.5773,
+      "risk_tags": [
+        "functional_group_compatibility"
+      ],
+      "execution": {
+        "mode": "retro_template",
+        "template_id": "E20_ullmann_N_arylation_retro",
+        "bond": [
+          9,
+          10
+        ],
+        "expected_precursors": [
+          "Cc1cc([N+](=O)[O-])c(Br)nc1Cl",
+          "COc1ncc(Cl)cc1N"
+        ]
+      }
+    },
+    {
+      "action_id": "site:bond:9:alt:2",
+      "site_id": "bond:9",
+      "reaction": {
+        "id": "reaction:photoredox_c_n_coupling",
+        "name": "Photoredox C-N coupling"
+      },
+      "source": "bond",
+      "source_label": "bond[0].alt[2]",
+      "template_id": "M04_photoredox_CN_coupling_retro",
+      "template_name": "Photoredox C–N coupling (aryl amination; retro)",
+      "precursors_preview": [
+        "Cc1cc([N+](=O)[O-])c(Br)nc1Cl",
+        "COc1ncc(Cl)cc1[NH]"
+      ],
+      "bond_idx": 0,
+      "alt_idx": 2,
+      "actual_bond_idx": 9,
+      "atoms": [
+        9,
+        10
+      ],
+      "role_pair": [
+        "aryl_amino_n",
+        "aryl_sp2_c"
+      ],
+      "bond_type": "SINGLE",
+      "in_ring": false,
+      "heuristic_score": 0.5773,
+      "risk_tags": [
+        "functional_group_compatibility"
+      ],
+      "execution": {
+        "mode": "retro_template",
+        "template_id": "M04_photoredox_CN_coupling_retro",
+        "bond": [
+          9,
+          10
+        ],
+        "expected_precursors": [
+          "Cc1cc([N+](=O)[O-])c(Br)nc1Cl",
+          "COc1ncc(Cl)cc1[NH]"
+        ]
+      }
+    },
+    {
+      "action_id": "site:bond:9:smart:0",
+      "site_id": "bond:9",
+      "reaction": {
+        "id": "reaction:buchwald_hartwig_amination",
+        "name": "Buchwald-Hartwig amination"
+      },
+      "source": "smart_capping",
+      "source_label": "bond[0].smart_capping[0]",
+      "template_name": "Buchwald-Hartwig amination",
+      "precursors_preview": [
+        "COc1ncc(Cl)cc1N",
+        "Cc1cc([N+](=O)[O-])c(Br)nc1Cl"
+      ],
+      "bond_idx": 0,
+      "smart_idx": 0,
+      "actual_bond_idx": 9,
+      "atoms": [
+        9,
+        10
+      ],
+      "role_pair": [
+        "aryl_amino_n",
+        "aryl_sp2_c"
+      ],
+      "bond_type": "SINGLE",
+      "in_ring": false,
+      "heuristic_score": 0.5773,
+      "confidence": 0.8,
+      "risk_tags": [
+        "heuristic_cap"
+      ],
+      "execution": {
+        "mode": "explicit_precursors",
+        "expected_precursors": [
+          "COc1ncc(Cl)cc1N",
+          "Cc1cc([N+](=O)[O-])c(Br)nc1Cl"
+        ]
+      }
+    }
+  ],
+  "next_step": "try_action(action_id)",
+  "competition_hint": "same-site competition: 4 reactions",
+  "actual_bond_idx": 9,
+  "atoms": [
+    9,
+    10
+  ],
+  "role_pair": [
+    "aryl_amino_n",
+    "aryl_sp2_c"
+  ],
+  "bond_type": "SINGLE",
+  "in_ring": false,
+  "heuristic_score": 0.5773,
+  "bond_fg_context": {
+    "atom_i": [],
+    "atom_j": [
+      "aromatic_6",
+      "pyridine"
+    ],
+    "spanning": [
+      "secondary_aromatic_amine"
+    ],
+    "nearby": [
+      "pyridine_N",
+      "aromatic_6",
+      "pyridine"
+    ]
+  },
+  "prompt_brief": {
+    "stage": "explore_site",
+    "events": [
+      "stage.explore_site",
+      "action.system_template",
+      "action.smart_capping",
+      "site.same_site_competition",
+      "strategy.route_sketch_requested",
+      "strategy.route_plan_active",
+      "strategy.route_plan_revised"
+    ],
+    "next_actions": [
+      "try_action(action_id)",
+      "route_sketch(...) then propose_action(...) if all listed actions are chemically weak"
+    ],
+    "quality_guardrails": [
+      "Chemical plausibility and route quality outrank template score, CS score, and local convenience.",
+      "Each committed step must be one real chemical event with a plausible mechanism and correct site.",
+      "Preserve scaffold topology; explicitly justify any ring construction, opening, or scaffold change.",
+      "Account for key C/N/S/halogen/protecting-group atoms and missing small molecules before commit.",
+      "Install reactive temporary handles late; protection/deprotection must be explicit tree steps.",
+      "Drive toward simple, stable, purchasable precursors when chemistry remains credible; accept honest advanced terminals over speculative low-confidence deep disconnections.",
+      "If system actions miss a sound route, use route_sketch for strategic gaps or propose a complete one-step custom action, then validate and audit it before commit.",
+      "Do not accept a nontrivial advanced terminal until a short target-oriented rescue sketch has asked whether simpler precursors, selectivity, and one executable next step exist."
+    ],
+    "active_experience_card_ids": [
+      "exp_snar_electron_poor_heteroaryl",
+      "exp_global_route_plan_persistence",
+      "exp_route_plan_revision"
+    ],
+    "experience_prompts": [
+      {
+        "id": "exp_snar_electron_poor_heteroaryl",
+        "one_line": "电子贫化杂芳氟与合适 N-亲核体匹配时，SNAr 可优先于金属 C-N 偶联。",
+        "action_prompt": "检查离去基、邻/对位活化、N-亲核体位阻和竞争亲核位点。",
+        "avoid": "不要在 SNAr 明显匹配时机械转向 Buchwald、Ullmann 或 Chan-Lam。"
+      },
+      {
+        "id": "exp_global_route_plan_persistence",
+        "one_line": "长期 route_plan 是全路线 thesis；每一步要检查当前 action 是否支持它。",
+        "action_prompt": "读取 route_plan_brief，优先保持核心、手柄和终端救援逻辑一致；局部选择偏离时先说明原因。",
+        "avoid": "不要只按当前模板贪心选择而忘记全局路线目标。"
+      },
+      {
+        "id": "exp_route_plan_revision",
+        "one_line": "发现更优路线或原 plan 与证据冲突时，应短修订 route_plan，而不是静默漂移。",
+        "action_prompt": "用 route_plan(...) 记录 revision_reason、更新 thesis、关键断键和保留结构，再继续标准 action/sandbox loop。",
+        "avoid": "不要把旧 plan 和新选择混在 reasoning 里却不更新状态。"
+      }
+    ],
+    "route_plan_brief": {
+      "id": "plan:ad36b3b7",
+      "revision": 0,
+      "route_thesis": "Keep the convergent late SNAr target disconnection, but do not stop at mol_3 or mol_5 if a chemically credible, simpler halopyridine precursor can be registered and validated. Replace the mol_3 Sandmeyer detour with direct C5 nitration of the right dichloromet",
+      "key_disconnections": [
+        "target C-N bond by activated SNAr",
+        "right nitrochloro electrophile from simpler dichloromethylpyridine by nitration rather than via aminonitro mol_3",
+        "left activated aryl fluoride mol_5 from more common dichloronitropyridine or halopyridine precursor"
+      ],
+      "preferred_precursor_logic": [
+        "preserve pyridine cores",
+        "use nitration only when regioisomer is explicit",
+        "use custom actions only to replace hard-block template artifacts"
+      ],
+      "protect_or_preserve": [
+        "pyridine skeletons",
+        "aryl halides",
+        "nitro/methoxy handles"
+      ],
+      "terminal_rescue_policy": "Before accepting advanced terminal, attempt a short mechanistic rollback to simpler credible precursors.",
+      "last_revision_reason": "terminal continuation requested"
+    },
+    "self_prompt": [
+      "Compare same-site actions by mechanism, site fidelity, precursor realism, and risk tags.",
+      "If all system actions are weak, write a route_sketch first, then convert only the next real step into propose_action(...)."
+    ]
+  }
+}

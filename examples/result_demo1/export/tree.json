@@ -1,0 +1,1802 @@
+{
+  "target": "COc1ncc(Cl)cc1Nc1nc(Cl)c(C)cc1[N+](=O)[O-]",
+  "target_name": "n1_6397_extended_rescue",
+  "tree_id": "c46c4255",
+  "created_at": "2026-07-06T07:55:21.707227+00:00",
+  "status": "complete",
+  "llm_summary": "",
+  "total_steps": 6,
+  "max_depth": 5,
+  "molecule_nodes": {
+    "mol_0": {
+      "smiles": "COc1ncc(Cl)cc1Nc1nc(Cl)c(C)cc1[N+](=O)[O-]",
+      "node_id": "mol_0",
+      "role": "target",
+      "depth": 0,
+      "complexity": {
+        "cs_score": 3.5471,
+        "classification": "moderate",
+        "is_terminal": false
+      }
+    },
+    "mol_1": {
+      "smiles": "Cc1cc([N+](=O)[O-])c(Cl)nc1Cl",
+      "node_id": "mol_1",
+      "role": "intermediate",
+      "depth": 1,
+      "complexity": {
+        "cs_score": 2.71,
+        "classification": "moderate",
+        "is_terminal": false
+      }
+    },
+    "mol_2": {
+      "smiles": "COc1ncc(Cl)cc1N",
+      "node_id": "mol_2",
+      "role": "intermediate",
+      "depth": 1,
+      "complexity": {
+        "cs_score": 2.4164,
+        "classification": "trivial",
+        "is_terminal": true
+      }
+    },
+    "mol_3": {
+      "smiles": "Cc1ccc(Cl)nc1Cl",
+      "node_id": "mol_3",
+      "role": "terminal",
+      "depth": 2,
+      "complexity": {
+        "cs_score": 2.1761,
+        "classification": "trivial",
+        "is_terminal": true
+      }
+    },
+    "mol_4": {
+      "smiles": "O=[N+]([O-])O",
+      "node_id": "mol_4",
+      "role": "terminal",
+      "depth": 2,
+      "complexity": {
+        "cs_score": 2.0,
+        "classification": "trivial",
+        "is_terminal": true
+      }
+    },
+    "mol_5": {
+      "smiles": "COc1ncc(Cl)cc1[N+](=O)[O-]",
+      "node_id": "mol_5",
+      "role": "intermediate",
+      "depth": 2,
+      "complexity": {
+        "cs_score": 2.71,
+        "classification": "moderate",
+        "is_terminal": false
+      }
+    },
+    "mol_6": {
+      "smiles": "O=[N+]([O-])c1cc(Cl)cnc1F",
+      "node_id": "mol_6",
+      "role": "intermediate",
+      "depth": 3,
+      "complexity": {
+        "cs_score": 2.7417,
+        "classification": "moderate",
+        "is_terminal": false
+      }
+    },
+    "mol_7": {
+      "smiles": "CO",
+      "node_id": "mol_7",
+      "role": "terminal",
+      "depth": 3,
+      "complexity": {
+        "cs_score": 1.54,
+        "classification": "trivial",
+        "is_terminal": true
+      }
+    },
+    "mol_8": {
+      "smiles": "O=[N+]([O-])c1cc(Cl)cnc1Cl",
+      "node_id": "mol_8",
+      "role": "intermediate",
+      "depth": 4,
+      "complexity": {
+        "cs_score": 2.6817,
+        "classification": "moderate",
+        "is_terminal": false
+      }
+    },
+    "mol_9": {
+      "smiles": "[F-]",
+      "node_id": "mol_9",
+      "role": "terminal",
+      "depth": 4,
+      "complexity": {
+        "cs_score": 2.0,
+        "classification": "trivial",
+        "is_terminal": true
+      }
+    },
+    "mol_10": {
+      "smiles": "Clc1ccc(Cl)nc1",
+      "node_id": "mol_10",
+      "role": "terminal",
+      "depth": 5,
+      "complexity": {
+        "cs_score": 2.1139,
+        "classification": "trivial",
+        "is_terminal": true
+      }
+    }
+  },
+  "reaction_nodes": [
+    {
+      "step_id": "rxn_1",
+      "depth": 0,
+      "reaction_smiles": "Cc1cc([N+](=O)[O-])c(Cl)nc1Cl.COc1ncc(Cl)cc1N>>COc1ncc(Cl)cc1Nc1nc(Cl)c(C)cc1[N+](=O)[O-]",
+      "product_node": "mol_0",
+      "reactant_nodes": [
+        "mol_1",
+        "mol_2"
+      ],
+      "reaction_type": "SNAr amination of activated chloronitropyridine",
+      "template_evidence": {
+        "template_id": "",
+        "template_name": "",
+        "reaction_category": "SNAr amination of activated chloronitropyridine",
+        "bond_atoms": [],
+        "heuristic_score": 0.0,
+        "is_fgi": false
+      },
+      "llm_decision": {
+        "selection_reasoning": "Explicit late SNAr forms the target C-N bond from Cc1cc([N+](=O)[O-])c(Cl)nc1Cl and COc1ncc(Cl)cc1N. The changed site is the activated C-Cl on the right nitro/chloropyridine; the left methoxy-chloropyridine, nitro group, methyl group and nonreacting chloride are preserved. This retains the successful convergent disconnection while allowing deeper continuation of the terminal branches.",
+        "confidence": "medium",
+        "rejected_alternatives": [
+          {
+            "action_id": "site:bond:9:alt:0",
+            "reason": "Wildcard electrophile."
+          },
+          {
+            "action_id": "site:bond:9:alt:1",
+            "reason": "Less direct bromo Ullmann route."
+          }
+        ],
+        "protection_needed": false,
+        "risk_assessment": "",
+        "site_audit_summary": "Site-retentive audit passed: only scaf_0:C(product_atom=10, precursor_atom=7) changed from ['[*]Cl'] to ['[*]Nc1cc(Cl)cnc1OC']; preserved sites=['scaf_2:C(product_atom=12, precursor_atom=10)', 'scaf_3:C(product_atom=14, precursor_atom=1)', 'scaf_5:C(product_atom=17, precursor_atom=3)']",
+        "selected_action_id": "custom:llm_custom:0",
+        "selected_strategy_id": "",
+        "decision_audit": {
+          "selected_attempt_idx": 0,
+          "selected_action_id": "custom:llm_custom:0",
+          "selected_attempt": {
+            "attempt_idx": 0,
+            "action_id": "custom:llm_custom:0",
+            "action_label": "late explicit chloro SNAr diarylamine formation",
+            "source": "llm_proposed",
+            "success": true,
+            "precursors": [
+              "Cc1cc([N+](=O)[O-])c(Cl)nc1Cl",
+              "COc1ncc(Cl)cc1N"
+            ],
+            "reaction_type": "SNAr amination of activated chloronitropyridine",
+            "template_id": "",
+            "template_name": "",
+            "forward_pass": true,
+            "validation_gate_state": "missing_evidence",
+            "validation_micro": {
+              "template_attempted": false,
+              "template_match": 0.4681,
+              "scaffold_alignment": 1.0
+            },
+            "risk_tags": [
+              "site_fidelity_check",
+              "regioselective_snar",
+              "preserve_aryl_chloride",
+              "route_sketch_derived",
+              "llm_custom_precursor"
+            ],
+            "why_existing_actions_rejected": "Listed SNAr has a wildcard electrophile; cross-coupling alternatives introduce bromo handles unnecessarily.",
+            "rationale_summary": "The aminomethoxy-chloropyridine nitrogen replaces the activated chloride on the nitro/chloropyridine electrophile, preserving both heteroaryl skeletons and nonparticipating substituents.",
+            "duplicate_of": "",
+            "error": "",
+            "validation_gate": {
+              "gate_state": "missing_evidence",
+              "commit_policy": "allow_with_note",
+              "hard_blocks": [],
+              "override_allowed": [],
+              "missing_evidence": [
+                "template_not_attempted"
+              ]
+            },
+            "route_sketch_id": "sketch:mol_0:0",
+            "active_experience_card_ids": [
+              "exp_route_sketch_for_weak_action_space",
+              "exp_custom_precursor_after_rejection",
+              "exp_template_pass_not_enough"
+            ]
+          },
+          "action_comparison": [
+            {
+              "attempt_idx": 0,
+              "action_id": "custom:llm_custom:0",
+              "action_label": "late explicit chloro SNAr diarylamine formation",
+              "source": "llm_proposed",
+              "success": true,
+              "precursors": [
+                "Cc1cc([N+](=O)[O-])c(Cl)nc1Cl",
+                "COc1ncc(Cl)cc1N"
+              ],
+              "reaction_type": "SNAr amination of activated chloronitropyridine",
+              "template_id": "",
+              "template_name": "",
+              "forward_pass": true,
+              "validation_gate_state": "missing_evidence",
+              "validation_micro": {
+                "template_attempted": false,
+                "template_match": 0.4681,
+                "scaffold_alignment": 1.0
+              },
+              "risk_tags": [
+                "site_fidelity_check",
+                "regioselective_snar",
+                "preserve_aryl_chloride",
+                "route_sketch_derived",
+                "llm_custom_precursor"
+              ],
+              "why_existing_actions_rejected": "Listed SNAr has a wildcard electrophile; cross-coupling alternatives introduce bromo handles unnecessarily.",
+              "rationale_summary": "The aminomethoxy-chloropyridine nitrogen replaces the activated chloride on the nitro/chloropyridine electrophile, preserving both heteroaryl skeletons and nonparticipating substituents.",
+              "duplicate_of": "",
+              "error": "",
+              "validation_gate": {
+                "gate_state": "missing_evidence",
+                "commit_policy": "allow_with_note",
+                "hard_blocks": [],
+                "override_allowed": [],
+                "missing_evidence": [
+                  "template_not_attempted"
+                ]
+              },
+              "route_sketch_id": "sketch:mol_0:0",
+              "active_experience_card_ids": [
+                "exp_route_sketch_for_weak_action_space",
+                "exp_custom_precursor_after_rejection",
+                "exp_template_pass_not_enough"
+              ]
+            }
+          ],
+          "rejected_actions": [
+            {
+              "action_id": "site:bond:9:alt:0",
+              "reason": "Wildcard electrophile."
+            },
+            {
+              "action_id": "site:bond:9:alt:1",
+              "reason": "Less direct bromo Ullmann route."
+            }
+          ],
+          "sandbox_evidence_count": 1,
+          "prompt_state": {
+            "stage": "commit",
+            "events": [
+              "stage.commit",
+              "decision.commit_requested",
+              "action.custom_precursors",
+              "strategy.route_sketch_used_for_custom_action",
+              "sandbox.success",
+              "validation.pass",
+              "validation.missing_evidence",
+              "validation.template_not_attempted",
+              "strategy.route_plan_active",
+              "strategy.route_plan_revised",
+              "strategy.route_sketch_active",
+              "strategy.route_sketch_requested",
+              "site.fused_heteroaryl_site_sensitive"
+            ]
+          },
+          "decision_source": "route_sketch_derived_custom",
+          "route_plan_brief": {
+            "id": "plan:ad36b3b7",
+            "revision": 0,
+            "route_thesis": "Keep the convergent late SNAr target disconnection, but do not stop at mol_3 or mol_5 if a chemically credible, simpler halopyridine precursor can be registered and validated. Replace the mol_3 Sandmeyer detour with direct C5 nitration of the right dichloromet",
+            "key_disconnections": [
+              "target C-N bond by activated SNAr",
+              "right nitrochloro electrophile from simpler dichloromethylpyridine by nitration rather than via aminonitro mol_3",
+              "left activated aryl fluoride mol_5 from more common dichloronitropyridine or halopyridine precursor"
+            ],
+            "preferred_precursor_logic": [
+              "preserve pyridine cores",
+              "use nitration only when regioisomer is explicit",
+              "use custom actions only to replace hard-block template artifacts"
+            ],
+            "protect_or_preserve": [
+              "pyridine skeletons",
+              "aryl halides",
+              "nitro/methoxy handles"
+            ],
+            "terminal_rescue_policy": "Before accepting advanced terminal, attempt a short mechanistic rollback to simpler credible precursors.",
+            "last_revision_reason": "terminal continuation requested"
+          },
+          "route_plan_id": "plan:ad36b3b7",
+          "route_plan_revision": 0,
+          "route_plan_alignment": "supports",
+          "route_sketch_id": "sketch:mol_0:0",
+          "route_strategy_brief": {
+            "id": "sketch:mol_0:0",
+            "macro_strategy": "Late SNAr of the aminomethoxy-chloropyridine onto the nitro-activated dichloromethylpyridine electrophile forms the target diarylamine.",
+            "next_executable_step": "propose_action",
+            "problem": "The system SNAr action is chemically right but uses a wildcard electrophile; keep the explicit chloro electrophile from the previous validated route."
+          },
+          "route_sketch_provenance": [
+            {
+              "id": "sketch:mol_0:0",
+              "node_id": "mol_0",
+              "smiles": "COc1ncc(Cl)cc1Nc1nc(Cl)c(C)cc1[N+](=O)[O-]",
+              "problem": "The system SNAr action is chemically right but uses a wildcard electrophile; keep the explicit chloro electrophile from the previous validated route.",
+              "macro_strategy": "Late SNAr of the aminomethoxy-chloropyridine onto the nitro-activated dichloromethylpyridine electrophile forms the target diarylamine.",
+              "key_disconnections": [
+                "target diarylamine C-N bond"
+              ],
+              "rejected_action_space_reason": "Wildcard SNAr precursor and cross-coupling alternatives are less explicit than the activated chloro SNAr precursor pair.",
+              "next_executable_step": "propose_action",
+              "terminal_review": false,
+              "action_space_summary": {
+                "bond_actions": 13,
+                "smart_actions": 4,
+                "fgi_actions": 7,
+                "custom_actions": 0,
+                "total_actions": 24
+              },
+              "created_at": "2026-07-06T15:55:21"
+            }
+          ],
+          "validation_gate": {
+            "gate_state": "missing_evidence",
+            "commit_policy": "allow_with_note",
+            "hard_blocks": [],
+            "soft_warnings": [],
+            "override_allowed": [],
+            "missing_evidence": [
+              {
+                "code": "template_not_attempted",
+                "source": "template_execution",
+                "message": "no executable forward template was available; this is missing evidence, not a hard block",
+                "evidence": {
+                  "template_id": "",
+                  "tanimoto_to_target": 0.4681
+                }
+              }
+            ],
+            "llm_override_allowed": false,
+            "recommended_action": "Treat validation as inconclusive; do not use template absence as positive evidence.",
+            "score": 0.867,
+            "legacy_pass": true,
+            "legacy_hard_fail_reasons": null
+          },
+          "applied_experience_card_ids": [
+            "exp_route_sketch_for_weak_action_space",
+            "exp_custom_precursor_after_rejection",
+            "exp_template_pass_not_enough"
+          ]
+        }
+      },
+      "forward_validation": {
+        "ok": true,
+        "pass": true,
+        "feasibility_score": 0.867,
+        "hard_fail_reasons": null,
+        "gate": {
+          "gate_state": "missing_evidence",
+          "commit_policy": "allow_with_note",
+          "hard_blocks": [],
+          "soft_warnings": [],
+          "override_allowed": [],
+          "missing_evidence": [
+            {
+              "code": "template_not_attempted",
+              "source": "template_execution",
+              "message": "no executable forward template was available; this is missing evidence, not a hard block",
+              "evidence": {
+                "template_id": "",
+                "tanimoto_to_target": 0.4681
+              }
+            }
+          ],
+          "llm_override_allowed": false,
+          "recommended_action": "Treat validation as inconclusive; do not use template absence as positive evidence.",
+          "score": 0.867,
+          "legacy_pass": true,
+          "legacy_hard_fail_reasons": null
+        }
+      }
+    },
+    {
+      "step_id": "rxn_2",
+      "depth": 1,
+      "reaction_smiles": "Cc1ccc(Cl)nc1Cl.O=[N+]([O-])O>>Cc1cc([N+](=O)[O-])c(Cl)nc1Cl",
+      "product_node": "mol_1",
+      "reactant_nodes": [
+        "mol_3",
+        "mol_4"
+      ],
+      "reaction_type": "regioselective C5 nitration of 2,6-dichloro-3-methylpyridine",
+      "template_evidence": {
+        "template_id": "",
+        "template_name": "",
+        "reaction_category": "regioselective C5 nitration of 2,6-dichloro-3-methylpyridine",
+        "bond_atoms": [],
+        "heuristic_score": 0.0,
+        "is_fgi": false
+      },
+      "llm_decision": {
+        "selection_reasoning": "Commit corrected direct nitration for the right electrophile. The changed site is C5-H of Cc1ccc(Cl)nc1Cl, converted to C-NO2 using O=[N+]([O-])O as explicit nitro atom source. The dichloropyridine carbon skeleton, methyl group, and both chloride substituents are preserved, giving Cc1cc([N+](=O)[O-])c(Cl)nc1Cl. This avoids mol_3 because mol_3 only serves as a Sandmeyer precursor back to an aryl chloride; the simpler precursor is the dichloromethylpyridine itself. Residual risk is harsh/regioselective heteroaryl nitration, but sandbox no longer has the previous skeleton atom-source hard block.",
+        "confidence": "medium",
+        "rejected_alternatives": [
+          {
+            "action_id": "fgi:0",
+            "reason": "Built-in nitration hard-blocked on skeleton_imbalance."
+          },
+          {
+            "action_id": "custom:llm_custom:0",
+            "reason": "First custom nitration omitted nitro atom source and was hard-blocked."
+          },
+          {
+            "action_id": "fgi:1",
+            "reason": "Sandmeyer via mol_3 is a less simple amino detour."
+          }
+        ],
+        "protection_needed": false,
+        "risk_assessment": "",
+        "site_audit_summary": "Site-retentive audit passed: only scaf_2:C(product_atom=3, precursor_atom=-1) changed from [] to ['[*][N+](=O)[O-]']; preserved sites=['scaf_0:C(product_atom=1, precursor_atom=1)', 'scaf_3:C(product_atom=7, precursor_atom=4)', 'scaf_5:C(product_atom=10, precursor_atom=7)']",
+        "selected_action_id": "custom:llm_custom:1",
+        "selected_strategy_id": "",
+        "decision_audit": {
+          "selected_attempt_idx": 0,
+          "selected_action_id": "custom:llm_custom:1",
+          "selected_attempt": {
+            "attempt_idx": 0,
+            "action_id": "custom:llm_custom:1",
+            "action_label": "right electrophile from dichloromethylpyridine plus nitric acid",
+            "source": "llm_proposed",
+            "success": true,
+            "precursors": [
+              "Cc1ccc(Cl)nc1Cl",
+              "O=[N+]([O-])O"
+            ],
+            "reaction_type": "regioselective C5 nitration of 2,6-dichloro-3-methylpyridine",
+            "template_id": "",
+            "template_name": "",
+            "forward_pass": true,
+            "validation_gate_state": "missing_evidence",
+            "validation_micro": {
+              "template_attempted": false,
+              "template_match": 0.3438,
+              "scaffold_alignment": 1.0
+            },
+            "risk_tags": [
+              "regioselective_heteroaryl_nitration",
+              "site_fidelity_check",
+              "harsh_conditions",
+              "nitro_atom_source_explicit",
+              "route_sketch_derived",
+              "llm_custom_precursor"
+            ],
+            "why_existing_actions_rejected": "Built-in nitration hard-blocked; the previous custom action omitted nitric acid/nitronium as the nitro atom source; Sandmeyer via mol_3 is less simple.",
+            "rationale_summary": "A nitronium/nitric-acid source installs the C5 nitro group on a preformed 2,6-dichloro-3-methylpyridine core. The carbon skeleton, methyl substituent and both chlorides are preserved; only C-H is converted to C-NO2.",
+            "duplicate_of": "",
+            "error": "",
+            "validation_gate": {
+              "gate_state": "missing_evidence",
+              "commit_policy": "allow_with_note",
+              "hard_blocks": [],
+              "override_allowed": [],
+              "missing_evidence": [
+                "template_not_attempted"
+              ]
+            },
+            "route_sketch_id": "sketch:mol_1:1",
+            "active_experience_card_ids": [
+              "exp_route_sketch_for_weak_action_space",
+              "exp_custom_precursor_after_rejection",
+              "exp_template_pass_not_enough"
+            ]
+          },
+          "action_comparison": [
+            {
+              "attempt_idx": 0,
+              "action_id": "custom:llm_custom:1",
+              "action_label": "right electrophile from dichloromethylpyridine plus nitric acid",
+              "source": "llm_proposed",
+              "success": true,
+              "precursors": [
+                "Cc1ccc(Cl)nc1Cl",
+                "O=[N+]([O-])O"
+              ],
+              "reaction_type": "regioselective C5 nitration of 2,6-dichloro-3-methylpyridine",
+              "template_id": "",
+              "template_name": "",
+              "forward_pass": true,
+              "validation_gate_state": "missing_evidence",
+              "validation_micro": {
+                "template_attempted": false,
+                "template_match": 0.3438,
+                "scaffold_alignment": 1.0
+              },
+              "risk_tags": [
+                "regioselective_heteroaryl_nitration",
+                "site_fidelity_check",
+                "harsh_conditions",
+                "nitro_atom_source_explicit",
+                "route_sketch_derived",
+                "llm_custom_precursor"
+              ],
+              "why_existing_actions_rejected": "Built-in nitration hard-blocked; the previous custom action omitted nitric acid/nitronium as the nitro atom source; Sandmeyer via mol_3 is less simple.",
+              "rationale_summary": "A nitronium/nitric-acid source installs the C5 nitro group on a preformed 2,6-dichloro-3-methylpyridine core. The carbon skeleton, methyl substituent and both chlorides are preserved; only C-H is converted to C-NO2.",
+              "duplicate_of": "",
+              "error": "",
+              "validation_gate": {
+                "gate_state": "missing_evidence",
+                "commit_policy": "allow_with_note",
+                "hard_blocks": [],
+                "override_allowed": [],
+                "missing_evidence": [
+                  "template_not_attempted"
+                ]
+              },
+              "route_sketch_id": "sketch:mol_1:1",
+              "active_experience_card_ids": [
+                "exp_route_sketch_for_weak_action_space",
+                "exp_custom_precursor_after_rejection",
+                "exp_template_pass_not_enough"
+              ]
+            }
+          ],
+          "rejected_actions": [
+            {
+              "action_id": "fgi:0",
+              "reason": "Built-in nitration hard-blocked on skeleton_imbalance."
+            },
+            {
+              "action_id": "custom:llm_custom:0",
+              "reason": "First custom nitration omitted nitro atom source and was hard-blocked."
+            },
+            {
+              "action_id": "fgi:1",
+              "reason": "Sandmeyer via mol_3 is a less simple amino detour."
+            }
+          ],
+          "sandbox_evidence_count": 1,
+          "prompt_state": {
+            "stage": "commit",
+            "events": [
+              "stage.commit",
+              "decision.commit_requested",
+              "action.custom_precursors",
+              "strategy.route_sketch_used_for_custom_action",
+              "sandbox.success",
+              "validation.pass",
+              "validation.missing_evidence",
+              "validation.template_not_attempted",
+              "strategy.route_plan_active",
+              "strategy.route_plan_revised",
+              "strategy.route_sketch_active",
+              "strategy.route_sketch_requested",
+              "site.fused_heteroaryl_site_sensitive"
+            ]
+          },
+          "decision_source": "route_sketch_derived_custom",
+          "route_plan_brief": {
+            "id": "plan:ad36b3b7",
+            "revision": 0,
+            "route_thesis": "Keep the convergent late SNAr target disconnection, but do not stop at mol_3 or mol_5 if a chemically credible, simpler halopyridine precursor can be registered and validated. Replace the mol_3 Sandmeyer detour with direct C5 nitration of the right dichloromet",
+            "key_disconnections": [
+              "target C-N bond by activated SNAr",
+              "right nitrochloro electrophile from simpler dichloromethylpyridine by nitration rather than via aminonitro mol_3",
+              "left activated aryl fluoride mol_5 from more common dichloronitropyridine or halopyridine precursor"
+            ],
+            "preferred_precursor_logic": [
+              "preserve pyridine cores",
+              "use nitration only when regioisomer is explicit",
+              "use custom actions only to replace hard-block template artifacts"
+            ],
+            "protect_or_preserve": [
+              "pyridine skeletons",
+              "aryl halides",
+              "nitro/methoxy handles"
+            ],
+            "terminal_rescue_policy": "Before accepting advanced terminal, attempt a short mechanistic rollback to simpler credible precursors.",
+            "last_revision_reason": "terminal continuation requested"
+          },
+          "route_plan_id": "plan:ad36b3b7",
+          "route_plan_revision": 0,
+          "route_plan_alignment": "revises",
+          "route_sketch_id": "sketch:mol_1:1",
+          "route_strategy_brief": {
+            "id": "sketch:mol_1:1",
+            "macro_strategy": "Install the nitro group on 2,6-dichloro-3-methylpyridine using nitric acid/nitronium source while preserving the dichloromethylpyridine skeleton.",
+            "next_executable_step": "propose_action",
+            "problem": "The first custom nitration precursor set omitted the nitro atom source and was correctly hard-blocked for skeleton imbalance. Use a complete precursor/reagent s"
+          },
+          "route_sketch_provenance": [
+            {
+              "id": "sketch:mol_1:0",
+              "node_id": "mol_1",
+              "smiles": "Cc1cc([N+](=O)[O-])c(Cl)nc1Cl",
+              "problem": "The desired simpler precursor for the right electrophile is the corresponding dichloromethylpyridine, but the built-in nitration action returned skeleton_imbalance even though the carbon skeleton and halogen pattern are conserved.",
+              "macro_strategy": "Disconnect the C5 nitro group by regioselective nitration of 2,6-dichloro-3-methylpyridine. The methyl substituent and pyridine/halogen pattern define the regioisomer; this replaces the previous mol_3 Sandmeyer detour.",
+              "key_disconnections": [
+                "C5 aryl nitro group on dichloromethylpyridine"
+              ],
+              "rejected_action_space_reason": "Built-in nitration has a skeleton_imbalance hard block, likely a template accounting/mapping failure for this heteroaryl nitration; Sandmeyer through mol_3 adds an amino detour instead of simplifying the route.",
+              "next_executable_step": "propose_action",
+              "terminal_review": false,
+              "action_space_summary": {
+                "bond_actions": 3,
+                "smart_actions": 1,
+                "fgi_actions": 2,
+                "custom_actions": 0,
+                "total_actions": 6
+              },
+              "created_at": "2026-07-06T15:56:25"
+            },
+            {
+              "id": "sketch:mol_1:1",
+              "node_id": "mol_1",
+              "smiles": "Cc1cc([N+](=O)[O-])c(Cl)nc1Cl",
+              "problem": "The first custom nitration precursor set omitted the nitro atom source and was correctly hard-blocked for skeleton imbalance. Use a complete precursor/reagent set for the same one-step nitration event.",
+              "macro_strategy": "Install the nitro group on 2,6-dichloro-3-methylpyridine using nitric acid/nitronium source while preserving the dichloromethylpyridine skeleton.",
+              "key_disconnections": [
+                "C5 aryl nitro group with explicit nitro source"
+              ],
+              "rejected_action_space_reason": "Built-in nitration and the first custom nitration lacked a complete atom source for custom validation; Sandmeyer via mol_3 remains a less simple detour.",
+              "next_executable_step": "propose_action",
+              "terminal_review": false,
+              "action_space_summary": {
+                "bond_actions": 3,
+                "smart_actions": 1,
+                "fgi_actions": 2,
+                "custom_actions": 1,
+                "total_actions": 7
+              },
+              "created_at": "2026-07-06T15:58:01"
+            }
+          ],
+          "validation_gate": {
+            "gate_state": "missing_evidence",
+            "commit_policy": "allow_with_note",
+            "hard_blocks": [],
+            "soft_warnings": [],
+            "override_allowed": [],
+            "missing_evidence": [
+              {
+                "code": "template_not_attempted",
+                "source": "template_execution",
+                "message": "no executable forward template was available; this is missing evidence, not a hard block",
+                "evidence": {
+                  "template_id": "",
+                  "tanimoto_to_target": 0.3438
+                }
+              }
+            ],
+            "llm_override_allowed": false,
+            "recommended_action": "Treat validation as inconclusive; do not use template absence as positive evidence.",
+            "score": 0.8359,
+            "legacy_pass": true,
+            "legacy_hard_fail_reasons": null
+          },
+          "applied_experience_card_ids": [
+            "exp_route_sketch_for_weak_action_space",
+            "exp_custom_precursor_after_rejection",
+            "exp_template_pass_not_enough"
+          ]
+        }
+      },
+      "forward_validation": {
+        "ok": true,
+        "pass": true,
+        "feasibility_score": 0.8359,
+        "hard_fail_reasons": null,
+        "gate": {
+          "gate_state": "missing_evidence",
+          "commit_policy": "allow_with_note",
+          "hard_blocks": [],
+          "soft_warnings": [],
+          "override_allowed": [],
+          "missing_evidence": [
+            {
+              "code": "template_not_attempted",
+              "source": "template_execution",
+              "message": "no executable forward template was available; this is missing evidence, not a hard block",
+              "evidence": {
+                "template_id": "",
+                "tanimoto_to_target": 0.3438
+              }
+            }
+          ],
+          "llm_override_allowed": false,
+          "recommended_action": "Treat validation as inconclusive; do not use template absence as positive evidence.",
+          "score": 0.8359,
+          "legacy_pass": true,
+          "legacy_hard_fail_reasons": null
+        }
+      }
+    },
+    {
+      "step_id": "rxn_3",
+      "depth": 1,
+      "reaction_smiles": "COc1ncc(Cl)cc1[N+](=O)[O-]>>COc1ncc(Cl)cc1N",
+      "product_node": "mol_2",
+      "reactant_nodes": [
+        "mol_5"
+      ],
+      "reaction_type": "fgi",
+      "template_evidence": {
+        "template_id": "A24_nitro_reduction_retro",
+        "template_name": "Nitro Reduction (Retro, oxidation reduction)",
+        "reaction_category": "fgi",
+        "bond_atoms": [],
+        "heuristic_score": 0.0,
+        "is_fgi": false
+      },
+      "llm_decision": {
+        "selection_reasoning": "Commit nitro reduction to prepare COc1ncc(Cl)cc1N from COc1ncc(Cl)cc1[N+](=O)[O-]. The changed site is aryl NO2 to aryl NH2; the methoxy ether, aryl chloride and pyridine core are preserved. This is cleaner than changing the methoxy bond at the amine stage because it avoids coupling/etherification in the presence of a free aminopyridine.",
+        "confidence": "medium",
+        "rejected_alternatives": [
+          {
+            "action_id": "site:bond:1:alt:0",
+            "reason": "Ullmann O-arylation at this stage needs metal conditions with free amine."
+          },
+          {
+            "action_id": "site:bond:1:alt:2",
+            "reason": "Methoxy SNAr is better done one node earlier on the nitro-activated precursor."
+          }
+        ],
+        "protection_needed": false,
+        "risk_assessment": "",
+        "site_audit_summary": "",
+        "selected_action_id": "fgi:0",
+        "selected_strategy_id": "",
+        "decision_audit": {
+          "selected_attempt_idx": 0,
+          "selected_action_id": "fgi:0",
+          "selected_attempt": {
+            "attempt_idx": 0,
+            "action_id": "fgi:0",
+            "action_label": "",
+            "source": "fgi[0]",
+            "success": true,
+            "precursors": [
+              "COc1ncc(Cl)cc1[N+](=O)[O-]"
+            ],
+            "reaction_type": "fgi",
+            "template_id": "A24_nitro_reduction_retro",
+            "template_name": "Nitro Reduction (Retro, oxidation reduction)",
+            "forward_pass": true,
+            "validation_gate_state": "missing_evidence",
+            "validation_micro": {
+              "template_attempted": true,
+              "template_match": 0.6,
+              "scaffold_alignment": 1.0
+            },
+            "risk_tags": [],
+            "why_existing_actions_rejected": "",
+            "rationale_summary": "",
+            "duplicate_of": "",
+            "error": "",
+            "validation_gate": {
+              "gate_state": "missing_evidence",
+              "commit_policy": "allow_with_note",
+              "hard_blocks": [],
+              "override_allowed": [],
+              "missing_evidence": [
+                "template_target_not_generated"
+              ]
+            },
+            "active_experience_card_ids": [
+              "exp_template_pass_not_enough",
+              "exp_route_plan_revision",
+              "exp_global_route_plan_persistence"
+            ]
+          },
+          "action_comparison": [
+            {
+              "attempt_idx": 0,
+              "action_id": "fgi:0",
+              "action_label": "",
+              "source": "fgi[0]",
+              "success": true,
+              "precursors": [
+                "COc1ncc(Cl)cc1[N+](=O)[O-]"
+              ],
+              "reaction_type": "fgi",
+              "template_id": "A24_nitro_reduction_retro",
+              "template_name": "Nitro Reduction (Retro, oxidation reduction)",
+              "forward_pass": true,
+              "validation_gate_state": "missing_evidence",
+              "validation_micro": {
+                "template_attempted": true,
+                "template_match": 0.6,
+                "scaffold_alignment": 1.0
+              },
+              "risk_tags": [],
+              "why_existing_actions_rejected": "",
+              "rationale_summary": "",
+              "duplicate_of": "",
+              "error": "",
+              "validation_gate": {
+                "gate_state": "missing_evidence",
+                "commit_policy": "allow_with_note",
+                "hard_blocks": [],
+                "override_allowed": [],
+                "missing_evidence": [
+                  "template_target_not_generated"
+                ]
+              },
+              "active_experience_card_ids": [
+                "exp_template_pass_not_enough",
+                "exp_route_plan_revision",
+                "exp_global_route_plan_persistence"
+              ]
+            }
+          ],
+          "rejected_actions": [
+            {
+              "action_id": "site:bond:1:alt:0",
+              "reason": "Ullmann O-arylation at this stage needs metal conditions with free amine."
+            },
+            {
+              "action_id": "site:bond:1:alt:2",
+              "reason": "Methoxy SNAr is better done one node earlier on the nitro-activated precursor."
+            }
+          ],
+          "sandbox_evidence_count": 1,
+          "prompt_state": {
+            "stage": "commit",
+            "events": [
+              "stage.commit",
+              "decision.commit_requested",
+              "action.system_template",
+              "sandbox.success",
+              "validation.pass",
+              "validation.missing_evidence",
+              "validation.template_target_not_generated",
+              "strategy.route_plan_active",
+              "strategy.route_plan_revised"
+            ]
+          },
+          "decision_source": "llm_selected",
+          "route_plan_brief": {
+            "id": "plan:ad36b3b7",
+            "revision": 0,
+            "route_thesis": "Keep the convergent late SNAr target disconnection, but do not stop at mol_3 or mol_5 if a chemically credible, simpler halopyridine precursor can be registered and validated. Replace the mol_3 Sandmeyer detour with direct C5 nitration of the right dichloromet",
+            "key_disconnections": [
+              "target C-N bond by activated SNAr",
+              "right nitrochloro electrophile from simpler dichloromethylpyridine by nitration rather than via aminonitro mol_3",
+              "left activated aryl fluoride mol_5 from more common dichloronitropyridine or halopyridine precursor"
+            ],
+            "preferred_precursor_logic": [
+              "preserve pyridine cores",
+              "use nitration only when regioisomer is explicit",
+              "use custom actions only to replace hard-block template artifacts"
+            ],
+            "protect_or_preserve": [
+              "pyridine skeletons",
+              "aryl halides",
+              "nitro/methoxy handles"
+            ],
+            "terminal_rescue_policy": "Before accepting advanced terminal, attempt a short mechanistic rollback to simpler credible precursors.",
+            "last_revision_reason": "terminal continuation requested"
+          },
+          "route_plan_id": "plan:ad36b3b7",
+          "route_plan_revision": 0,
+          "route_plan_alignment": "supports",
+          "validation_gate": {
+            "gate_state": "missing_evidence",
+            "commit_policy": "allow_with_note",
+            "hard_blocks": [],
+            "soft_warnings": [
+              {
+                "code": "atom_balance_unresolved",
+                "source": "atom_balance",
+                "message": "atom balance has unexplained remainder, but not a hard skeleton/severe block",
+                "evidence": {
+                  "note": "adjusted deficit: O=2"
+                }
+              }
+            ],
+            "override_allowed": [],
+            "missing_evidence": [
+              {
+                "code": "template_target_not_generated",
+                "source": "template_execution",
+                "message": "forward template did not regenerate the target; template coverage may be incomplete",
+                "evidence": {
+                  "template_id": "A24_nitro_reduction_retro",
+                  "best_match": "COc1ncc(Cl)cc1[NH2+]",
+                  "tanimoto_to_target": 0.6
+                }
+              }
+            ],
+            "llm_override_allowed": false,
+            "recommended_action": "Treat validation as inconclusive; do not use template absence as positive evidence.",
+            "score": 0.8583,
+            "legacy_pass": true,
+            "legacy_hard_fail_reasons": null
+          },
+          "applied_experience_card_ids": [
+            "exp_template_pass_not_enough",
+            "exp_route_plan_revision",
+            "exp_global_route_plan_persistence"
+          ]
+        }
+      },
+      "forward_validation": {
+        "ok": true,
+        "pass": true,
+        "feasibility_score": 0.8583,
+        "hard_fail_reasons": null,
+        "gate": {
+          "gate_state": "missing_evidence",
+          "commit_policy": "allow_with_note",
+          "hard_blocks": [],
+          "soft_warnings": [
+            {
+              "code": "atom_balance_unresolved",
+              "source": "atom_balance",
+              "message": "atom balance has unexplained remainder, but not a hard skeleton/severe block",
+              "evidence": {
+                "note": "adjusted deficit: O=2"
+              }
+            }
+          ],
+          "override_allowed": [],
+          "missing_evidence": [
+            {
+              "code": "template_target_not_generated",
+              "source": "template_execution",
+              "message": "forward template did not regenerate the target; template coverage may be incomplete",
+              "evidence": {
+                "template_id": "A24_nitro_reduction_retro",
+                "best_match": "COc1ncc(Cl)cc1[NH2+]",
+                "tanimoto_to_target": 0.6
+              }
+            }
+          ],
+          "llm_override_allowed": false,
+          "recommended_action": "Treat validation as inconclusive; do not use template absence as positive evidence.",
+          "score": 0.8583,
+          "legacy_pass": true,
+          "legacy_hard_fail_reasons": null
+        }
+      }
+    },
+    {
+      "step_id": "rxn_4",
+      "depth": 2,
+      "reaction_smiles": "O=[N+]([O-])c1cc(Cl)cnc1F.CO>>COc1ncc(Cl)cc1[N+](=O)[O-]",
+      "product_node": "mol_5",
+      "reactant_nodes": [
+        "mol_6",
+        "mol_7"
+      ],
+      "reaction_type": "SNAr O-Nucleophile",
+      "template_evidence": {
+        "template_id": "H21_snar_cyclization_O_retro",
+        "template_name": "SNAr O-Nucleophile (Retro, aromatic)",
+        "reaction_category": "SNAr O-Nucleophile",
+        "bond_atoms": [],
+        "heuristic_score": 0.0,
+        "is_fgi": false
+      },
+      "llm_decision": {
+        "selection_reasoning": "Commit methoxy SNAr to prepare COc1ncc(Cl)cc1[N+](=O)[O-] from O=[N+]([O-])c1cc(Cl)cnc1F and methanol. The changed site is aryl C-F to C-OMe; the nitro group, chloride and pyridine core are preserved. Nitro and pyridine N activate the aryl fluoride toward O-nucleophile substitution, and this is more direct than Ullmann/Chan-Lam O-arylation or the hard-blocked direct nitration candidate.",
+        "confidence": "medium",
+        "rejected_alternatives": [
+          {
+            "action_id": "site:bond:1:alt:0",
+            "reason": "Requires aryl bromide and metal-mediated O-arylation."
+          },
+          {
+            "action_id": "site:bond:1:alt:1",
+            "reason": "Requires heteroaryl boronic acid."
+          },
+          {
+            "action_id": "fgi:0",
+            "reason": "Built-in direct nitration hard-blocked in the previous evaluation."
+          }
+        ],
+        "protection_needed": false,
+        "risk_assessment": "",
+        "site_audit_summary": "",
+        "selected_action_id": "site:bond:1:alt:2",
+        "selected_strategy_id": "",
+        "decision_audit": {
+          "selected_attempt_idx": 0,
+          "selected_action_id": "site:bond:1:alt:2",
+          "selected_attempt": {
+            "attempt_idx": 0,
+            "action_id": "site:bond:1:alt:2",
+            "action_label": "",
+            "source": "bond[0].alt[2]",
+            "success": true,
+            "precursors": [
+              "O=[N+]([O-])c1cc(Cl)cnc1F",
+              "CO"
+            ],
+            "reaction_type": "SNAr O-Nucleophile",
+            "template_id": "H21_snar_cyclization_O_retro",
+            "template_name": "SNAr O-Nucleophile (Retro, aromatic)",
+            "forward_pass": true,
+            "validation_gate_state": "missing_evidence",
+            "validation_micro": {
+              "template_attempted": true,
+              "template_match": 0.3721,
+              "scaffold_alignment": 1.0
+            },
+            "risk_tags": [],
+            "why_existing_actions_rejected": "",
+            "rationale_summary": "",
+            "duplicate_of": "",
+            "error": "",
+            "validation_gate": {
+              "gate_state": "missing_evidence",
+              "commit_policy": "allow_with_note",
+              "hard_blocks": [],
+              "override_allowed": [],
+              "missing_evidence": [
+                "template_target_not_generated"
+              ]
+            },
+            "active_experience_card_ids": [
+              "exp_template_pass_not_enough",
+              "exp_route_plan_revision",
+              "exp_global_route_plan_persistence"
+            ]
+          },
+          "action_comparison": [
+            {
+              "attempt_idx": 0,
+              "action_id": "site:bond:1:alt:2",
+              "action_label": "",
+              "source": "bond[0].alt[2]",
+              "success": true,
+              "precursors": [
+                "O=[N+]([O-])c1cc(Cl)cnc1F",
+                "CO"
+              ],
+              "reaction_type": "SNAr O-Nucleophile",
+              "template_id": "H21_snar_cyclization_O_retro",
+              "template_name": "SNAr O-Nucleophile (Retro, aromatic)",
+              "forward_pass": true,
+              "validation_gate_state": "missing_evidence",
+              "validation_micro": {
+                "template_attempted": true,
+                "template_match": 0.3721,
+                "scaffold_alignment": 1.0
+              },
+              "risk_tags": [],
+              "why_existing_actions_rejected": "",
+              "rationale_summary": "",
+              "duplicate_of": "",
+              "error": "",
+              "validation_gate": {
+                "gate_state": "missing_evidence",
+                "commit_policy": "allow_with_note",
+                "hard_blocks": [],
+                "override_allowed": [],
+                "missing_evidence": [
+                  "template_target_not_generated"
+                ]
+              },
+              "active_experience_card_ids": [
+                "exp_template_pass_not_enough",
+                "exp_route_plan_revision",
+                "exp_global_route_plan_persistence"
+              ]
+            }
+          ],
+          "rejected_actions": [
+            {
+              "action_id": "site:bond:1:alt:0",
+              "reason": "Requires aryl bromide and metal-mediated O-arylation."
+            },
+            {
+              "action_id": "site:bond:1:alt:1",
+              "reason": "Requires heteroaryl boronic acid."
+            },
+            {
+              "action_id": "fgi:0",
+              "reason": "Built-in direct nitration hard-blocked in the previous evaluation."
+            }
+          ],
+          "sandbox_evidence_count": 1,
+          "prompt_state": {
+            "stage": "commit",
+            "events": [
+              "stage.commit",
+              "decision.commit_requested",
+              "action.system_template",
+              "sandbox.success",
+              "validation.pass",
+              "validation.missing_evidence",
+              "validation.template_target_not_generated",
+              "strategy.route_plan_active",
+              "strategy.route_plan_revised"
+            ]
+          },
+          "decision_source": "llm_selected",
+          "route_plan_brief": {
+            "id": "plan:ad36b3b7",
+            "revision": 0,
+            "route_thesis": "Keep the convergent late SNAr target disconnection, but do not stop at mol_3 or mol_5 if a chemically credible, simpler halopyridine precursor can be registered and validated. Replace the mol_3 Sandmeyer detour with direct C5 nitration of the right dichloromet",
+            "key_disconnections": [
+              "target C-N bond by activated SNAr",
+              "right nitrochloro electrophile from simpler dichloromethylpyridine by nitration rather than via aminonitro mol_3",
+              "left activated aryl fluoride mol_5 from more common dichloronitropyridine or halopyridine precursor"
+            ],
+            "preferred_precursor_logic": [
+              "preserve pyridine cores",
+              "use nitration only when regioisomer is explicit",
+              "use custom actions only to replace hard-block template artifacts"
+            ],
+            "protect_or_preserve": [
+              "pyridine skeletons",
+              "aryl halides",
+              "nitro/methoxy handles"
+            ],
+            "terminal_rescue_policy": "Before accepting advanced terminal, attempt a short mechanistic rollback to simpler credible precursors.",
+            "last_revision_reason": "terminal continuation requested"
+          },
+          "route_plan_id": "plan:ad36b3b7",
+          "route_plan_revision": 0,
+          "route_plan_alignment": "supports",
+          "validation_gate": {
+            "gate_state": "missing_evidence",
+            "commit_policy": "allow_with_note",
+            "hard_blocks": [],
+            "soft_warnings": [],
+            "override_allowed": [],
+            "missing_evidence": [
+              {
+                "code": "template_target_not_generated",
+                "source": "template_execution",
+                "message": "forward template did not regenerate the target; template coverage may be incomplete",
+                "evidence": {
+                  "template_id": "H21_snar_cyclization_O_retro",
+                  "best_match": "CO~c1ncc(Cl)cc1[N+](=O)[O-]",
+                  "tanimoto_to_target": 0.3721
+                }
+              }
+            ],
+            "llm_override_allowed": false,
+            "recommended_action": "Treat validation as inconclusive; do not use template absence as positive evidence.",
+            "score": 0.843,
+            "legacy_pass": true,
+            "legacy_hard_fail_reasons": null
+          },
+          "applied_experience_card_ids": [
+            "exp_template_pass_not_enough",
+            "exp_route_plan_revision",
+            "exp_global_route_plan_persistence"
+          ]
+        }
+      },
+      "forward_validation": {
+        "ok": true,
+        "pass": true,
+        "feasibility_score": 0.843,
+        "hard_fail_reasons": null,
+        "gate": {
+          "gate_state": "missing_evidence",
+          "commit_policy": "allow_with_note",
+          "hard_blocks": [],
+          "soft_warnings": [],
+          "override_allowed": [],
+          "missing_evidence": [
+            {
+              "code": "template_target_not_generated",
+              "source": "template_execution",
+              "message": "forward template did not regenerate the target; template coverage may be incomplete",
+              "evidence": {
+                "template_id": "H21_snar_cyclization_O_retro",
+                "best_match": "CO~c1ncc(Cl)cc1[N+](=O)[O-]",
+                "tanimoto_to_target": 0.3721
+              }
+            }
+          ],
+          "llm_override_allowed": false,
+          "recommended_action": "Treat validation as inconclusive; do not use template absence as positive evidence.",
+          "score": 0.843,
+          "legacy_pass": true,
+          "legacy_hard_fail_reasons": null
+        }
+      }
+    },
+    {
+      "step_id": "rxn_5",
+      "depth": 3,
+      "reaction_smiles": "O=[N+]([O-])c1cc(Cl)cnc1Cl.[F-]>>O=[N+]([O-])c1cc(Cl)cnc1F",
+      "product_node": "mol_6",
+      "reactant_nodes": [
+        "mol_8",
+        "mol_9"
+      ],
+      "reaction_type": "activated halogen exchange fluorination",
+      "template_evidence": {
+        "template_id": "",
+        "template_name": "",
+        "reaction_category": "activated halogen exchange fluorination",
+        "bond_atoms": [],
+        "heuristic_score": 0.0,
+        "is_fgi": false
+      },
+      "llm_decision": {
+        "selection_reasoning": "Commit Halex/SNAr fluorination for mol_5. The changed site is the activated aryl halide that becomes C-F; O=[N+]([O-])c1cc(Cl)cnc1Cl supplies the same nitrochloropyridine skeleton, and [F-] supplies the fluorine atom. The nitro group and pyridine N activate this site, while the other aryl chloride is preserved. This is a more actionable continuation than accepting mol_5: it reaches a simpler/common dichloro-nitropyridine precursor and avoids the hard-blocked direct nitration and non-simplifying Sandmeyer candidates.",
+        "confidence": "medium",
+        "rejected_alternatives": [
+          {
+            "action_id": "fgi:0",
+            "reason": "Built-in direct nitration candidate hard-blocks or lacks reliable atom/site accounting."
+          },
+          {
+            "action_id": "fgi:1",
+            "reason": "Sandmeyer retreats to an amino nitro fluoro precursor rather than simplifying the aryl fluoride handle."
+          }
+        ],
+        "protection_needed": false,
+        "risk_assessment": "",
+        "site_audit_summary": "Site-retentive audit passed: only scaf_5:C(product_atom=9, precursor_atom=9) changed from ['[*]Cl'] to ['[*]F']; preserved sites=['scaf_0:C(product_atom=3, precursor_atom=3)', 'scaf_2:C(product_atom=5, precursor_atom=5)']",
+        "selected_action_id": "custom:llm_custom:0",
+        "selected_strategy_id": "",
+        "decision_audit": {
+          "selected_attempt_idx": 0,
+          "selected_action_id": "custom:llm_custom:0",
+          "selected_attempt": {
+            "attempt_idx": 0,
+            "action_id": "custom:llm_custom:0",
+            "action_label": "mol5 from dichloronitropyridine plus fluoride",
+            "source": "llm_proposed",
+            "success": true,
+            "precursors": [
+              "O=[N+]([O-])c1cc(Cl)cnc1Cl",
+              "[F-]"
+            ],
+            "reaction_type": "activated halogen exchange fluorination",
+            "template_id": "",
+            "template_name": "",
+            "forward_pass": true,
+            "validation_gate_state": "missing_evidence",
+            "validation_micro": {
+              "template_attempted": false,
+              "template_match": 0.6667,
+              "scaffold_alignment": 1.0
+            },
+            "risk_tags": [
+              "halex",
+              "site_fidelity_check",
+              "preserve_aryl_chloride",
+              "activated_snar_fluorination",
+              "route_sketch_derived",
+              "llm_custom_precursor"
+            ],
+            "why_existing_actions_rejected": "Nitration hard-blocks or requires harsher regioselective EAS; Sandmeyer gives an aminonitrofluoro precursor. Neither captures the simpler dichloro-nitro pyridine plus fluoride route.",
+            "rationale_summary": "Fluoride substitutes the activated chloro leaving group on the nitro/pyridine-activated ring to give the aryl fluoride. The pyridine core, nitro group and the nonreacting aryl chloride are preserved.",
+            "duplicate_of": "",
+            "error": "",
+            "validation_gate": {
+              "gate_state": "missing_evidence",
+              "commit_policy": "allow_with_note",
+              "hard_blocks": [],
+              "override_allowed": [],
+              "missing_evidence": [
+                "template_not_attempted"
+              ]
+            },
+            "route_sketch_id": "sketch:mol_6:0",
+            "active_experience_card_ids": [
+              "exp_advanced_terminal_short_route_rescue",
+              "exp_route_sketch_for_weak_action_space",
+              "exp_custom_precursor_after_rejection",
+              "exp_template_pass_not_enough",
+              "exp_global_route_plan_persistence"
+            ]
+          },
+          "action_comparison": [
+            {
+              "attempt_idx": 0,
+              "action_id": "custom:llm_custom:0",
+              "action_label": "mol5 from dichloronitropyridine plus fluoride",
+              "source": "llm_proposed",
+              "success": true,
+              "precursors": [
+                "O=[N+]([O-])c1cc(Cl)cnc1Cl",
+                "[F-]"
+              ],
+              "reaction_type": "activated halogen exchange fluorination",
+              "template_id": "",
+              "template_name": "",
+              "forward_pass": true,
+              "validation_gate_state": "missing_evidence",
+              "validation_micro": {
+                "template_attempted": false,
+                "template_match": 0.6667,
+                "scaffold_alignment": 1.0
+              },
+              "risk_tags": [
+                "halex",
+                "site_fidelity_check",
+                "preserve_aryl_chloride",
+                "activated_snar_fluorination",
+                "route_sketch_derived",
+                "llm_custom_precursor"
+              ],
+              "why_existing_actions_rejected": "Nitration hard-blocks or requires harsher regioselective EAS; Sandmeyer gives an aminonitrofluoro precursor. Neither captures the simpler dichloro-nitro pyridine plus fluoride route.",
+              "rationale_summary": "Fluoride substitutes the activated chloro leaving group on the nitro/pyridine-activated ring to give the aryl fluoride. The pyridine core, nitro group and the nonreacting aryl chloride are preserved.",
+              "duplicate_of": "",
+              "error": "",
+              "validation_gate": {
+                "gate_state": "missing_evidence",
+                "commit_policy": "allow_with_note",
+                "hard_blocks": [],
+                "override_allowed": [],
+                "missing_evidence": [
+                  "template_not_attempted"
+                ]
+              },
+              "route_sketch_id": "sketch:mol_6:0",
+              "active_experience_card_ids": [
+                "exp_advanced_terminal_short_route_rescue",
+                "exp_route_sketch_for_weak_action_space",
+                "exp_custom_precursor_after_rejection",
+                "exp_template_pass_not_enough",
+                "exp_global_route_plan_persistence"
+              ]
+            }
+          ],
+          "rejected_actions": [
+            {
+              "action_id": "fgi:0",
+              "reason": "Built-in direct nitration candidate hard-blocks or lacks reliable atom/site accounting."
+            },
+            {
+              "action_id": "fgi:1",
+              "reason": "Sandmeyer retreats to an amino nitro fluoro precursor rather than simplifying the aryl fluoride handle."
+            }
+          ],
+          "sandbox_evidence_count": 1,
+          "prompt_state": {
+            "stage": "commit",
+            "events": [
+              "stage.commit",
+              "decision.commit_requested",
+              "action.custom_precursors",
+              "strategy.route_sketch_used_for_custom_action",
+              "sandbox.success",
+              "validation.pass",
+              "validation.missing_evidence",
+              "validation.template_not_attempted",
+              "strategy.route_plan_active",
+              "strategy.route_plan_revised",
+              "strategy.route_sketch_active",
+              "strategy.route_sketch_requested"
+            ]
+          },
+          "decision_source": "route_sketch_derived_custom",
+          "route_plan_brief": {
+            "id": "plan:ad36b3b7",
+            "revision": 0,
+            "route_thesis": "Keep the convergent late SNAr target disconnection, but do not stop at mol_3 or mol_5 if a chemically credible, simpler halopyridine precursor can be registered and validated. Replace the mol_3 Sandmeyer detour with direct C5 nitration of the right dichloromet",
+            "key_disconnections": [
+              "target C-N bond by activated SNAr",
+              "right nitrochloro electrophile from simpler dichloromethylpyridine by nitration rather than via aminonitro mol_3",
+              "left activated aryl fluoride mol_5 from more common dichloronitropyridine or halopyridine precursor"
+            ],
+            "preferred_precursor_logic": [
+              "preserve pyridine cores",
+              "use nitration only when regioisomer is explicit",
+              "use custom actions only to replace hard-block template artifacts"
+            ],
+            "protect_or_preserve": [
+              "pyridine skeletons",
+              "aryl halides",
+              "nitro/methoxy handles"
+            ],
+            "terminal_rescue_policy": "Before accepting advanced terminal, attempt a short mechanistic rollback to simpler credible precursors.",
+            "last_revision_reason": "terminal continuation requested"
+          },
+          "route_plan_id": "plan:ad36b3b7",
+          "route_plan_revision": 0,
+          "route_plan_alignment": "revises",
+          "route_sketch_id": "sketch:mol_6:0",
+          "route_strategy_brief": {
+            "id": "sketch:mol_6:0",
+            "macro_strategy": "Disconnect the aryl C-F bond as Halex/SNAr fluorination of O=[N+]([O-])c1cc(Cl)cnc1Cl. The nitro group and pyridine N activate the chloro position toward fluoride substitution, while the other chloride is preserved.",
+            "next_executable_step": "propose_action",
+            "problem": "mol_5 was previously accepted as an advanced terminal, but a chemically plausible simpler precursor is the corresponding dichloronitropyridine plus fluoride sou"
+          },
+          "route_sketch_provenance": [
+            {
+              "id": "sketch:mol_6:0",
+              "node_id": "mol_6",
+              "smiles": "O=[N+]([O-])c1cc(Cl)cnc1F",
+              "problem": "mol_5 was previously accepted as an advanced terminal, but a chemically plausible simpler precursor is the corresponding dichloronitropyridine plus fluoride source for activated halogen exchange.",
+              "macro_strategy": "Disconnect the aryl C-F bond as Halex/SNAr fluorination of O=[N+]([O-])c1cc(Cl)cnc1Cl. The nitro group and pyridine N activate the chloro position toward fluoride substitution, while the other chloride is preserved.",
+              "key_disconnections": [
+                "C-F bond on activated nitrochloropyridine"
+              ],
+              "rejected_action_space_reason": "Built-in action space only offered nitration and Sandmeyer, missing the chemically standard halogen-exchange route for aryl fluoride formation.",
+              "next_executable_step": "propose_action",
+              "terminal_review": false,
+              "action_space_summary": {
+                "bond_actions": 0,
+                "smart_actions": 0,
+                "fgi_actions": 2,
+                "custom_actions": 0,
+                "total_actions": 2
+              },
+              "created_at": "2026-07-06T16:02:41"
+            }
+          ],
+          "validation_gate": {
+            "gate_state": "missing_evidence",
+            "commit_policy": "allow_with_note",
+            "hard_blocks": [],
+            "soft_warnings": [
+              {
+                "code": "atom_balance_unresolved",
+                "source": "atom_balance",
+                "message": "atom balance has unexplained remainder, but not a hard skeleton/severe block",
+                "evidence": {
+                  "note": "adjusted deficit: Cl=1"
+                }
+              }
+            ],
+            "override_allowed": [],
+            "missing_evidence": [
+              {
+                "code": "template_not_attempted",
+                "source": "template_execution",
+                "message": "no executable forward template was available; this is missing evidence, not a hard block",
+                "evidence": {
+                  "template_id": "",
+                  "tanimoto_to_target": 0.6667
+                }
+              }
+            ],
+            "llm_override_allowed": false,
+            "recommended_action": "Treat validation as inconclusive; do not use template absence as positive evidence.",
+            "score": 0.8959,
+            "legacy_pass": true,
+            "legacy_hard_fail_reasons": null
+          },
+          "applied_experience_card_ids": [
+            "exp_route_sketch_for_weak_action_space",
+            "exp_custom_precursor_after_rejection",
+            "exp_advanced_terminal_short_route_rescue"
+          ]
+        }
+      },
+      "forward_validation": {
+        "ok": true,
+        "pass": true,
+        "feasibility_score": 0.8959,
+        "hard_fail_reasons": null,
+        "gate": {
+          "gate_state": "missing_evidence",
+          "commit_policy": "allow_with_note",
+          "hard_blocks": [],
+          "soft_warnings": [
+            {
+              "code": "atom_balance_unresolved",
+              "source": "atom_balance",
+              "message": "atom balance has unexplained remainder, but not a hard skeleton/severe block",
+              "evidence": {
+                "note": "adjusted deficit: Cl=1"
+              }
+            }
+          ],
+          "override_allowed": [],
+          "missing_evidence": [
+            {
+              "code": "template_not_attempted",
+              "source": "template_execution",
+              "message": "no executable forward template was available; this is missing evidence, not a hard block",
+              "evidence": {
+                "template_id": "",
+                "tanimoto_to_target": 0.6667
+              }
+            }
+          ],
+          "llm_override_allowed": false,
+          "recommended_action": "Treat validation as inconclusive; do not use template absence as positive evidence.",
+          "score": 0.8959,
+          "legacy_pass": true,
+          "legacy_hard_fail_reasons": null
+        }
+      }
+    },
+    {
+      "step_id": "rxn_6",
+      "depth": 4,
+      "reaction_smiles": "Clc1ccc(Cl)nc1.O=[N+]([O-])O>>O=[N+]([O-])c1cc(Cl)cnc1Cl",
+      "product_node": "mol_8",
+      "reactant_nodes": [
+        "mol_10",
+        "mol_4"
+      ],
+      "reaction_type": "regioselective nitration of dichloropyridine",
+      "template_evidence": {
+        "template_id": "",
+        "template_name": "",
+        "reaction_category": "regioselective nitration of dichloropyridine",
+        "bond_atoms": [],
+        "heuristic_score": 0.0,
+        "is_fgi": false
+      },
+      "llm_decision": {
+        "selection_reasoning": "Commit nitration of dichloropyridine to prepare O=[N+]([O-])c1cc(Cl)cnc1Cl. The changed site is aryl C-H to C-NO2; Clc1ccc(Cl)cn1 preserves the pyridine skeleton and both chloro substituents, and O=[N+]([O-])O provides the nitro atom source. This extends mol_5 beyond the aryl fluoride by a Halex precursor and then to a simpler dichloropyridine terminal. The main risk is regioselective nitration of an electron-poor halopyridine under harsh conditions, but atom accounting is explicit and there is no skeleton hard block in the custom sandbox.",
+        "confidence": "medium",
+        "rejected_alternatives": [
+          {
+            "action_id": "fgi:0",
+            "reason": "Built-in nitration lacks explicit nitro atom source and/or hard-blocked in analogous checks."
+          },
+          {
+            "action_id": "fgi:1",
+            "reason": "Sandmeyer-like paths do not simplify the halopyridine core."
+          }
+        ],
+        "protection_needed": false,
+        "risk_assessment": "",
+        "site_audit_summary": "Site-retentive audit passed: only scaf_0:C(product_atom=3, precursor_atom=-1) changed from [] to ['[*][N+](=O)[O-]']; preserved sites=['scaf_2:C(product_atom=5, precursor_atom=1)', 'scaf_5:C(product_atom=9, precursor_atom=4)']",
+        "selected_action_id": "custom:llm_custom:0",
+        "selected_strategy_id": "",
+        "decision_audit": {
+          "selected_attempt_idx": 0,
+          "selected_action_id": "custom:llm_custom:0",
+          "selected_attempt": {
+            "attempt_idx": 0,
+            "action_id": "custom:llm_custom:0",
+            "action_label": "dichloronitropyridine from dichloropyridine plus nitric acid",
+            "source": "llm_proposed",
+            "success": true,
+            "precursors": [
+              "Clc1ccc(Cl)nc1",
+              "O=[N+]([O-])O"
+            ],
+            "reaction_type": "regioselective nitration of dichloropyridine",
+            "template_id": "",
+            "template_name": "",
+            "forward_pass": true,
+            "validation_gate_state": "missing_evidence",
+            "validation_micro": {
+              "template_attempted": false,
+              "template_match": 0.2903,
+              "scaffold_alignment": 1.0
+            },
+            "risk_tags": [
+              "regioselective_heteroaryl_nitration",
+              "site_fidelity_check",
+              "nitro_atom_source_explicit",
+              "harsh_conditions",
+              "route_sketch_derived",
+              "llm_custom_precursor"
+            ],
+            "why_existing_actions_rejected": "Built-in nitration did not provide a complete atom source for the nitro group; Sandmeyer-type alternatives would add amino complexity rather than simplify the halopyridine core.",
+            "rationale_summary": "A nitronium/nitric-acid source installs the nitro group on the dichloropyridine core. Both aryl chlorides and the pyridine skeleton are preserved.",
+            "duplicate_of": "",
+            "error": "",
+            "validation_gate": {
+              "gate_state": "missing_evidence",
+              "commit_policy": "allow_with_note",
+              "hard_blocks": [],
+              "override_allowed": [],
+              "missing_evidence": [
+                "template_not_attempted"
+              ]
+            },
+            "route_sketch_id": "sketch:mol_8:0",
+            "active_experience_card_ids": [
+              "exp_route_sketch_for_weak_action_space",
+              "exp_custom_precursor_after_rejection",
+              "exp_template_pass_not_enough"
+            ]
+          },
+          "action_comparison": [
+            {
+              "attempt_idx": 0,
+              "action_id": "custom:llm_custom:0",
+              "action_label": "dichloronitropyridine from dichloropyridine plus nitric acid",
+              "source": "llm_proposed",
+              "success": true,
+              "precursors": [
+                "Clc1ccc(Cl)nc1",
+                "O=[N+]([O-])O"
+              ],
+              "reaction_type": "regioselective nitration of dichloropyridine",
+              "template_id": "",
+              "template_name": "",
+              "forward_pass": true,
+              "validation_gate_state": "missing_evidence",
+              "validation_micro": {
+                "template_attempted": false,
+                "template_match": 0.2903,
+                "scaffold_alignment": 1.0
+              },
+              "risk_tags": [
+                "regioselective_heteroaryl_nitration",
+                "site_fidelity_check",
+                "nitro_atom_source_explicit",
+                "harsh_conditions",
+                "route_sketch_derived",
+                "llm_custom_precursor"
+              ],
+              "why_existing_actions_rejected": "Built-in nitration did not provide a complete atom source for the nitro group; Sandmeyer-type alternatives would add amino complexity rather than simplify the halopyridine core.",
+              "rationale_summary": "A nitronium/nitric-acid source installs the nitro group on the dichloropyridine core. Both aryl chlorides and the pyridine skeleton are preserved.",
+              "duplicate_of": "",
+              "error": "",
+              "validation_gate": {
+                "gate_state": "missing_evidence",
+                "commit_policy": "allow_with_note",
+                "hard_blocks": [],
+                "override_allowed": [],
+                "missing_evidence": [
+                  "template_not_attempted"
+                ]
+              },
+              "route_sketch_id": "sketch:mol_8:0",
+              "active_experience_card_ids": [
+                "exp_route_sketch_for_weak_action_space",
+                "exp_custom_precursor_after_rejection",
+                "exp_template_pass_not_enough"
+              ]
+            }
+          ],
+          "rejected_actions": [
+            {
+              "action_id": "fgi:0",
+              "reason": "Built-in nitration lacks explicit nitro atom source and/or hard-blocked in analogous checks."
+            },
+            {
+              "action_id": "fgi:1",
+              "reason": "Sandmeyer-like paths do not simplify the halopyridine core."
+            }
+          ],
+          "sandbox_evidence_count": 1,
+          "prompt_state": {
+            "stage": "commit",
+            "events": [
+              "stage.commit",
+              "decision.commit_requested",
+              "action.custom_precursors",
+              "strategy.route_sketch_used_for_custom_action",
+              "sandbox.success",
+              "validation.pass",
+              "validation.missing_evidence",
+              "validation.template_not_attempted",
+              "strategy.route_plan_active",
+              "strategy.route_plan_revised",
+              "strategy.route_sketch_active",
+              "strategy.route_sketch_requested",
+              "site.fused_heteroaryl_site_sensitive"
+            ]
+          },
+          "decision_source": "route_sketch_derived_custom",
+          "route_plan_brief": {
+            "id": "plan:ad36b3b7",
+            "revision": 0,
+            "route_thesis": "Keep the convergent late SNAr target disconnection, but do not stop at mol_3 or mol_5 if a chemically credible, simpler halopyridine precursor can be registered and validated. Replace the mol_3 Sandmeyer detour with direct C5 nitration of the right dichloromet",
+            "key_disconnections": [
+              "target C-N bond by activated SNAr",
+              "right nitrochloro electrophile from simpler dichloromethylpyridine by nitration rather than via aminonitro mol_3",
+              "left activated aryl fluoride mol_5 from more common dichloronitropyridine or halopyridine precursor"
+            ],
+            "preferred_precursor_logic": [
+              "preserve pyridine cores",
+              "use nitration only when regioisomer is explicit",
+              "use custom actions only to replace hard-block template artifacts"
+            ],
+            "protect_or_preserve": [
+              "pyridine skeletons",
+              "aryl halides",
+              "nitro/methoxy handles"
+            ],
+            "terminal_rescue_policy": "Before accepting advanced terminal, attempt a short mechanistic rollback to simpler credible precursors.",
+            "last_revision_reason": "terminal continuation requested"
+          },
+          "route_plan_id": "plan:ad36b3b7",
+          "route_plan_revision": 0,
+          "route_plan_alignment": "revises",
+          "route_sketch_id": "sketch:mol_8:0",
+          "route_strategy_brief": {
+            "id": "sketch:mol_8:0",
+            "macro_strategy": "Use regioselective nitration of dichloropyridine to install the nitro group on the same preformed halopyridine core. This gives a simpler halopyridine terminal plus nitric acid/nitronium source.",
+            "next_executable_step": "propose_action",
+            "problem": "Continue the dichloronitropyridine precursor by removing the nitro group to the corresponding dichloropyridine, but custom validation must include the nitro ato"
+          },
+          "route_sketch_provenance": [
+            {
+              "id": "sketch:mol_8:0",
+              "node_id": "mol_8",
+              "smiles": "O=[N+]([O-])c1cc(Cl)cnc1Cl",
+              "problem": "Continue the dichloronitropyridine precursor by removing the nitro group to the corresponding dichloropyridine, but custom validation must include the nitro atom source.",
+              "macro_strategy": "Use regioselective nitration of dichloropyridine to install the nitro group on the same preformed halopyridine core. This gives a simpler halopyridine terminal plus nitric acid/nitronium source.",
+              "key_disconnections": [
+                "aryl C-NO2 bond on dichloropyridine"
+              ],
+              "rejected_action_space_reason": "Built-in nitration lacks explicit nitro atom source and may hard-block; deeper halogen/methyl disassembly is outside a reliable short rescue.",
+              "next_executable_step": "propose_action",
+              "terminal_review": false,
+              "action_space_summary": {
+                "bond_actions": 0,
+                "smart_actions": 0,
+                "fgi_actions": 2,
+                "custom_actions": 0,
+                "total_actions": 2
+              },
+              "created_at": "2026-07-06T16:04:01"
+            }
+          ],
+          "validation_gate": {
+            "gate_state": "missing_evidence",
+            "commit_policy": "allow_with_note",
+            "hard_blocks": [],
+            "soft_warnings": [],
+            "override_allowed": [],
+            "missing_evidence": [
+              {
+                "code": "template_not_attempted",
+                "source": "template_execution",
+                "message": "no executable forward template was available; this is missing evidence, not a hard block",
+                "evidence": {
+                  "template_id": "",
+                  "tanimoto_to_target": 0.2903
+                }
+              }
+            ],
+            "llm_override_allowed": false,
+            "recommended_action": "Treat validation as inconclusive; do not use template absence as positive evidence.",
+            "score": 0.8226,
+            "legacy_pass": true,
+            "legacy_hard_fail_reasons": null
+          },
+          "applied_experience_card_ids": [
+            "exp_route_sketch_for_weak_action_space",
+            "exp_custom_precursor_after_rejection",
+            "exp_template_pass_not_enough"
+          ]
+        }
+      },
+      "forward_validation": {
+        "ok": true,
+        "pass": true,
+        "feasibility_score": 0.8226,
+        "hard_fail_reasons": null,
+        "gate": {
+          "gate_state": "missing_evidence",
+          "commit_policy": "allow_with_note",
+          "hard_blocks": [],
+          "soft_warnings": [],
+          "override_allowed": [],
+          "missing_evidence": [
+            {
+              "code": "template_not_attempted",
+              "source": "template_execution",
+              "message": "no executable forward template was available; this is missing evidence, not a hard block",
+              "evidence": {
+                "template_id": "",
+                "tanimoto_to_target": 0.2903
+              }
+            }
+          ],
+          "llm_override_allowed": false,
+          "recommended_action": "Treat validation as inconclusive; do not use template absence as positive evidence.",
+          "score": 0.8226,
+          "legacy_pass": true,
+          "legacy_hard_fail_reasons": null
+        }
+      }
+    }
+  ]
+}

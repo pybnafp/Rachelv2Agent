@@ -1,0 +1,12 @@
+name: rachel-v2
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - rdkit
+  - numpy
+  - pillow
+  - pytest
+  - pandas
+  - matplotlib
+  - networkx

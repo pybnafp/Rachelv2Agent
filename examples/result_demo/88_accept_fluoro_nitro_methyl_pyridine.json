@@ -1,0 +1,11 @@
+{
+  "ok": true,
+  "action": "accepted_terminal",
+  "terminal_rescue": {
+    "route_sketch_id": "sketch:mol_11:0",
+    "terminal_review": true,
+    "rescue_attempt_count": 0,
+    "force_accept_without_rescue": true,
+    "rescue_not_actionable_reason": "No credible one-step rescue is better than using the pre-nitrated fluoro pyridine; available nitration candidate is hard-blocked and regioselectivity-risky."
+  }
+}

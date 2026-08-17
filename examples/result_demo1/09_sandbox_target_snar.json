@@ -1,0 +1,131 @@
+{
+  "n_attempts": 1,
+  "selected": null,
+  "by_site": [
+    {
+      "site_id": "custom:custom:llm_custom:0",
+      "attempt_idxs": [
+        0
+      ]
+    }
+  ],
+  "by_reaction": [
+    {
+      "reaction_id": "reaction:snar_amination_of_activated_chloronitropyridine",
+      "reaction_name": "SNAr amination of activated chloronitropyridine",
+      "attempt_idxs": [
+        0
+      ]
+    }
+  ],
+  "attempts": [
+    {
+      "idx": 0,
+      "action_id": "custom:llm_custom:0",
+      "site_id": "custom:custom:llm_custom:0",
+      "source": "llm_proposed",
+      "success": true,
+      "precursors": [
+        "Cc1cc([N+](=O)[O-])c(Cl)nc1Cl",
+        "COc1ncc(Cl)cc1N"
+      ],
+      "reaction_type": "SNAr amination of activated chloronitropyridine",
+      "forward_pass": true,
+      "validation_gate": {
+        "state": "missing_evidence",
+        "hard_blocks": [],
+        "override_allowed": [],
+        "missing_evidence": [
+          "template_not_attempted"
+        ]
+      }
+    }
+  ],
+  "prompt_brief": {
+    "stage": "sandbox_list",
+    "events": [
+      "stage.sandbox_list",
+      "sandbox.success",
+      "action.custom_precursors",
+      "strategy.route_sketch_used_for_custom_action",
+      "validation.pass",
+      "validation.missing_evidence",
+      "validation.template_not_attempted",
+      "strategy.route_plan_active",
+      "strategy.route_plan_revised",
+      "strategy.route_sketch_active",
+      "strategy.route_sketch_requested"
+    ],
+    "next_actions": [
+      "commit(idx=..., reasoning=..., rejected=...)",
+      "select(idx) then commit(...)"
+    ],
+    "quality_guardrails": [
+      "Chemical plausibility and route quality outrank template score, CS score, and local convenience.",
+      "Each committed step must be one real chemical event with a plausible mechanism and correct site.",
+      "Preserve scaffold topology; explicitly justify any ring construction, opening, or scaffold change.",
+      "Account for key C/N/S/halogen/protecting-group atoms and missing small molecules before commit.",
+      "Install reactive temporary handles late; protection/deprotection must be explicit tree steps.",
+      "Drive toward simple, stable, purchasable precursors when chemistry remains credible; accept honest advanced terminals over speculative low-confidence deep disconnections.",
+      "If system actions miss a sound route, use route_sketch for strategic gaps or propose a complete one-step custom action, then validate and audit it before commit.",
+      "Do not accept a nontrivial advanced terminal until a short target-oriented rescue sketch has asked whether simpler precursors, selectivity, and one executable next step exist."
+    ],
+    "active_experience_card_ids": [
+      "exp_route_sketch_for_weak_action_space",
+      "exp_custom_precursor_after_rejection",
+      "exp_template_pass_not_enough"
+    ],
+    "experience_prompts": [
+      {
+        "id": "exp_route_sketch_for_weak_action_space",
+        "one_line": "系统 action space 弱时，先自由构思目标导向路线，再只把下一步真实化学事件转成 action。",
+        "action_prompt": "写明目标核心、可用手柄、关键断键、被拒 action-space 原因和 next_executable_step；若下一步未列出，再 propose_action -> try_action。",
+        "avoid": "不要把 route sketch 降级为 validation gate，也不要用长程想法一次性跳过 sandbox。"
+      },
+      {
+        "id": "exp_custom_precursor_after_rejection",
+        "one_line": "LLM 自提前体只应在系统动作不满足化学逻辑后使用，并必须继承同一步 sandbox 审计。",
+        "action_prompt": "调用 propose_action 前写清 rejected action ids、拒绝原因、reaction/site、risk tags 和一步反应逻辑。",
+        "avoid": "不要用自提前体绕过 action comparison、try_action 或 commit audit。"
+      },
+      {
+        "id": "exp_template_pass_not_enough",
+        "one_line": "pass=true 只说明系统没有拦截，不证明机理、碳账、位点和时序合理。",
+        "action_prompt": "在 commit 前补充机理、拓扑、碳源、手柄时序和主要替代方案审计。",
+        "avoid": "不要把 template_match 或 confidence 当成 commit 理由。"
+      }
+    ],
+    "route_plan_brief": {
+      "id": "plan:ad36b3b7",
+      "revision": 0,
+      "route_thesis": "Keep the convergent late SNAr target disconnection, but do not stop at mol_3 or mol_5 if a chemically credible, simpler halopyridine precursor can be registered and validated. Replace the mol_3 Sandmeyer detour with direct C5 nitration of the right dichloromet",
+      "key_disconnections": [
+        "target C-N bond by activated SNAr",
+        "right nitrochloro electrophile from simpler dichloromethylpyridine by nitration rather than via aminonitro mol_3",
+        "left activated aryl fluoride mol_5 from more common dichloronitropyridine or halopyridine precursor"
+      ],
+      "preferred_precursor_logic": [
+        "preserve pyridine cores",
+        "use nitration only when regioisomer is explicit",
+        "use custom actions only to replace hard-block template artifacts"
+      ],
+      "protect_or_preserve": [
+        "pyridine skeletons",
+        "aryl halides",
+        "nitro/methoxy handles"
+      ],
+      "terminal_rescue_policy": "Before accepting advanced terminal, attempt a short mechanistic rollback to simpler credible precursors.",
+      "last_revision_reason": "terminal continuation requested"
+    },
+    "route_strategy_brief": {
+      "id": "sketch:mol_0:0",
+      "macro_strategy": "Late SNAr of the aminomethoxy-chloropyridine onto the nitro-activated dichloromethylpyridine electrophile forms the target diarylamine.",
+      "next_executable_step": "propose_action",
+      "problem": "The system SNAr action is chemically right but uses a wildcard electrophile; keep the explicit chloro electrophile from the previous validated route."
+    },
+    "self_prompt": [
+      "Compare attempts by action_id, reaction type, precursor realism, validation, and rejected alternatives.",
+      "For terminal rescue, choose one outcome: commit a credible attempt, try one more concrete rescue, or accept only with explicit no-actionable reason."
+    ]
+  }
+}

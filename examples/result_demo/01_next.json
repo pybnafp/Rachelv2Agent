@@ -1,0 +1,253 @@
+{
+  "status": {
+    "target": "Cc1ncc(C)n2nc(CCc3ccc(O)c(NC(C)CCO)n3)nc12",
+    "status": "in_progress",
+    "steps_executed": 0,
+    "pending_count": 0,
+    "total_molecules": 1,
+    "total_steps": 0,
+    "max_depth": 0,
+    "elapsed_sec": 0.2,
+    "tree_complete": false
+  },
+  "current": {
+    "action": "awaiting_decision",
+    "decision_tier": "standard",
+    "smiles": "Cc1ncc(C)n2nc(CCc3ccc(O)c(NC(C)CCO)n3)nc12",
+    "node_id": "mol_0",
+    "depth": 0,
+    "cs_score": 4.4154,
+    "classification": "moderate",
+    "is_terminal": false,
+    "is_target": true,
+    "depth_limited": false,
+    "steps_executed": 0,
+    "steps_remaining": 50,
+    "molecule_brief": {
+      "formula": "C18H24N6O2",
+      "mw": 356.43,
+      "heavy_atoms": 26,
+      "rings": 3,
+      "aromatic_rings": 3,
+      "stereocenters": 1,
+      "rotatable_bonds": 7
+    },
+    "functional_group_brief": [
+      {
+        "name": "primary_alcohol",
+        "count": 1
+      },
+      {
+        "name": "phenol",
+        "count": 1
+      },
+      {
+        "name": "secondary_aromatic_amine",
+        "count": 1
+      },
+      {
+        "name": "pyridine_N",
+        "count": 4
+      },
+      {
+        "name": "benzylic_CH2",
+        "count": 2
+      },
+      {
+        "name": "aromatic_6",
+        "count": 2
+      },
+      {
+        "name": "aromatic_5",
+        "count": 1
+      },
+      {
+        "name": "pyridine",
+        "count": 1
+      },
+      {
+        "name": "pyrazine",
+        "count": 1
+      },
+      {
+        "name": "bridgehead_atom",
+        "count": 1
+      }
+    ],
+    "complexity_brief": {
+      "cs_score": 4.4154,
+      "classification": "moderate",
+      "is_terminal": false
+    },
+    "n_bonds": 9,
+    "n_fgi": 22,
+    "warnings": [],
+    "primary_disclosure": "reaction_opportunity_brief",
+    "reaction_opportunity_brief": {
+      "site_count": 31,
+      "total_reaction_count": 52,
+      "action_count": 53,
+      "competing_site_count": 9,
+      "high_competition_sites": [
+        {
+          "site_id": "bond:8",
+          "site_hint": "aryl_sp2_c-benzylic_sp3_c bond",
+          "reaction_count": 5,
+          "action_count": 5,
+          "reaction_names": [
+            "Negishi Coupling",
+            "Kumada Coupling",
+            "Azole N Alkylation SN2",
+            "Photoredox/Ni cross-electrophile coupling",
+            "Benzylic alkylation (SN2)"
+          ],
+          "risk_hint": "functional_group_compatibility, heuristic_cap",
+          "next_step": "explore_site('bond:8')"
+        },
+        {
+          "site_id": "bond:16",
+          "site_hint": "aryl_sp2_c-aryl_amino_n bond",
+          "reaction_count": 5,
+          "action_count": 5,
+          "reaction_names": [
+            "Chan Lam",
+            "SNAr N-Nucleophile",
+            "Ullmann N Arylation",
+            "Photoredox C-N coupling",
+            "Buchwald-Hartwig amination"
+          ],
+          "risk_hint": "functional_group_compatibility, heuristic_cap",
+          "next_step": "explore_site('bond:16')"
+        },
+        {
+          "site_id": "bond:17",
+          "site_hint": "aryl_amino_n-alkyl_sp3_c bond",
+          "reaction_count": 4,
+          "action_count": 5,
+          "reaction_names": [
+            "Alkyl Halide Amination SN2",
+            "Mitsunobu",
+            "N-alkylation (SN2)",
+            "Reductive amination"
+          ],
+          "risk_hint": "functional_group_compatibility, heuristic_cap",
+          "next_step": "explore_site('bond:17')"
+        }
+      ],
+      "reaction_names": [
+        "Negishi Coupling",
+        "Kumada Coupling",
+        "Benzylic alkylation (SN2)",
+        "Azole N Alkylation SN2",
+        "Photoredox/Ni cross-electrophile coupling",
+        "Chan Lam",
+        "SNAr N-Nucleophile",
+        "Ullmann N Arylation",
+        "Photoredox C-N coupling",
+        "Buchwald-Hartwig amination",
+        "Alkyl Halide Amination SN2",
+        "Mitsunobu",
+        "N-alkylation (SN2)",
+        "Reductive amination",
+        "1 2 4 Triazole From Amidrazone Acyl Chloride",
+        "simple_break",
+        "Barton Mccombrie",
+        "Alkene Hydrogenation",
+        "Alkyne Hydrogenation To Alkane",
+        "Hydroboration Oxidation Terminal",
+        "Clemmensen Reduction",
+        "Aldehyde Reduction",
+        "Tamao Fleming",
+        "Carboxylic Acid Reduction BH3",
+        "Demethylation Bbr3",
+        "TBS Deprotect TBAF",
+        "Thp Deprotect",
+        "Benzyl Deprotect Hydrogenolysis",
+        "PMB Deprotect DDQ",
+        "TIPS deprotection",
+        "TBDPS deprotection",
+        "MOM deprotection",
+        "SEM deprotection",
+        "Boc Deprotect TFA",
+        "Fmoc deprotection",
+        "Cbz deprotection",
+        "Alloc deprotection",
+        "Troc deprotection"
+      ],
+      "first_layer_command": "reaction_sites()"
+    },
+    "commands": {
+      "first_layer": "reaction_sites()",
+      "second_layer": "explore_site(site_id)",
+      "sandbox": "try_action(action_id)",
+      "custom_action": "propose_action(...)",
+      "terminal": "accept_terminal(reason=...)"
+    },
+    "hint": "Use reaction_opportunity_brief for molecule-level triage; call reaction_sites() for the full first-layer site menu, then explore_site(site_id) and try_action(action_id).",
+    "prompt_brief": {
+      "stage": "context_compact",
+      "events": [
+        "stage.context_compact",
+        "strategy.route_mode_triage",
+        "site.fused_heteroaryl_site_sensitive"
+      ],
+      "next_actions": [
+        "reaction_sites()"
+      ],
+      "quality_guardrails": [
+        "Chemical plausibility and route quality outrank template score, CS score, and local convenience.",
+        "Each committed step must be one real chemical event with a plausible mechanism and correct site.",
+        "Preserve scaffold topology; explicitly justify any ring construction, opening, or scaffold change.",
+        "At route-plan initialization, record the likely route paradigm, evidence, strategic risks, and revision triggers.",
+        "Do not mistake local action-space for the full retrosynthesis space; if listed actions only express local FGI while core construction is unresolved, revise route_plan or use route_sketch.",
+        "If terminal review exposes a hidden core-construction problem, revise route_plan before accepting or committing.",
+        "Account for key C/N/S/halogen/protecting-group atoms and missing small molecules before commit.",
+        "Install reactive temporary handles late; protection/deprotection must be explicit tree steps.",
+        "Drive toward simple, stable, purchasable precursors when chemistry remains credible; accept honest advanced terminals over speculative low-confidence deep disconnections.",
+        "If system actions miss a sound route, use route_sketch for strategic gaps or propose a complete one-step custom action, then validate and audit it before commit.",
+        "Do not accept a nontrivial advanced terminal until a short target-oriented rescue sketch has asked whether simpler precursors, selectivity, and one executable next step exist.",
+        "If rescue continuation is active, resolve that forced precursor review before accepting the molecule or finalizing the route."
+      ],
+      "active_experience_card_ids": [
+        "exp_route_mode_triage_before_first_plan",
+        "exp_electron_poor_pyridine_electronic_state_strategy",
+        "exp_advanced_terminal_short_route_rescue",
+        "exp_snar_electron_poor_heteroaryl"
+      ],
+      "experience_prompts": [
+        {
+          "id": "exp_route_mode_triage_before_first_plan",
+          "one_line": "Before the first complex-target plan, classify the route hypothesis instead of jumping directly to a local disconnection.",
+          "action_prompt": "Compare late FGI/editing, scaffold assembly, electronic-state strategy, and hybrid routes; write the current choice plus evidence, risks, and revision triggers into route_plan.",
+          "avoid": "Do not treat the listed local action-space as the complete retrosynthesis space, and do not let a route-mode decision remain only in hidden reasoning."
+        },
+        {
+          "id": "exp_electron_poor_pyridine_electronic_state_strategy",
+          "one_line": "Highly substituted electron-poor pyridines should not automatically be treated as preserved mature cores for late EAS/halogenation.",
+          "action_prompt": "Compare late FGI with scaffold assembly or an electronic-state strategy. If the final aromatic pyridine is too deactivated for selective editing, consider pyridone/lactam, dihydropyridine, or related non-final electronic states before aromatization/chlorination, and record the choice in route_plan.",
+          "avoid": "Do not accept an advanced halogenated or nitrated pyridine terminal as route closure unless it explains how the difficult core is actually constructed."
+        },
+        {
+          "id": "exp_advanced_terminal_short_route_rescue",
+          "one_line": "接受高级 terminal 前，先反问：这个小目标能否由更简单前体经 1-3 步机理选择性路线到达？",
+          "action_prompt": "寻找更简单前体、官能团回退、氧化态调整、保护/脱保护或区域/化学选择性来源；actionable rescue 必须有完整 precursor SMILES、一个真实化学事件和选择性来源。route_sketch(..., terminal_review=True) 后，把一个可信下一步走 propose_action -> try_action；若还有后续真实步骤，交给 rescue continuation 的 next 续作，或用 no-actionable 理由显式例外。",
+          "avoid": "不要只写 reaction family name（如 annulation/SNAr/oxidation）；也不要在 terminal_review sketch 后未经 custom sandbox attempt 就普通 accept。"
+        },
+        {
+          "id": "exp_snar_electron_poor_heteroaryl",
+          "one_line": "电子贫化杂芳氟与合适 N-亲核体匹配时，SNAr 可优先于金属 C-N 偶联。",
+          "action_prompt": "检查离去基、邻/对位活化、N-亲核体位阻和竞争亲核位点。",
+          "avoid": "不要在 SNAr 明显匹配时机械转向 Buchwald、Ullmann 或 Chan-Lam。"
+        }
+      ],
+      "self_prompt": [
+        "Form a molecule-level route hypothesis before choosing a site.",
+        "Compare route paradigms first: late FGI/editing vs scaffold assembly vs electronic-state strategy."
+      ]
+    },
+    "audit_state_summary": {
+      "linear_steps": 0,
+      "linear_target": 15
+    }
+  }
+}

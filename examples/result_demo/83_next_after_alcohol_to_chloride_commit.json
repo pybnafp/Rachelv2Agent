@@ -1,0 +1,382 @@
+{
+  "status": {
+    "target": "Cc1ncc(C)n2nc(CCc3ccc(O)c(NC(C)CCO)n3)nc12",
+    "status": "in_progress",
+    "steps_executed": 9,
+    "pending_count": 1,
+    "total_molecules": 15,
+    "total_steps": 9,
+    "max_depth": 7,
+    "elapsed_sec": 0.3,
+    "tree_complete": false
+  },
+  "current": {
+    "action": "awaiting_decision",
+    "decision_tier": "standard",
+    "smiles": "Cc1ccc(F)c([N+](=O)[O-])n1",
+    "node_id": "mol_11",
+    "depth": 7,
+    "cs_score": 2.5726,
+    "classification": "moderate",
+    "is_terminal": false,
+    "is_target": false,
+    "depth_limited": false,
+    "steps_executed": 9,
+    "steps_remaining": 41,
+    "molecule_brief": {
+      "formula": "C6H5FN2O2",
+      "mw": 156.12,
+      "heavy_atoms": 11,
+      "rings": 1,
+      "aromatic_rings": 1,
+      "stereocenters": 0,
+      "rotatable_bonds": 1
+    },
+    "functional_group_brief": [
+      {
+        "name": "nitro",
+        "count": 1
+      },
+      {
+        "name": "pyridine_N",
+        "count": 1
+      },
+      {
+        "name": "fluoride",
+        "count": 1
+      },
+      {
+        "name": "aryl_fluoride",
+        "count": 1
+      },
+      {
+        "name": "aromatic_6",
+        "count": 1
+      },
+      {
+        "name": "pyridine",
+        "count": 1
+      }
+    ],
+    "complexity_brief": {
+      "cs_score": 2.5726,
+      "classification": "moderate",
+      "is_terminal": false
+    },
+    "n_bonds": 1,
+    "n_fgi": 1,
+    "warnings": [],
+    "primary_disclosure": "reaction_opportunity_brief",
+    "reaction_opportunity_brief": {
+      "site_count": 2,
+      "total_reaction_count": 4,
+      "action_count": 4,
+      "competing_site_count": 1,
+      "high_competition_sites": [
+        {
+          "site_id": "bond:0",
+          "site_hint": "benzylic_sp3_c-aryl_sp2_c bond",
+          "reaction_count": 3,
+          "action_count": 3,
+          "reaction_names": [
+            "Negishi Coupling",
+            "Kumada Coupling",
+            "Benzylic alkylation (SN2)"
+          ],
+          "risk_hint": "functional_group_compatibility, heuristic_cap",
+          "next_step": "explore_site('bond:0')"
+        }
+      ],
+      "reaction_names": [
+        "Negishi Coupling",
+        "Kumada Coupling",
+        "Benzylic alkylation (SN2)",
+        "Nitration"
+      ],
+      "first_layer_command": "reaction_sites()"
+    },
+    "commands": {
+      "first_layer": "reaction_sites()",
+      "second_layer": "explore_site(site_id)",
+      "sandbox": "try_action(action_id)",
+      "custom_action": "propose_action(...)",
+      "terminal": "accept_terminal(reason=...)"
+    },
+    "hint": "Use reaction_opportunity_brief for molecule-level triage; call reaction_sites() for the full first-layer site menu, then explore_site(site_id) and try_action(action_id).",
+    "prompt_brief": {
+      "stage": "context_compact",
+      "events": [
+        "stage.context_compact",
+        "strategy.route_plan_active",
+        "strategy.route_mode_triage",
+        "strategy.route_plan_revision_requested"
+      ],
+      "next_actions": [
+        "reaction_sites()"
+      ],
+      "quality_guardrails": [
+        "Chemical plausibility and route quality outrank template score, CS score, and local convenience.",
+        "Each committed step must be one real chemical event with a plausible mechanism and correct site.",
+        "Preserve scaffold topology; explicitly justify any ring construction, opening, or scaffold change.",
+        "At route-plan initialization, record the likely route paradigm, evidence, strategic risks, and revision triggers.",
+        "Do not mistake local action-space for the full retrosynthesis space; if listed actions only express local FGI while core construction is unresolved, revise route_plan or use route_sketch.",
+        "If terminal review exposes a hidden core-construction problem, revise route_plan before accepting or committing.",
+        "Account for key C/N/S/halogen/protecting-group atoms and missing small molecules before commit.",
+        "Install reactive temporary handles late; protection/deprotection must be explicit tree steps.",
+        "Drive toward simple, stable, purchasable precursors when chemistry remains credible; accept honest advanced terminals over speculative low-confidence deep disconnections.",
+        "If system actions miss a sound route, use route_sketch for strategic gaps or propose a complete one-step custom action, then validate and audit it before commit.",
+        "Do not accept a nontrivial advanced terminal until a short target-oriented rescue sketch has asked whether simpler precursors, selectivity, and one executable next step exist.",
+        "If rescue continuation is active, resolve that forced precursor review before accepting the molecule or finalizing the route."
+      ],
+      "active_experience_card_ids": [
+        "exp_route_mode_triage_before_first_plan",
+        "exp_electron_poor_pyridine_electronic_state_strategy",
+        "exp_route_plan_revision",
+        "exp_advanced_terminal_short_route_rescue"
+      ],
+      "experience_prompts": [
+        {
+          "id": "exp_route_mode_triage_before_first_plan",
+          "one_line": "Before the first complex-target plan, classify the route hypothesis instead of jumping directly to a local disconnection.",
+          "action_prompt": "Compare late FGI/editing, scaffold assembly, electronic-state strategy, and hybrid routes; write the current choice plus evidence, risks, and revision triggers into route_plan.",
+          "avoid": "Do not treat the listed local action-space as the complete retrosynthesis space, and do not let a route-mode decision remain only in hidden reasoning."
+        },
+        {
+          "id": "exp_electron_poor_pyridine_electronic_state_strategy",
+          "one_line": "Highly substituted electron-poor pyridines should not automatically be treated as preserved mature cores for late EAS/halogenation.",
+          "action_prompt": "Compare late FGI with scaffold assembly or an electronic-state strategy. If the final aromatic pyridine is too deactivated for selective editing, consider pyridone/lactam, dihydropyridine, or related non-final electronic states before aromatization/chlorination, and record the choice in route_plan.",
+          "avoid": "Do not accept an advanced halogenated or nitrated pyridine terminal as route closure unless it explains how the difficult core is actually constructed."
+        },
+        {
+          "id": "exp_route_plan_revision",
+          "one_line": "发现更优路线或原 plan 与证据冲突时，应短修订 route_plan，而不是静默漂移。",
+          "action_prompt": "用 route_plan(...) 记录 revision_reason、更新 thesis、关键断键和保留结构，再继续标准 action/sandbox loop。",
+          "avoid": "不要把旧 plan 和新选择混在 reasoning 里却不更新状态。"
+        },
+        {
+          "id": "exp_advanced_terminal_short_route_rescue",
+          "one_line": "接受高级 terminal 前，先反问：这个小目标能否由更简单前体经 1-3 步机理选择性路线到达？",
+          "action_prompt": "寻找更简单前体、官能团回退、氧化态调整、保护/脱保护或区域/化学选择性来源；actionable rescue 必须有完整 precursor SMILES、一个真实化学事件和选择性来源。route_sketch(..., terminal_review=True) 后，把一个可信下一步走 propose_action -> try_action；若还有后续真实步骤，交给 rescue continuation 的 next 续作，或用 no-actionable 理由显式例外。",
+          "avoid": "不要只写 reaction family name（如 annulation/SNAr/oxidation）；也不要在 terminal_review sketch 后未经 custom sandbox attempt 就普通 accept。"
+        }
+      ],
+      "route_plan_brief": {
+        "id": "plan:deea6efc",
+        "revision": 0,
+        "route_thesis": "Use a hybrid route: preserve the mature fused triazolopyrimidine-like core and the aminopyridinol side fragment as late-stage heteroaryl building blocks; disconnect the benzylic/ethyl linker and N-aryl aminoalcohol handle before considering deeper core assembl",
+        "route_mode": "hybrid",
+        "key_disconnections": [
+          "Csp3-Csp2 or Csp3-heteroaryl bond at the ethyl linker connecting the fused core to the pyridinol fragment.",
+          "C-N bond between pyridinol ring nitrogen substituent and the 1-methyl-3-hydroxypropyl fragment or its protected electrop"
+        ],
+        "preferred_precursor_logic": [
+          "Prefer halomethyl/vinyl/aldehyde-type heteroaryl handles for linker assembly only if forward chemistry is credible.",
+          "Prefer commercially plausible protected aminopyridinol or aminoalcohol fragments over unprotected high-functionality intermediates."
+        ],
+        "protect_or_preserve": [
+          "Preserve fused heteroaryl core unless a well-defined annulation is proposed.",
+          "Preserve phenol or protect it explicitly before alkylation/acylation conditions."
+        ],
+        "mode_evidence": [
+          "The target contains two heteroaromatic systems plus a flexible ethyl linker and a secondary aminoalcohol handle; preserving heteroaryl cores",
+          "Late FGI/editing can address phenol and aminoalcohol compatibility, while scaffold assembly remains available if the fused bicyclic core is"
+        ],
+        "strategic_risks": [
+          "Action-space may over-disconnect stable heteroaryl cores without a credible forward construction.",
+          "Phenol and secondary amine/alcohol handles may require explicit protection if used before C-C/N-C bond formation."
+        ],
+        "revision_triggers": [
+          "A selected precursor still hides the same hard heteroaryl-core construction problem as an advanced terminal.",
+          "Sandbox validation shows the linker disconnection or N-alkylation logic is route-incoherent."
+        ],
+        "terminal_rescue_policy": "Before accepting advanced terminal, attempt a short mechanistic rollback to simpler credible precursors.",
+        "last_revision_reason": "initial"
+      },
+      "self_prompt": [
+        "Form a molecule-level route hypothesis before choosing a site.",
+        "Compare route paradigms first: late FGI/editing vs scaffold assembly vs electronic-state strategy."
+      ]
+    },
+    "queue_preview": [
+      {
+        "index": 0,
+        "smiles": "Cc1ncc(C)n2nc(CO)nc12",
+        "depth": 7,
+        "cs_score": 3.2378
+      }
+    ],
+    "audit_state_summary": {
+      "strategic_plan": {
+        "route_plan": {
+          "id": "plan:deea6efc",
+          "revision": 0,
+          "route_thesis": "Use a hybrid route: preserve the mature fused triazolopyrimidine-like core and the aminopyridinol side fragment as late-stage heteroaryl building blocks; disconnect the benzylic/ethyl linker and N-aryl aminoalcohol handle before considering deeper core assembl",
+          "route_mode": "hybrid",
+          "key_disconnections": [
+            "Csp3-Csp2 or Csp3-heteroaryl bond at the ethyl linker connecting the fused core to the pyridinol fragment.",
+            "C-N bond between pyridinol ring nitrogen substituent and the 1-methyl-3-hydroxypropyl fragment or its protected electrop"
+          ],
+          "preferred_precursor_logic": [
+            "Prefer halomethyl/vinyl/aldehyde-type heteroaryl handles for linker assembly only if forward chemistry is credible.",
+            "Prefer commercially plausible protected aminopyridinol or aminoalcohol fragments over unprotected high-functionality intermediates."
+          ],
+          "protect_or_preserve": [
+            "Preserve fused heteroaryl core unless a well-defined annulation is proposed.",
+            "Preserve phenol or protect it explicitly before alkylation/acylation conditions."
+          ],
+          "mode_evidence": [
+            "The target contains two heteroaromatic systems plus a flexible ethyl linker and a secondary aminoalcohol handle; preserving heteroaryl cores",
+            "Late FGI/editing can address phenol and aminoalcohol compatibility, while scaffold assembly remains available if the fused bicyclic core is "
+          ],
+          "strategic_risks": [
+            "Action-space may over-disconnect stable heteroaryl cores without a credible forward construction.",
+            "Phenol and secondary amine/alcohol handles may require explicit protection if used before C-C/N-C bond formation."
+          ],
+          "revision_triggers": [
+            "A selected precursor still hides the same hard heteroaryl-core construction problem as an advanced terminal.",
+            "Sandbox validation shows the linker disconnection or N-alkylation logic is route-incoherent."
+          ],
+          "terminal_rescue_policy": "Before accepting advanced terminal, attempt a short mechanistic rollback to simpler credible precursors.",
+          "last_revision_reason": "initial"
+        },
+        "active_route_sketch": {
+          "id": "sketch:mol_9:0",
+          "macro_strategy": "Prepare the chloromethyl handle from the corresponding hydroxymethyl fused core using SOCl2 or related alcohol-to-chloride conditions, preserving the fused heteroaryl core.",
+          "next_executable_step": "propose_action",
+          "problem": "The chloromethyl fused core lacks a clean local FGI action. Direct radical chlorination of the trimethyl fused core would face multiple methyl-site selectivity "
+        },
+        "problem": "The chloromethyl fused core lacks a clean local FGI action. Direct radical chlorination of the trimethyl fused core would face multiple methyl-site selectivity issues.",
+        "next_executable_step": "propose_action"
+      },
+      "recent_decisions": [
+        {
+          "step_id": "rxn_2",
+          "molecule": "Cc1ncc(C)n2nc(CCc3ccc(O)c(N)n3)nc12",
+          "action": "commit",
+          "reaction_name": "Alkene Hydrogenation (Retro, oxidation reduction)",
+          "reasoning_summary": "Retrosynthetically replace the saturated ethyl bridge by the corresponding styryl/heteroaryl alkene Cc1ncc(C)n2nc(C=Cc3c",
+          "outcome": "committed",
+          "confidence": "medium"
+        },
+        {
+          "step_id": "rxn_3",
+          "molecule": "Cc1ncc(C)n2nc(C=Cc3ccc(O)c(N)n3)nc12",
+          "action": "commit",
+          "reaction_name": "Nitro Reduction (Retro, oxidation reduction)",
+          "reasoning_summary": "Retrosynthetically convert the aryl amine on the pyridinol ring to the corresponding nitro precursor. Forward direction ",
+          "outcome": "committed",
+          "confidence": "medium"
+        },
+        {
+          "step_id": "rxn_4",
+          "molecule": "Cc1ncc(C)n2nc(C=Cc3ccc(O)c([N+](=O)[O-])n3)nc12",
+          "action": "commit",
+          "reaction_name": "Demethylation Bbr3 (Retro, protection)",
+          "reasoning_summary": "Retrosynthetically protect the phenol as the anisole precursor COc1ccc(C=Cc2nc3c(C)ncc(C)n3n2)nc1[N+](=O)[O-]. Forward d",
+          "outcome": "committed",
+          "confidence": "medium"
+        },
+        {
+          "step_id": "rxn_5",
+          "molecule": "COc1ccc(C=Cc2nc3c(C)ncc(C)n3n2)nc1[N+](=O)[O-]",
+          "action": "commit",
+          "reaction_name": "Horner-Wadsworth-Emmons olefination",
+          "reasoning_summary": "Commit the custom HWE olefination as the first true scaffold-assembly event for the styryl linker. Forward direction: de",
+          "outcome": "committed",
+          "confidence": "medium"
+        },
+        {
+          "step_id": "rxn_6",
+          "molecule": "COc1ccc(C=O)nc1[N+](=O)[O-]",
+          "action": "commit",
+          "reaction_name": "Benzylic C–H oxidation to aldehyde (DDQ/CAN/SeO2 etc.) (retro)",
+          "reasoning_summary": "Retrosynthetically replace the pyridine carboxaldehyde with the corresponding methyl precursor COc1ccc(C)nc1[N+](=O)[O-]",
+          "outcome": "committed",
+          "confidence": "medium"
+        },
+        {
+          "step_id": "rxn_7",
+          "molecule": "CCOP(=O)(Cc1nc2c(C)ncc(C)n2n1)OCC",
+          "action": "commit",
+          "reaction_name": "Michaelis-Arbuzov phosphonate formation",
+          "reasoning_summary": "Commit Michaelis-Arbuzov preparation of the fused-core methyl phosphonate. Forward direction: chloromethyl fused heteroa",
+          "outcome": "committed",
+          "confidence": "medium"
+        },
+        {
+          "step_id": "rxn_8",
+          "molecule": "COc1ccc(C)nc1[N+](=O)[O-]",
+          "action": "commit",
+          "reaction_name": "SNAr O-Nucleophile (Retro, aromatic)",
+          "reasoning_summary": "Retrosynthetically disconnect the aryl O-Me bond to activated fluoro nitropyridine Cc1ccc(F)c([N+](=O)[O-])n1 and methan",
+          "outcome": "committed",
+          "confidence": "medium"
+        },
+        {
+          "step_id": "rxn_9",
+          "molecule": "Cc1ncc(C)n2nc(CCl)nc12",
+          "action": "commit",
+          "reaction_name": "Alcohol to chloride with thionyl chloride",
+          "reasoning_summary": "Commit chloromethyl handle formation from hydroxymethyl fused core. Forward direction: Cc1ncc(C)n2nc(CO)nc12 is treated ",
+          "outcome": "committed",
+          "confidence": "medium"
+        }
+      ],
+      "total_decisions": 9,
+      "recent_candidate_audit": [
+        {
+          "event": "sandbox_clear",
+          "molecule": "COc1ccc(C)nc1[N+](=O)[O-]",
+          "selected_candidate_id": "",
+          "n_attempts": 1
+        },
+        {
+          "event": "commit",
+          "molecule": "",
+          "selected_candidate_id": "site:bond:1:alt:2",
+          "n_attempts": 1
+        },
+        {
+          "event": "commit",
+          "molecule": "",
+          "selected_candidate_id": "custom:llm_custom:0",
+          "n_attempts": 1
+        }
+      ],
+      "linear_steps": 9,
+      "linear_target": 15
+    },
+    "route_plan_brief": {
+      "id": "plan:deea6efc",
+      "revision": 0,
+      "route_thesis": "Use a hybrid route: preserve the mature fused triazolopyrimidine-like core and the aminopyridinol side fragment as late-stage heteroaryl building blocks; disconnect the benzylic/ethyl linker and N-aryl aminoalcohol handle before considering deeper core assembl",
+      "route_mode": "hybrid",
+      "key_disconnections": [
+        "Csp3-Csp2 or Csp3-heteroaryl bond at the ethyl linker connecting the fused core to the pyridinol fragment.",
+        "C-N bond between pyridinol ring nitrogen substituent and the 1-methyl-3-hydroxypropyl fragment or its protected electrop"
+      ],
+      "preferred_precursor_logic": [
+        "Prefer halomethyl/vinyl/aldehyde-type heteroaryl handles for linker assembly only if forward chemistry is credible.",
+        "Prefer commercially plausible protected aminopyridinol or aminoalcohol fragments over unprotected high-functionality intermediates."
+      ],
+      "protect_or_preserve": [
+        "Preserve fused heteroaryl core unless a well-defined annulation is proposed.",
+        "Preserve phenol or protect it explicitly before alkylation/acylation conditions."
+      ],
+      "mode_evidence": [
+        "The target contains two heteroaromatic systems plus a flexible ethyl linker and a secondary aminoalcohol handle; preserving heteroaryl cores",
+        "Late FGI/editing can address phenol and aminoalcohol compatibility, while scaffold assembly remains available if the fused bicyclic core is "
+      ],
+      "strategic_risks": [
+        "Action-space may over-disconnect stable heteroaryl cores without a credible forward construction.",
+        "Phenol and secondary amine/alcohol handles may require explicit protection if used before C-C/N-C bond formation."
+      ],
+      "revision_triggers": [
+        "A selected precursor still hides the same hard heteroaryl-core construction problem as an advanced terminal.",
+        "Sandbox validation shows the linker disconnection or N-alkylation logic is route-incoherent."
+      ],
+      "terminal_rescue_policy": "Before accepting advanced terminal, attempt a short mechanistic rollback to simpler credible precursors.",
+      "last_revision_reason": "initial"
+    }
+  }
+}

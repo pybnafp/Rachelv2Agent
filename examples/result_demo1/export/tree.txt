@@ -1,0 +1,18 @@
+└── 🎯 COc1ncc(Cl)cc1Nc1nc(Cl)c(C)cc1[N+](=O)[O-] CS=3.5 [mol_0]
+      ↓ SNAr amination of activated chloronitropyridine
+    ├── ○ Cc1cc([N+](=O)[O-])c(Cl)nc1Cl CS=2.7 [mol_1]
+    │     ↓ regioselective C5 nitration of 2,6-dichloro-3-methylpyridine
+    │   ├── ✓ Cc1ccc(Cl)nc1Cl CS=2.2 [mol_3]
+    │   └── ✓ O=[N+]([O-])O CS=2.0 [mol_4]
+    └── ○ COc1ncc(Cl)cc1N CS=2.4 [mol_2]
+          ↓ fgi
+        └── ○ COc1ncc(Cl)cc1[N+](=O)[O-] CS=2.7 [mol_5]
+              ↓ SNAr O-Nucleophile
+            ├── ○ O=[N+]([O-])c1cc(Cl)cnc1F CS=2.7 [mol_6]
+            │     ↓ activated halogen exchange fluorination
+            │   ├── ○ O=[N+]([O-])c1cc(Cl)cnc1Cl CS=2.7 [mol_8]
+            │   │     ↓ regioselective nitration of dichloropyridine
+            │   │   ├── ✓ Clc1ccc(Cl)nc1 CS=2.1 [mol_10]
+            │   │   └── ✓ O=[N+]([O-])O CS=2.0 [mol_4]
+            │   └── ✓ [F-] CS=2.0 [mol_9]
+            └── ✓ CO CS=1.5 [mol_7]

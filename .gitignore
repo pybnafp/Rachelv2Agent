@@ -27,3 +27,7 @@ Rachel-v2/**/__pycache__/
 # 系统
 .DS_Store
 Thumbs.db
+
+# SDD 工作区与本地插件
+.superpowers/
+.remember/

@@ -1,0 +1,453 @@
+# n5_9998 — 逆合成规划报告
+
+**目标分子 SMILES**: `Cc1ncc(C)n2nc(CCc3ccc(O)c(NC(C)CCO)n3)nc12`
+
+**状态**: complete | **总步数**: 11 | **最大深度**: 9
+
+![目标分子](images/mol_0.png)
+
+## 合成路线总览
+
+![合成树](images/synthesis_tree.png)
+
+## 起始原料 (6 种)
+
+| 编号 | SMILES | CS Score | 分类 | 图像 |
+|------|--------|----------|------|------|
+| 1 | `CC(=O)CCO` | 1.58 | trivial | ![mol_2](images/mol_2.png) |
+| 2 | `CCOP(OCC)OCC` | 1.81 | trivial | ![mol_10](images/mol_10.png) |
+| 3 | `Cc1ccc(F)c([N+](=O)[O-])n1` | 2.57 | moderate | ![mol_11](images/mol_11.png) |
+| 4 | `CO` | 1.54 | trivial | ![mol_12](images/mol_12.png) |
+| 5 | `O=S(Cl)Cl` | 1.98 | trivial | ![mol_14](images/mol_14.png) |
+| 6 | `Cc1nc2c(C)ncc(C)n2n1` | 3.04 | moderate | ![mol_16](images/mol_16.png) |
+
+## 正向合成步骤 (11 步)
+
+### Step 1: Benzylic C–H oxidation to aldehyde (DDQ/CAN/SeO2 etc.) (retro)
+
+**反应**: `Cc1nc2c(C)ncc(C)n2n1>>Cc1ncc(C)n2nc(C=O)nc12`
+
+**前体**:
+
+- `Cc1nc2c(C)ncc(C)n2n1` [terminal]
+  ![mol_16](images/mol_16.png)
+
+
+![反应 rxn_11](images/rxn_11_reaction.png)
+
+**产物**: `Cc1ncc(C)n2nc(C=O)nc12`
+
+![mol_15](images/mol_15.png)
+
+- **选择理由**: Retrosynthetically convert the fused-core aldehyde Cc1ncc(C)n2nc(C=O)nc12 to trimethyl fused core Cc1nc2c(C)ncc(C)n2n1. Forward direction is selective oxidation of the methyl group adjacent to the electron-poor triazolopyrimidine-like core to the aldehyde, using SeO2 or related benzylic/heterobenzylic oxidation conditions with careful control to avoid overoxidation. The fused heteroaryl scaffold is preserved and only one methyl oxidation state changes. Vilsmeier was rejected because validation showed skeleton imbalance and the electron-poor fused heteroaryl would not be an obvious formylation substrate; acetal was rejected as a protected aldehyde rather than a simpler precursor.
+- **置信度**: medium
+- **被拒绝**:
+  - fgi:0: Vilsmeier candidate hard-blocked and electronically questionable.
+  - fgi:4: Dimethyl acetal is not a simpler upstream building block.
+- **Decision Audit**:
+  - selected action: fgi:1
+  - decision source: llm_selected
+  - route plan: plan:deea6efc r0: Use a hybrid route: preserve the mature fused triazolopyrimidine-like core and the aminopyridinol side fragment as late-stage heteroaryl building blocks; disconnect the benzylic/ethyl linker and N-aryl aminoalcohol handle before considering deeper core assembl [supports]
+  - validation gate: warningwarning
+  - applied experience cards: exp_electron_poor_pyridine_electronic_state_strategy, exp_route_mode_triage_before_first_plan, exp_route_plan_revision, exp_site_fidelity_fused_heteroaryl
+  - prompt events: stage.commit, decision.commit_requested, action.system_template, sandbox.success, validation.pass, validation.warning, strategy.route_plan_active, strategy.route_mode_triage
+  - sandbox evidence:
+    - [0] `fgi:1` pass, forward=True, gate=warning, reaction=fgi
+  - rejected alternatives:
+    - fgi:0: Vilsmeier candidate hard-blocked and electronically questionable.
+    - fgi:4: Dimethyl acetal is not a simpler upstream building block.
+
+### Step 2: SNAr O-Nucleophile (Retro, aromatic)
+
+**反应**: `Cc1ccc(F)c([N+](=O)[O-])n1.CO>>COc1ccc(C)nc1[N+](=O)[O-]`
+
+**前体**:
+
+- `Cc1ccc(F)c([N+](=O)[O-])n1` [terminal]
+  ![mol_11](images/mol_11.png)
+
+- `CO` [terminal]
+  ![mol_12](images/mol_12.png)
+
+
+![反应 rxn_8](images/rxn_8_reaction.png)
+
+**产物**: `COc1ccc(C)nc1[N+](=O)[O-]`
+
+![mol_8](images/mol_8.png)
+
+- **选择理由**: Retrosynthetically disconnect the aryl O-Me bond to activated fluoro nitropyridine Cc1ccc(F)c([N+](=O)[O-])n1 and methanol. Forward direction is SNAr methoxylation: methoxide attacks the electron-poor fluoro-nitropyridine carbon activated by the ring nitrogen and nitro group, displacing fluoride to give COc1ccc(C)nc1[N+](=O)[O-]. The methyl substituent and nitro group are preserved and methanol supplies the methoxy carbon/oxygen. Template evidence is incomplete, but there is no skeleton or site hard block. Nitration was rejected because Rachel flagged skeleton imbalance and regiochemical nitration of the substituted pyridine would be less controlled than using the pre-nitrated fluoro building block.
+- **置信度**: medium
+- **被拒绝**:
+  - fgi:0: Nitration candidate had validation hard_block and less certain regiochemistry.
+  - site:bond:1:alt:0: Ullmann aryl bromide/methanol is less direct than SNAr on a nitro-activated fluoro pyridine.
+  - site:bond:1:alt:1: Chan-Lam boronic acid route is unnecessary for a highly SNAr-activated aryl fluoride.
+- **Decision Audit**:
+  - selected action: site:bond:1:alt:2
+  - decision source: llm_selected
+  - route plan: plan:deea6efc r0: Use a hybrid route: preserve the mature fused triazolopyrimidine-like core and the aminopyridinol side fragment as late-stage heteroaryl building blocks; disconnect the benzylic/ethyl linker and N-aryl aminoalcohol handle before considering deeper core assembl [supports]
+  - validation gate: missing_evidence (missing_evidence=template_target_not_generated)
+  - applied experience cards: exp_electron_poor_pyridine_electronic_state_strategy, exp_route_mode_triage_before_first_plan, exp_template_pass_not_enough, exp_route_plan_revision
+  - prompt events: stage.commit, decision.commit_requested, action.system_template, sandbox.success, validation.pass, validation.missing_evidence, validation.template_target_not_generated, strategy.route_plan_active
+  - sandbox evidence:
+    - [0] `site:bond:1:alt:2` pass, forward=True, gate=missing_evidence, missing_evidence=template_target_not_generated, reaction=SNAr O-Nucleophile
+  - rejected alternatives:
+    - fgi:0: Nitration candidate had validation hard_block and less certain regiochemistry.
+    - site:bond:1:alt:0: Ullmann aryl bromide/methanol is less direct than SNAr on a nitro-activated fluoro pyridine.
+    - site:bond:1:alt:1: Chan-Lam boronic acid route is unnecessary for a highly SNAr-activated aryl fluoride.
+
+### Step 3: Aldehyde Reduction (Retro, oxidation reduction)
+
+**反应**: `Cc1ncc(C)n2nc(C=O)nc12>>Cc1ncc(C)n2nc(CO)nc12`
+
+**前体**:
+
+- `Cc1ncc(C)n2nc(C=O)nc12` [intermediate]
+  ![mol_15](images/mol_15.png)
+
+
+![反应 rxn_10](images/rxn_10_reaction.png)
+
+**产物**: `Cc1ncc(C)n2nc(CO)nc12`
+
+![mol_13](images/mol_13.png)
+
+- **选择理由**: Retrosynthetically convert the hydroxymethyl fused core to the corresponding aldehyde Cc1ncc(C)n2nc(C=O)nc12. Forward direction is selective aldehyde reduction to primary alcohol using NaBH4 or related mild hydride. The fused bicyclic heteroaryl core and methyl substituents are preserved; only the formyl oxidation state changes. This gives a common handle sequence: aldehyde -> alcohol -> chloride -> phosphonate. Ring-annulation actions were not chosen because their previews produced incoherent amidrazone/acyl chloride fragments and would hide the immediate handle chemistry.
+- **置信度**: medium
+- **被拒绝**:
+  - site:bond:6:alt:0: Ring annulation preview did not provide a credible atom/accounting-preserving construction for this fused core.
+  - site:bond:11:alt:0: Same incoherent ring-break precursor family; not preferred over clear handle FGI.
+  - site:bond:13:alt:0: Same incoherent ring-break precursor family; not preferred over clear handle FGI.
+- **Decision Audit**:
+  - selected action: fgi:0
+  - decision source: llm_selected
+  - route plan: plan:deea6efc r0: Use a hybrid route: preserve the mature fused triazolopyrimidine-like core and the aminopyridinol side fragment as late-stage heteroaryl building blocks; disconnect the benzylic/ethyl linker and N-aryl aminoalcohol handle before considering deeper core assembl [supports]
+  - validation gate: passpass
+  - applied experience cards: exp_electron_poor_pyridine_electronic_state_strategy, exp_route_mode_triage_before_first_plan, exp_route_plan_revision, exp_site_fidelity_fused_heteroaryl
+  - prompt events: stage.commit, decision.commit_requested, action.system_template, sandbox.success, validation.pass, strategy.route_plan_active, strategy.route_mode_triage, strategy.route_plan_revision_requested
+  - sandbox evidence:
+    - [0] `fgi:0` pass, forward=True, gate=pass, reaction=fgi
+  - rejected alternatives:
+    - site:bond:6:alt:0: Ring annulation preview did not provide a credible atom/accounting-preserving construction for this fused core.
+    - site:bond:11:alt:0: Same incoherent ring-break precursor family; not preferred over clear handle FGI.
+    - site:bond:13:alt:0: Same incoherent ring-break precursor family; not preferred over clear handle FGI.
+
+### Step 4: Benzylic C–H oxidation to aldehyde (DDQ/CAN/SeO2 etc.) (retro)
+
+**反应**: `COc1ccc(C)nc1[N+](=O)[O-]>>COc1ccc(C=O)nc1[N+](=O)[O-]`
+
+**前体**:
+
+- `COc1ccc(C)nc1[N+](=O)[O-]` [intermediate]
+  ![mol_8](images/mol_8.png)
+
+
+![反应 rxn_6](images/rxn_6_reaction.png)
+
+**产物**: `COc1ccc(C=O)nc1[N+](=O)[O-]`
+
+![mol_6](images/mol_6.png)
+
+- **选择理由**: Retrosynthetically replace the pyridine carboxaldehyde with the corresponding methyl precursor COc1ccc(C)nc1[N+](=O)[O-]. Forward direction is controlled heteroaryl methyl oxidation to aldehyde, e.g. SeO2, MnO2 after benzylic activation, or related conditions screened to avoid overoxidation to acid. The nitro, methoxy, and pyridine ring are preserved; only Ar-CH3 to Ar-CHO changes. The validation warning reflects oxygen atom accounting for an oxidation event, not a skeleton mismatch. Vilsmeier was rejected because the tested precursor had skeleton imbalance and electron-poor nitropyridine formylation is less credible; acetal deprotection was rejected because it does not simplify the aldehyde precursor family.
+- **置信度**: medium
+- **被拒绝**:
+  - fgi:1: Vilsmeier candidate had skeleton imbalance and is chemically disfavored on a strongly deactivated nitropyridine.
+  - fgi:5: Acetal is merely a protected aldehyde, not a simpler convergent precursor.
+  - fgi:4: Swern action returned an invalid scaffold-aligned precursor.
+- **Decision Audit**:
+  - selected action: fgi:2
+  - decision source: llm_selected
+  - route plan: plan:deea6efc r0: Use a hybrid route: preserve the mature fused triazolopyrimidine-like core and the aminopyridinol side fragment as late-stage heteroaryl building blocks; disconnect the benzylic/ethyl linker and N-aryl aminoalcohol handle before considering deeper core assembl [supports]
+  - validation gate: warningwarning
+  - applied experience cards: exp_electron_poor_pyridine_electronic_state_strategy, exp_route_mode_triage_before_first_plan, exp_route_plan_revision, exp_snar_electron_poor_heteroaryl
+  - prompt events: stage.commit, decision.commit_requested, action.system_template, sandbox.success, validation.pass, validation.warning, strategy.route_plan_active, strategy.route_mode_triage
+  - sandbox evidence:
+    - [0] `fgi:2` pass, forward=True, gate=warning, reaction=fgi
+  - rejected alternatives:
+    - fgi:1: Vilsmeier candidate had skeleton imbalance and is chemically disfavored on a strongly deactivated nitropyridine.
+    - fgi:5: Acetal is merely a protected aldehyde, not a simpler convergent precursor.
+    - fgi:4: Swern action returned an invalid scaffold-aligned precursor.
+
+### Step 5: Alcohol to chloride with thionyl chloride
+
+**反应**: `Cc1ncc(C)n2nc(CO)nc12.O=S(Cl)Cl>>Cc1ncc(C)n2nc(CCl)nc12`
+
+**前体**:
+
+- `Cc1ncc(C)n2nc(CO)nc12` [intermediate]
+  ![mol_13](images/mol_13.png)
+
+- `O=S(Cl)Cl` [terminal]
+  ![mol_14](images/mol_14.png)
+
+
+![反应 rxn_9](images/rxn_9_reaction.png)
+
+**产物**: `Cc1ncc(C)n2nc(CCl)nc12`
+
+![mol_9](images/mol_9.png)
+
+- **选择理由**: Commit chloromethyl handle formation from hydroxymethyl fused core. Forward direction: Cc1ncc(C)n2nc(CO)nc12 is treated with thionyl chloride or an equivalent alcohol activation/chloride displacement system to give Cc1ncc(C)n2nc(CCl)nc12. The reaction changes only the benzylic hydroxymethyl handle to chloromethyl; the fused heteroaryl core and two methyl substituents are preserved. This route avoids nonselective radical chlorination of a trimethyl fused core. Risks are acid sensitivity of the heteroaryl system and possible chloromethyl instability, so mild conditions, base scavenger, and immediate use in Arbuzov are preferred. Rachel missing_evidence reflects lack of an alcohol-to-chloride forward template.
+- **置信度**: medium
+- **被拒绝**:
+  - radical chlorination not registered: Would have competing methyl positions and worse site selectivity.
+  - listed aryl-benzylic bond actions: They break the preserved fused core or unrelated C-C bonds rather than interconverting the handle.
+- **Decision Audit**:
+  - selected action: custom:llm_custom:0
+  - decision source: route_sketch_derived_custom
+  - route plan: plan:deea6efc r0: Use a hybrid route: preserve the mature fused triazolopyrimidine-like core and the aminopyridinol side fragment as late-stage heteroaryl building blocks; disconnect the benzylic/ethyl linker and N-aryl aminoalcohol handle before considering deeper core assembl [supports]
+  - route sketch: sketch:mol_9:0: Prepare the chloromethyl handle from the corresponding hydroxymethyl fused core using SOCl2 or related alcohol-to-chloride conditions, preserving the fused heteroaryl core. -> propose_action
+  - validation gate: missing_evidence (missing_evidence=template_not_attempted)
+  - applied experience cards: exp_electron_poor_pyridine_electronic_state_strategy, exp_route_mode_triage_before_first_plan, exp_route_sketch_for_weak_action_space, exp_custom_precursor_after_rejection
+  - prompt events: stage.commit, decision.commit_requested, action.custom_precursors, strategy.route_sketch_used_for_custom_action, sandbox.success, validation.pass, validation.missing_evidence, validation.template_not_attempted
+  - custom provenance:
+    - why existing actions rejected: Local actions do not provide this functional-group interconversion and radical chlorination would be less site-selective.
+    - rationale: One real substitution/activation event converts the benzylic alcohol handle to chloride; the fused heteroaryl skeleton and methyl groups are preserved.
+  - sandbox evidence:
+    - [0] `custom:llm_custom:0` pass, forward=True, gate=missing_evidence, missing_evidence=template_not_attempted, reaction=Alcohol to chloride with thionyl chloride
+  - rejected alternatives:
+    - radical chlorination not registered: Would have competing methyl positions and worse site selectivity.
+    - listed aryl-benzylic bond actions: They break the preserved fused core or unrelated C-C bonds rather than interconverting the handle.
+
+### Step 6: Michaelis-Arbuzov phosphonate formation
+
+**反应**: `Cc1ncc(C)n2nc(CCl)nc12.CCOP(OCC)OCC>>CCOP(=O)(Cc1nc2c(C)ncc(C)n2n1)OCC`
+
+**前体**:
+
+- `Cc1ncc(C)n2nc(CCl)nc12` [intermediate]
+  ![mol_9](images/mol_9.png)
+
+- `CCOP(OCC)OCC` [terminal]
+  ![mol_10](images/mol_10.png)
+
+
+![反应 rxn_7](images/rxn_7_reaction.png)
+
+**产物**: `CCOP(=O)(Cc1nc2c(C)ncc(C)n2n1)OCC`
+
+![mol_7](images/mol_7.png)
+
+- **选择理由**: Commit Michaelis-Arbuzov preparation of the fused-core methyl phosphonate. Forward direction: chloromethyl fused heteroaryl Cc1ncc(C)n2nc(CCl)nc12 undergoes substitution/rearrangement with triethyl phosphite CCOP(OCC)OCC to give the diethyl phosphonate CCOP(=O)(Cc1nc2c(C)ncc(C)n2n1)OCC. This is a single P-C-forming event at the benzylic chloromethyl handle; the fused heteroaryl core and two methyl substituents are preserved. The chlorine is the leaving group, the phosphite supplies phosphorus and ethoxy groups. Main risks are chloromethyl heteroaryl stability and competing N-alkylation/solvolysis; using freshly prepared chloride/bromide and excess phosphite under Arbuzov conditions is standard. Rachel marks missing_evidence only because no executable Arbuzov template exists.
+- **置信度**: medium
+- **被拒绝**:
+  - bond/ring actions: Available local actions would break preserved heteroaryl core bonds or unrelated aryl-benzylic bonds rather than the required P-C bond.
+- **Decision Audit**:
+  - selected action: custom:llm_custom:0
+  - decision source: route_sketch_derived_custom
+  - route plan: plan:deea6efc r0: Use a hybrid route: preserve the mature fused triazolopyrimidine-like core and the aminopyridinol side fragment as late-stage heteroaryl building blocks; disconnect the benzylic/ethyl linker and N-aryl aminoalcohol handle before considering deeper core assembl [supports]
+  - route sketch: sketch:mol_7:0: Treat the phosphonate as an HWE reagent prepared by Michaelis-Arbuzov substitution from the corresponding chloromethyl or bromomethyl fused heteroaryl core and triethyl phosphite. -> propose_action
+  - validation gate: missing_evidence (missing_evidence=template_not_attempted)
+  - applied experience cards: exp_electron_poor_pyridine_electronic_state_strategy, exp_route_mode_triage_before_first_plan, exp_route_sketch_for_weak_action_space, exp_custom_precursor_after_rejection
+  - prompt events: stage.commit, decision.commit_requested, action.custom_precursors, strategy.route_sketch_used_for_custom_action, sandbox.success, validation.pass, validation.missing_evidence, validation.template_not_attempted
+  - custom provenance:
+    - why existing actions rejected: The listed actions do not disconnect the phosphonate P-C bond and would degrade the preserved heteroaryl core.
+    - rationale: One real substitution event: triethyl phosphite attacks the benzylic chloromethyl heteroaryl electrophile and rearranges to the diethyl phosphonate HWE reagent.
+  - sandbox evidence:
+    - [0] `custom:llm_custom:0` pass, forward=True, gate=missing_evidence, missing_evidence=template_not_attempted, reaction=Michaelis-Arbuzov phosphonate formation
+  - rejected alternatives:
+    - bond/ring actions: Available local actions would break preserved heteroaryl core bonds or unrelated aryl-benzylic bonds rather than the required P-C bond.
+
+### Step 7: Horner-Wadsworth-Emmons olefination
+
+**反应**: `COc1ccc(C=O)nc1[N+](=O)[O-].CCOP(=O)(Cc1nc2c(C)ncc(C)n2n1)OCC>>COc1ccc(C=Cc2nc3c(C)ncc(C)n3n2)nc1[N+](=O)[O-]`
+
+**前体**:
+
+- `COc1ccc(C=O)nc1[N+](=O)[O-]` [intermediate]
+  ![mol_6](images/mol_6.png)
+
+- `CCOP(=O)(Cc1nc2c(C)ncc(C)n2n1)OCC` [intermediate]
+  ![mol_7](images/mol_7.png)
+
+
+![反应 rxn_5](images/rxn_5_reaction.png)
+
+**产物**: `COc1ccc(C=Cc2nc3c(C)ncc(C)n3n2)nc1[N+](=O)[O-]`
+
+![mol_5](images/mol_5.png)
+
+- **选择理由**: Commit the custom HWE olefination as the first true scaffold-assembly event for the styryl linker. Forward direction: deprotonate diethyl ((fused-core)methyl)phosphonate CCOP(=O)(Cc1nc2c(C)ncc(C)n2n1)OCC and condense with nitro-methoxy pyridine aldehyde COc1ccc(C=O)nc1[N+](=O)[O-] to form COc1ccc(C=Cc2nc3c(C)ncc(C)n3n2)nc1[N+](=O)[O-]. The aldehyde carbon becomes the pyridyl alkene carbon; the phosphonate methylene becomes the fused-core alkene carbon. Methoxy protects the phenol, and nitro avoids free-amine base incompatibility during olefination. Main risks are E/Z control, aldehyde electrophilicity on an electron-poor pyridine, and heteroaryl phosphonate deprotonation; these are manageable screening risks and not skeleton-accounting failures. Rachel marks missing_evidence because no executable HWE forward template was available, not because of a hard chemical block.
+- **置信度**: medium
+- **被拒绝**:
+  - site:bond:6:alt:0: Built-in Wittig action did not supply a real ylide/phosphonate precursor; it returned two aldehydes.
+  - site:bond:6:alt:1: Built-in Julia precursor contained invalid S(c) placeholder SMILES.
+  - site:bond:6:alt:2: Peterson organosilane route is less accessible and had weaker validation than the explicit phosphonate route.
+- **Decision Audit**:
+  - selected action: custom:llm_custom:0
+  - decision source: route_sketch_derived_custom
+  - route plan: plan:deea6efc r0: Use a hybrid route: preserve the mature fused triazolopyrimidine-like core and the aminopyridinol side fragment as late-stage heteroaryl building blocks; disconnect the benzylic/ethyl linker and N-aryl aminoalcohol handle before considering deeper core assembl [supports]
+  - route sketch: sketch:mol_5:0: Build the styryl linker by a real Horner-Wadsworth-Emmons olefination between a nitro-methoxy pyridine carboxaldehyde and a fused-core methyl phosphonate. This preserves both heteroaryl cores and uses protected/non-nucleophilic handles duri -> propose_action
+  - validation gate: missing_evidence (missing_evidence=template_not_attempted)
+  - applied experience cards: exp_electron_poor_pyridine_electronic_state_strategy, exp_route_mode_triage_before_first_plan, exp_route_sketch_for_weak_action_space, exp_custom_precursor_after_rejection
+  - prompt events: stage.commit, decision.commit_requested, action.custom_precursors, strategy.route_sketch_used_for_custom_action, sandbox.success, validation.pass, validation.missing_evidence, validation.template_not_attempted
+  - custom provenance:
+    - why existing actions rejected: Wittig action lacks a true ylide/phosphonate precursor, Julia precursor is invalid, and Peterson precursor is less accessible with weaker validation.
+    - rationale: One real C=C-forming olefination event; the aldehyde carbon becomes the pyridyl alkene carbon and the phosphonate methylene becomes the fused-core alkene carbon.
+  - sandbox evidence:
+    - [0] `custom:llm_custom:0` pass, forward=True, gate=missing_evidence, missing_evidence=template_not_attempted, reaction=Horner-Wadsworth-Emmons olefination
+  - rejected alternatives:
+    - site:bond:6:alt:0: Built-in Wittig action did not supply a real ylide/phosphonate precursor; it returned two aldehydes.
+    - site:bond:6:alt:1: Built-in Julia precursor contained invalid S(c) placeholder SMILES.
+    - site:bond:6:alt:2: Peterson organosilane route is less accessible and had weaker validation than the explicit phosphonate route.
+
+### Step 8: Demethylation Bbr3 (Retro, protection)
+
+**反应**: `COc1ccc(C=Cc2nc3c(C)ncc(C)n3n2)nc1[N+](=O)[O-]>>Cc1ncc(C)n2nc(C=Cc3ccc(O)c([N+](=O)[O-])n3)nc12`
+
+**前体**:
+
+- `COc1ccc(C=Cc2nc3c(C)ncc(C)n3n2)nc1[N+](=O)[O-]` [intermediate]
+  ![mol_5](images/mol_5.png)
+
+
+![反应 rxn_4](images/rxn_4_reaction.png)
+
+**产物**: `Cc1ncc(C)n2nc(C=Cc3ccc(O)c([N+](=O)[O-])n3)nc12`
+
+![mol_4](images/mol_4.png)
+
+- **选择理由**: Retrosynthetically protect the phenol as the anisole precursor COc1ccc(C=Cc2nc3c(C)ncc(C)n3n2)nc1[N+](=O)[O-]. Forward direction is BBr3-mediated aryl methyl ether cleavage at the nitro stage. This is deliberately placed before nitro reduction and aminoalcohol installation, avoiding BBr3 exposure of a free aryl amine or secondary aminoalcohol. The fused heteroaryl core, styryl linker, pyridine nitro substituent, and aryl skeleton are preserved; only O-Me to O-H changes. The warning is an atom-accounting limitation for demethylation and not a site-fidelity block. Keeping phenol masked also makes upstream base-mediated olefination more plausible.
+- **置信度**: medium
+- **被拒绝**:
+  - bond:9 olefination before phenol protection: Free phenol would be deprotonated under HWE/Julia/Wittig basic conditions and complicate selectivity.
+- **Decision Audit**:
+  - selected action: fgi:2
+  - decision source: llm_selected
+  - route plan: plan:deea6efc r0: Use a hybrid route: preserve the mature fused triazolopyrimidine-like core and the aminopyridinol side fragment as late-stage heteroaryl building blocks; disconnect the benzylic/ethyl linker and N-aryl aminoalcohol handle before considering deeper core assembl [supports]
+  - validation gate: warningwarning
+  - applied experience cards: exp_electron_poor_pyridine_electronic_state_strategy, exp_route_mode_triage_before_first_plan, exp_route_plan_revision, exp_site_fidelity_fused_heteroaryl
+  - prompt events: stage.commit, decision.commit_requested, action.system_template, sandbox.success, validation.pass, validation.warning, strategy.route_plan_active, strategy.route_mode_triage
+  - sandbox evidence:
+    - [0] `fgi:2` pass, forward=True, gate=warning, reaction=fgi
+  - rejected alternatives:
+    - bond:9 olefination before phenol protection: Free phenol would be deprotonated under HWE/Julia/Wittig basic conditions and complicate selectivity.
+
+### Step 9: Nitro Reduction (Retro, oxidation reduction)
+
+**反应**: `Cc1ncc(C)n2nc(C=Cc3ccc(O)c([N+](=O)[O-])n3)nc12>>Cc1ncc(C)n2nc(C=Cc3ccc(O)c(N)n3)nc12`
+
+**前体**:
+
+- `Cc1ncc(C)n2nc(C=Cc3ccc(O)c([N+](=O)[O-])n3)nc12` [intermediate]
+  ![mol_4](images/mol_4.png)
+
+
+![反应 rxn_3](images/rxn_3_reaction.png)
+
+**产物**: `Cc1ncc(C)n2nc(C=Cc3ccc(O)c(N)n3)nc12`
+
+![mol_3](images/mol_3.png)
+
+- **选择理由**: Retrosynthetically convert the aryl amine on the pyridinol ring to the corresponding nitro precursor. Forward direction is a standard nitro reduction to the primary aryl amine, using chemoselective conditions such as Fe/NH4Cl, SnCl2, or catalytic transfer hydrogenation chosen to avoid premature alkene hydrogenation if needed. This preserves the fused heteroaryl core, styryl linker, and phenol; only the aryl-N oxidation state changes. The step improves upstream planning because nitro is less nucleophilic and more compatible with base-mediated olefination than a free amino group. The Rachel template returned missing evidence due to template regeneration/protonation limitations, but there is no skeleton or site-fidelity hard block.
+- **置信度**: medium
+- **被拒绝**:
+  - site:bond:9:alt:0: Existing Wittig action at this stage returned incomplete/ambiguous carbonyl precursors rather than a real ylide/phosphonate precursor.
+  - site:bond:9:alt:1: Existing Julia candidate contained an invalid precursor SMILES and cannot be committed as-is.
+- **Decision Audit**:
+  - selected action: fgi:1
+  - decision source: llm_selected
+  - route plan: plan:deea6efc r0: Use a hybrid route: preserve the mature fused triazolopyrimidine-like core and the aminopyridinol side fragment as late-stage heteroaryl building blocks; disconnect the benzylic/ethyl linker and N-aryl aminoalcohol handle before considering deeper core assembl [supports]
+  - validation gate: missing_evidence (missing_evidence=template_target_not_generated)
+  - applied experience cards: exp_electron_poor_pyridine_electronic_state_strategy, exp_route_mode_triage_before_first_plan, exp_template_pass_not_enough, exp_route_plan_revision
+  - prompt events: stage.commit, decision.commit_requested, action.system_template, sandbox.success, validation.pass, validation.missing_evidence, validation.template_target_not_generated, strategy.route_plan_active
+  - sandbox evidence:
+    - [0] `fgi:1` pass, forward=True, gate=missing_evidence, missing_evidence=template_target_not_generated, reaction=fgi
+  - rejected alternatives:
+    - site:bond:9:alt:0: Existing Wittig action at this stage returned incomplete/ambiguous carbonyl precursors rather than a real ylide/phosphonate precursor.
+    - site:bond:9:alt:1: Existing Julia candidate contained an invalid precursor SMILES and cannot be committed as-is.
+
+### Step 10: Alkene Hydrogenation (Retro, oxidation reduction)
+
+**反应**: `Cc1ncc(C)n2nc(C=Cc3ccc(O)c(N)n3)nc12>>Cc1ncc(C)n2nc(CCc3ccc(O)c(N)n3)nc12`
+
+**前体**:
+
+- `Cc1ncc(C)n2nc(C=Cc3ccc(O)c(N)n3)nc12` [intermediate]
+  ![mol_3](images/mol_3.png)
+
+
+![反应 rxn_2](images/rxn_2_reaction.png)
+
+**产物**: `Cc1ncc(C)n2nc(CCc3ccc(O)c(N)n3)nc12`
+
+![mol_1](images/mol_1.png)
+
+- **选择理由**: Retrosynthetically replace the saturated ethyl bridge by the corresponding styryl/heteroaryl alkene Cc1ncc(C)n2nc(C=Cc3ccc(O)c(N)n3)nc12. Forward direction is one chemoselective alkene hydrogenation event after the C=C linker has been assembled. The fused heteroaryl core, pyridinol ring, phenol, and primary aryl amine are preserved; only the linker oxidation state changes. This avoids requiring unprotected aminophenol organozinc or Grignard intermediates from the direct Csp3-Csp2 disconnections. Main risk is catalyst poisoning or over-reduction of heteroaromatics by the amine/phenol-rich substrate; use mild H2/Pd-C or transfer hydrogenation screening and, if needed, defer amine installation or protect handles. Direct Negishi/Kumada alternatives were not chosen because their organometallic aminophenol precursors are less plausible without protection.
+- **置信度**: medium
+- **被拒绝**:
+  - site:bond:8:alt:0: Requires an unprotected aminophenol-bearing alkylzinc fragment; functional group compatibility is poor.
+  - site:bond:10:alt:0: Requires a heteroaryl alkylzinc coupled to bromo aminopyridinol; plausible only after additional protection and less direct than alkene hydrogenation logic.
+- **Decision Audit**:
+  - selected action: fgi:4
+  - decision source: llm_selected
+  - route plan: plan:deea6efc r0: Use a hybrid route: preserve the mature fused triazolopyrimidine-like core and the aminopyridinol side fragment as late-stage heteroaryl building blocks; disconnect the benzylic/ethyl linker and N-aryl aminoalcohol handle before considering deeper core assembl [supports]
+  - validation gate: passpass
+  - applied experience cards: exp_electron_poor_pyridine_electronic_state_strategy, exp_route_mode_triage_before_first_plan, exp_route_plan_revision, exp_site_fidelity_fused_heteroaryl
+  - prompt events: stage.commit, decision.commit_requested, action.system_template, sandbox.success, validation.pass, strategy.route_plan_active, strategy.route_mode_triage, strategy.route_plan_revision_requested
+  - sandbox evidence:
+    - [0] `fgi:4` pass, forward=True, gate=pass, reaction=fgi
+  - rejected alternatives:
+    - site:bond:8:alt:0: Requires an unprotected aminophenol-bearing alkylzinc fragment; functional group compatibility is poor.
+    - site:bond:10:alt:0: Requires a heteroaryl alkylzinc coupled to bromo aminopyridinol; plausible only after additional protection and less direct than alkene hydrogenation logic.
+
+### Step 11: Reductive amination
+
+**反应**: `Cc1ncc(C)n2nc(CCc3ccc(O)c(N)n3)nc12.CC(=O)CCO>>Cc1ncc(C)n2nc(CCc3ccc(O)c(NC(C)CCO)n3)nc12`
+
+**前体**:
+
+- `Cc1ncc(C)n2nc(CCc3ccc(O)c(N)n3)nc12` [intermediate]
+  ![mol_1](images/mol_1.png)
+
+- `CC(=O)CCO` [terminal]
+  ![mol_2](images/mol_2.png)
+
+
+![反应 rxn_1](images/rxn_1_reaction.png)
+
+**产物**: `Cc1ncc(C)n2nc(CCc3ccc(O)c(NC(C)CCO)n3)nc12`
+
+![mol_0](images/mol_0.png)
+
+- **选择理由**: Choose late reductive amination at the aryl_amino_n-alkyl_sp3_c bond. Forward direction uses the preserved heteroaryl primary amine Cc1ncc(C)n2nc(CCc3ccc(O)c(N)n3)nc12 and 4-hydroxybutan-2-one (CC(=O)CCO) under mild imine/iminium reduction conditions, e.g. NaBH(OAc)3 or related hydride. This is one real C-N-forming event and accounts for the N-C stereogenic carbon as reduction of the ketimine/iminium; racemate or enantioselective reductive amination can be considered later if chirality is required. The fused bicyclic core, pyridinol ring, phenol, and ethyl linker are preserved. The phenol/alcohol are compatible with mild reductive amination better than with Mitsunobu or strong SN2 conditions. Reject secondary bromide SN2 because CC(Br)CCO is a hindered secondary electrophile with elimination/overalkylation risk and no advantage over ketone reductive amination. Reject Mitsunobu because the phenol and diol-like alcohol environment complicate chemoselectivity and the aryl amine is less ideal as the acidic pronucleophile.
+- **置信度**: medium
+- **被拒绝**:
+  - site:bond:17:smart:0: Secondary bromohydrin SN2 would be slower and less selective, with elimination/overalkylation risk.
+  - site:bond:17:alt:1: Mitsunobu has broader functional-group compatibility concerns with phenol/alcohol handles and a heteroaryl amine.
+- **Decision Audit**:
+  - selected action: site:bond:17:smart:1
+  - decision source: llm_selected
+  - route plan: plan:deea6efc r0: Use a hybrid route: preserve the mature fused triazolopyrimidine-like core and the aminopyridinol side fragment as late-stage heteroaryl building blocks; disconnect the benzylic/ethyl linker and N-aryl aminoalcohol handle before considering deeper core assembl [supports]
+  - validation gate: missing_evidence (missing_evidence=template_not_attempted)
+  - applied experience cards: exp_electron_poor_pyridine_electronic_state_strategy, exp_route_mode_triage_before_first_plan, exp_template_pass_not_enough, exp_route_plan_revision
+  - prompt events: stage.commit, decision.commit_requested, action.smart_capping, sandbox.success, validation.pass, validation.missing_evidence, validation.template_not_attempted, action.system_template
+  - sandbox evidence:
+    - [0] `site:bond:17:smart:1` pass, forward=True, gate=missing_evidence, missing_evidence=template_not_attempted, reaction=Reductive amination
+    - [1] `site:bond:17:smart:0` pass, forward=True, gate=missing_evidence, missing_evidence=template_not_attempted, reaction=N-alkylation (SN2)
+    - [2] `site:bond:17:alt:1` pass, forward=True, gate=warning, reaction=Mitsunobu
+  - rejected alternatives:
+    - site:bond:17:smart:0: Secondary bromohydrin SN2 would be slower and less selective, with elimination/overalkylation risk.
+    - site:bond:17:alt:1: Mitsunobu has broader functional-group compatibility concerns with phenol/alcohol handles and a heteroaryl amine.
+
+## 分子一览
+
+| ID | SMILES | 角色 | CS Score | 图像 |
+|-----|--------|------|----------|------|
+| mol_0 | `Cc1ncc(C)n2nc(CCc3ccc(O)c(N...` | target | 4.42 | [查看](images/mol_0.png) |
+| mol_1 | `Cc1ncc(C)n2nc(CCc3ccc(O)c(N...` | intermediate | 4.02 | [查看](images/mol_1.png) |
+| mol_2 | `CC(=O)CCO` | terminal | 1.58 | [查看](images/mol_2.png) |
+| mol_3 | `Cc1ncc(C)n2nc(C=Cc3ccc(O)c(...` | intermediate | 4.02 | [查看](images/mol_3.png) |
+| mol_4 | `Cc1ncc(C)n2nc(C=Cc3ccc(O)c(...` | intermediate | 4.18 | [查看](images/mol_4.png) |
+| mol_5 | `COc1ccc(C=Cc2nc3c(C)ncc(C)n...` | intermediate | 4.20 | [查看](images/mol_5.png) |
+| mol_6 | `COc1ccc(C=O)nc1[N+](=O)[O-]` | intermediate | 2.68 | [查看](images/mol_6.png) |
+| mol_7 | `CCOP(=O)(Cc1nc2c(C)ncc(C)n2...` | intermediate | 3.73 | [查看](images/mol_7.png) |
+| mol_8 | `COc1ccc(C)nc1[N+](=O)[O-]` | intermediate | 2.55 | [查看](images/mol_8.png) |
+| mol_9 | `Cc1ncc(C)n2nc(CCl)nc12` | intermediate | 3.24 | [查看](images/mol_9.png) |
+| mol_10 | `CCOP(OCC)OCC` | terminal | 1.81 | [查看](images/mol_10.png) |
+| mol_11 | `Cc1ccc(F)c([N+](=O)[O-])n1` | terminal | 2.57 | [查看](images/mol_11.png) |
+| mol_12 | `CO` | terminal | 1.54 | [查看](images/mol_12.png) |
+| mol_13 | `Cc1ncc(C)n2nc(CO)nc12` | intermediate | 3.24 | [查看](images/mol_13.png) |
+| mol_14 | `O=S(Cl)Cl` | terminal | 1.98 | [查看](images/mol_14.png) |
+| mol_15 | `Cc1ncc(C)n2nc(C=O)nc12` | intermediate | 3.24 | [查看](images/mol_15.png) |
+| mol_16 | `Cc1nc2c(C)ncc(C)n2n1` | terminal | 3.04 | [查看](images/mol_16.png) |
