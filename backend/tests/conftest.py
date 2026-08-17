@@ -1,3 +1,9 @@
+import sys as _sys
+from pathlib import Path as _Path
+_RACHEL_ROOT = _Path(__file__).resolve().parents[2] / "Rachel-v2"
+if str(_RACHEL_ROOT) not in _sys.path:
+    _sys.path.insert(0, str(_RACHEL_ROOT))
+
 import pytest
 from fastapi.testclient import TestClient
 
