@@ -1,9 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Routes, Route, useLocation } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useAuthStore } from "../stores/auth";
+import { FakeEventSource, resetEventSources } from "./fakes_eventsource";
+
+vi.stubGlobal("EventSource", FakeEventSource);
 
 vi.mock("../components/MoleculeView", () => ({
   MoleculeView: () => <span data-testid="mock-mol" />,
@@ -59,11 +62,13 @@ let user: ReturnType<typeof userEvent.setup>;
 
 beforeEach(() => {
   user = userEvent.setup();
+  resetEventSources();
   useAuthStore.setState({ token: "t", role: "user" });
 });
 
 afterEach(() => {
   vi.unstubAllGlobals();
+  vi.stubGlobal("EventSource", FakeEventSource);
 });
 
 describe("JobDetailPage", () => {
@@ -73,6 +78,30 @@ describe("JobDetailPage", () => {
     expect(screen.getByTestId("status-running")).toBeInTheDocument();
     expect(screen.queryByTestId("tab-tree")).not.toBeInTheDocument();
     expect(screen.queryByRole("tab", { name: "路线树" })).not.toBeInTheDocument();
+  });
+
+  it("running job renders live progress panel (hint + command stream) via SSE", async () => {
+    renderPage(mkJob({ status: "running", finished_at: null }));
+    expect(await screen.findByTestId("running-hint")).toBeInTheDocument();
+    expect(screen.getByTestId("cmd-stream")).toBeInTheDocument();
+    expect(FakeEventSource.instances.length).toBeGreaterThan(0);
+    expect(FakeEventSource.instances[0].url).toBe("/api/jobs/j1/events?token=t");
+    // snapshot 到达后命令行渲染
+    const es = FakeEventSource.instances[0];
+    await act(async () => {
+      es.trigger("snapshot", {
+        status: "running",
+        stats_live: { steps: 1, tokens: 10, duration_ms: 100, last_seq: 1 },
+        steps: [
+          {
+            seq: 1, command: "init", args: {}, result_summary: "", status: "ok",
+            tokens: 10, duration_ms: 100, created_at: "2026-08-17T10:00:00Z",
+          },
+        ],
+      });
+    });
+    expect(screen.getAllByTestId(/^cmd-row-/)).toHaveLength(1);
+    expect(screen.getByTestId("live-steps")).toHaveTextContent("1");
   });
 
   it("succeeded job shows tabs and metrics from result", async () => {

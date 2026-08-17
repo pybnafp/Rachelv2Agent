@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
 import { Tabs } from "../components/ui/Tabs";
@@ -11,6 +12,7 @@ import { formatDuration } from "../lib/format";
 import RouteTreeCanvas from "../components/RouteTreeCanvas";
 import { AuditTimeline } from "../components/AuditTimeline";
 import { TerminalAuditPanel } from "../components/TerminalAuditPanel";
+import { ProgressPanel } from "../components/ProgressPanel";
 
 const TABS = [
   { key: "tree", label: "路线树" },
@@ -35,6 +37,7 @@ const ARTIFACTS = [
 export default function JobDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const qc = useQueryClient();
   const { data: job, isLoading, isError } = useJob(id);
   const hasResult = job?.status === "succeeded" || job?.status === "partial";
   const { data: result } = useResult(id, !!hasResult);
@@ -101,14 +104,13 @@ export default function JobDetailPage() {
       </Card>
 
       {(job.status === "queued" || job.status === "running") && (
-        <Card>
-          <div data-testid="running-hint" className="space-y-1 text-sm text-slate-600">
-            <p>任务执行中，预计 10-30 分钟。</p>
-            <p>
-              当前进度：{job.stats.steps ?? 0} 步。页面将自动刷新，无需手动操作。
-            </p>
-          </div>
-        </Card>
+        <ProgressPanel
+          jobId={id!}
+          onTerminal={() => {
+            qc.invalidateQueries({ queryKey: ["job", id] });
+            qc.invalidateQueries({ queryKey: ["result", id] });
+          }}
+        />
       )}
 
       {hasResult && (

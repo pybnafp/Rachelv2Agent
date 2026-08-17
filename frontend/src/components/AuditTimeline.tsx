@@ -3,6 +3,7 @@ import { useTrace } from "../api/hooks";
 import { Badge } from "./ui/Badge";
 import { Card } from "./ui/Card";
 import type { TraceStep } from "../types";
+import { aggregateSteps } from "../lib/traceStats";
 
 const HIGHLIGHT_COMMANDS = new Set(["commit", "accept"]);
 
@@ -15,14 +16,12 @@ function hhmmss(iso: string): string {
 }
 
 function StatsCard({ steps, onRefresh }: { steps: TraceStep[]; onRefresh: () => void }) {
-  const errors = steps.filter((s) => s.status === "error").length;
-  const tokens = steps.reduce((sum, s) => sum + (s.tokens || 0), 0);
-  const ms = steps.reduce((sum, s) => sum + (s.duration_ms || 0), 0);
+  const { total, errors, tokens, durationMs: ms } = aggregateSteps(steps);
   return (
     <Card>
       <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
         <div data-testid="trace-stat-steps" className="text-sm text-slate-600">
-          总步数 <span className="font-semibold text-slate-800">{steps.length}</span>
+          总步数 <span className="font-semibold text-slate-800">{total}</span>
         </div>
         <div data-testid="trace-stat-errors" className="text-sm text-slate-600">
           error 步数 <span className="font-semibold text-red-600">{errors}</span>
