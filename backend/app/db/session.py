@@ -3,8 +3,8 @@ from sqlalchemy.orm import sessionmaker
 from app.core.config import get_settings
 
 
-def make_engine(url: str | None = None) -> sa.Engine:
-    return sa.create_engine(url or get_settings().database_url, pool_pre_ping=True)
+def make_engine(url: str | None = None, **kwargs) -> sa.Engine:
+    return sa.create_engine(url or get_settings().database_url, pool_pre_ping=True, **kwargs)
 
 
 engine = None  # 惰性创建，避免 import 时连库
