@@ -10,6 +10,20 @@ def ensure_workspace(job_id: str) -> Path:
     return ws
 
 
+def _ensure_engine():
+    """Worker 进程惰性绑定 DB engine；幂等，且不覆盖测试中已 rebind 的 SessionLocal。"""
+    import app.db.session as dbs
+    if dbs.engine is not None:
+        return
+    from app.db.base import Base
+    import app.db.models  # register tables on Base
+    from sqlalchemy import inspect
+    dbs.init_engine()
+    insp = inspect(dbs.engine)
+    if not insp.get_table_names():
+        Base.metadata.create_all(dbs.engine)
+
+
 def _build_driver(job, workspace: Path):
     """RetroCmd + get_active_client + DbTraceSink → AgentDriver。"""
     from app.agent.driver import AgentDriver, DriverLimits
@@ -19,7 +33,11 @@ def _build_driver(job, workspace: Path):
     from app.db.session import SessionLocal
     from Rachel.main.retro_cmd import RetroCmd
     retro = RetroCmd(str(workspace / "session.json"))
-    llm = get_active_client(SessionLocal())
+    db = SessionLocal()
+    try:
+        llm = get_active_client(db)
+    finally:
+        db.close()
     if llm is None:
         raise RuntimeError("no active llm provider configured")
     trace = DbTraceSink(SessionLocal, job.id)
@@ -40,9 +58,15 @@ def run_retro_job(self, job_id: str) -> str:
         job = db.get(Job, job_id)
         if job is None:
             return JobStatus.FAILED
+        if job.status == JobStatus.CANCELLED:  # 取消先于 pickup
+            return JobStatus.CANCELLED
+        _ensure_engine()
         set_status(db, job_id, JobStatus.RUNNING)
         workspace = ensure_workspace(job_id)
         result = _build_driver(job, workspace).run()
+        db.expire_all()
+        if db.get(Job, job_id).status == JobStatus.CANCELLED:
+            return JobStatus.CANCELLED  # 取消竞态：不覆盖 CANCELLED
         stats = {"steps": result.steps, "tokens_in": result.tokens_in,
                  "tokens_out": result.tokens_out, "reason": result.reason}
         if result.export_result.get("output_dir"):

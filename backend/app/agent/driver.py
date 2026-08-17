@@ -37,6 +37,7 @@ class AgentDriver:
         ]
         self._seq = 0
         self._finalized = False
+        self._llm_consecutive_errors = 0
         self._consecutive_errors: dict[str, int] = {}
 
     def run(self) -> DriverResult:
@@ -52,7 +53,11 @@ class AgentDriver:
             try:
                 turn = self.llm.chat(self._wire_messages(), TOOL_SCHEMAS)
             except Exception as e:
-                return self._finish("failed", f"llm error: {e}", usage_total, "llm_error")
+                self._llm_consecutive_errors += 1
+                if self._llm_consecutive_errors >= 5:  # spec §3.6: 5 consecutive failures
+                    return self._finish("failed", f"llm error: {e}", usage_total, "llm_error")
+                continue  # transient: retry same call
+            self._llm_consecutive_errors = 0
             u = getattr(turn, "usage", None)
             if u is not None:
                 usage_total.prompt_tokens += getattr(u, "prompt_tokens", 0)

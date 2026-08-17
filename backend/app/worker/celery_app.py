@@ -6,4 +6,5 @@ celery_app.conf.update(
     task_always_eager=get_settings().testing,
     task_eager_propagates=False,
     task_track_started=True,
+    include=["app.worker.tasks"],
 )
