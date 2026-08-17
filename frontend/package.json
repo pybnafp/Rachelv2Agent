@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "postinstall": "node scripts/copy-rdkit.mjs",
-    "test": "vitest",
+    "test": "vitest --run",
     "preview": "vite preview"
   },
   "dependencies": {

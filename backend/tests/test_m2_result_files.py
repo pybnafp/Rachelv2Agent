@@ -58,6 +58,23 @@ def test_result_degrades_without_artifacts(client, db, auth_headers_user):
     assert "visualization" not in r.json()
 
 
+def test_result_export_dir_outside_data_dir_degrades(client, db, auth_headers_user, tmp_path):
+    # Minor-7：stats 中的 export_dir 指向 data_dir 之外的目录 → 视为无产物降级，不 500
+    from app.db.models import Job, User
+    from app.core.config import get_settings
+    u = db.query(User).filter_by(username="usr").first()
+    outside = tmp_path.parent / "m2-outside" / "export"  # data_dir(=tmp_path) 之外
+    outside.mkdir(parents=True)
+    (outside / "visualization.json").write_text('{"nodes": [{"id": "x"}]}', encoding="utf-8")
+    assert get_settings().data_dir.resolve() not in outside.resolve().parents
+    db.add(Job(id="jout", user_id=u.id, smiles="CCO", status="succeeded",
+               stats={"export_dir": str(outside)})); db.commit()
+    r = client.get("/api/jobs/jout/result", headers=auth_headers_user)
+    assert r.status_code == 200
+    assert r.json()["job"]["id"] == "jout"
+    assert "visualization" not in r.json()
+
+
 def test_result_other_user_404(client, db, auth_headers_admin, auth_headers_user):
     jid = client.post("/api/jobs", headers=auth_headers_user, json={"smiles": "CCO"}).json()["id"]
     client.post("/api/auth/register", json={"username": "m2eve", "password": "pw9"})

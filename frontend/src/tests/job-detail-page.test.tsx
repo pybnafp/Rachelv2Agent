@@ -90,6 +90,7 @@ describe("JobDetailPage", () => {
     await user.click(screen.getByRole("tab", { name: "报告" }));
     const iframe = screen.getByTestId("report-iframe");
     expect(iframe).toHaveAttribute("src", "/api/jobs/j1/files/export/SYNTHESIS_REPORT.html?token=t");
+    expect(iframe).toHaveAttribute("sandbox", "allow-scripts");
     const open = screen.getByTestId("report-open");
     expect(open).toHaveAttribute("href", "/api/jobs/j1/files/export/SYNTHESIS_REPORT.html?token=t");
     expect(open).toHaveAttribute("target", "_blank");

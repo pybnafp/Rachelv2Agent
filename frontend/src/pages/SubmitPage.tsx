@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { api, apiGet, ApiError } from "../api/client";
 import { useAuthStore } from "../stores/auth";
@@ -81,6 +81,17 @@ export default function SubmitPage() {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    const pre = searchParams.get("smiles");
+    if (pre) {
+      setSmiles(pre); // 触发一次有效性判定（上方 effect）
+      setSearchParams({}, { replace: true }); // 清掉参数，避免刷新重复填充
+    }
+    // 仅 mount 时执行一次
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const token = useAuthStore((s) => s.token);
   void token; // AdvancedPanel queries /api/auth/me itself
 

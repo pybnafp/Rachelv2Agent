@@ -63,11 +63,15 @@ def result(job_id: str, user: User = Depends(get_current_user), db: Session = De
     job = _get_own_job(db, job_id, user)
     out = ResultOut(job=JobOut.model_validate(job))
     export_dir = (job.stats or {}).get("export_dir")
-    if export_dir and Path(export_dir).exists():
-        parsed = parse_export(Path(export_dir))
-        out.visualization = parsed.get("visualization")
-        out.terminals = parsed.get("terminals")
-        out.metrics = parsed.get("metrics")
+    if export_dir:
+        # 防御纵深：export_dir 来自 stats JSON，仅接受 data_dir 之下的路径，越界则降级
+        path = Path(export_dir).resolve()
+        root = get_settings().data_dir.resolve()
+        if root in path.parents and path.exists():
+            parsed = parse_export(path)
+            out.visualization = parsed.get("visualization")
+            out.terminals = parsed.get("terminals")
+            out.metrics = parsed.get("metrics")
     return out
 
 

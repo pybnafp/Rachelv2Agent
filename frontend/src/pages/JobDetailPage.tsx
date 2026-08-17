@@ -135,6 +135,10 @@ export default function JobDetailPage() {
               data-testid="report-iframe"
               title="synthesis report"
               src={reportUrl}
+              // 不带 allow-same-origin：报告在 opaque origin 中运行，读不到本站
+              // localStorage/cookie（?token= 泄露面最小化）；allow-scripts 保留图表脚本，
+              // 静态子资源（图片等）加载不受影响。
+              sandbox="allow-scripts"
               className="w-full h-[70vh] rounded border bg-white"
             />
           </div>

@@ -21,16 +21,16 @@ const ASPIRIN = "CC(=O)OC1=CC=CC=C1C(=O)O";
 
 function LocationDisplay() {
   const location = useLocation();
-  return <div data-testid="location">{location.pathname}</div>;
+  return <div data-testid="location">{location.pathname + location.search}</div>;
 }
 
-function renderPage() {
+function renderPage(initialEntry = "/") {
   const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   return render(
     <QueryClientProvider client={qc}>
-      <MemoryRouter initialEntries={["/"]}>
+      <MemoryRouter initialEntries={[initialEntry]}>
         <Routes>
-          <Route path="/" element={<SubmitPage />} />
+          <Route path="/" element={<><SubmitPage /><LocationDisplay /></>} />
           <Route path="*" element={<LocationDisplay />} />
         </Routes>
       </MemoryRouter>
@@ -61,6 +61,15 @@ afterEach(() => {
 });
 
 describe("SubmitPage", () => {
+  it("prefills SMILES from ?smiles= query param and clears it (I1)", async () => {
+    renderPage("/?smiles=CCO");
+    const ta = screen.getByRole("textbox", { name: /SMILES/ }) as HTMLTextAreaElement;
+    expect(ta.value).toBe("CCO");
+    await waitFor(() => expect(screen.getByTestId("validity").textContent).toContain("有效"));
+    // 参数被清掉，避免刷新时重复填充
+    await waitFor(() => expect(screen.getByTestId("location").textContent).toBe("/"));
+  });
+
   it("example button fills textarea and validity turns green", async () => {
     renderPage();
     await user.click(screen.getByRole("button", { name: "阿司匹林" }));
