@@ -1,7 +1,11 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import App from "../App";
 import { useAuthStore } from "../stores/auth";
+
+vi.mock("../components/MoleculeView", () => ({
+  MoleculeView: () => <span data-testid="mock-mol" />,
+}));
 
 beforeEach(() => {
   useAuthStore.setState({ token: null, role: null });
