@@ -71,3 +71,35 @@ conda run -n rachel-v2 python scripts/smoke_retro.py
 
 `deploy/docker-compose.yml` 提供 `redis:7-alpine`（6379）与 `postgres:16-alpine`
 （5432，db/user `rachel`，含 `pgdata` 持久卷与健康检查）。
+
+## 前端（M2 起）
+
+前端为 React 19 + Vite + TypeScript + Tailwind 的 SPA，位于 `frontend/`：
+
+```bash
+cd frontend
+npm install        # 安装依赖（postinstall 自动拷贝 RDKit WASM 到 public/rdkit/）
+npm run dev        # 开发服务器 http://localhost:5173（Vite proxy 将 /api 转发到 :8000）
+npm test           # Vitest + Testing Library（--run 一次性跑完）
+npm run build      # 产出 dist/ 静态文件（index.html + assets + rdkit WASM）
+```
+
+- 后端先启动（见上文），前端 dev 服务器通过 Vite proxy 访问 `http://localhost:8000/api/*`。
+- `dist/` 为生产静态产物，生产环境由 Nginx 托管（M5 部署阶段）。
+
+### 联调脚本
+
+`scripts/m2_integration_check.sh` 对运行中的后端做全链路 API 验证
+（注册 → me → 提交任务 → 列表 → trace → result → 文件 → 删除），
+逐项输出 PASS/FAIL 并汇总：
+
+```bash
+# 终端1（仓库根目录）启动后端
+D:/Anaconda/envs/rachel-v2/python.exe -m uvicorn app.main:app --port 8000 --app-dir backend
+# 终端2
+bash scripts/m2_integration_check.sh [base_url]   # 默认 http://127.0.0.1:8000
+```
+
+> 说明：不启动 Redis 时 Celery 无法投递（任务停留在 queued 且提交可能 500）。
+> 无 Redis 的本机联调可用 eager 模式内联执行任务（见 M2-T11 报告）；有 Redis 时
+> 需另起 Celery worker。LLM provider 无有效 key 时任务按预期进入 failed 且 error 有值。

@@ -6,6 +6,7 @@ import RegisterPage from "./pages/RegisterPage";
 import SubmitPage from "./pages/SubmitPage";
 import JobsPage from "./pages/JobsPage";
 import JobDetailPage from "./pages/JobDetailPage";
+import Layout from "./components/Layout";
 const qc = new QueryClient({ defaultOptions: { queries: { retry: 1, refetchOnWindowFocus: false } } });
 function Guard({ children }: { children: React.ReactNode }) {
   const token = useAuthStore((s) => s.token);
@@ -18,9 +19,9 @@ export default function App() {
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/" element={<Guard><SubmitPage /></Guard>} />
-          <Route path="/jobs" element={<Guard><JobsPage /></Guard>} />
-          <Route path="/jobs/:id" element={<Guard><JobDetailPage /></Guard>} />
+          <Route path="/" element={<Guard><Layout><SubmitPage /></Layout></Guard>} />
+          <Route path="/jobs" element={<Guard><Layout><JobsPage /></Layout></Guard>} />
+          <Route path="/jobs/:id" element={<Guard><Layout><JobDetailPage /></Layout></Guard>} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

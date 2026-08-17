@@ -1,32 +1,49 @@
-# React + TypeScript + Vite
+# Rachel-v2 Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+React 19 + Vite + TypeScript SPA for the Rachel-v2 retro-synthesis platform
+(M2). Talks to the FastAPI backend (`../backend`, port 8000) through the
+Vite dev proxy; auth token is stored via Zustand persist.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19 + react-router-dom 7（路由 + 登录守卫）
+- Zustand（persist 认证状态）、TanStack Query（数据请求与轮询）
+- Tailwind CSS 3、自建轻量 UI 基件（`src/components/ui/`）
+- @xyflow/react（React Flow 12）路线树画布
+- @rdkit/rdkit（WASM，本地打包：postinstall 拷贝到 `public/rdkit/`）
+- Vitest + Testing Library（jsdom）
 
-## React Compiler
+## 目录结构
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```
+src/
+  api/          # API client（fetch 封装 + token 注入）
+  components/   # Layout、MoleculeView、RouteTreeCanvas、NodeDrawer、StatusBadge、ui/
+  pages/        # LoginPage / RegisterPage / SubmitPage / JobsPage / JobDetailPage
+  stores/       # Zustand（auth）
+  lib/          # 工具（树布局等）
+  tests/        # Vitest 测试 + fixtures
+  types.ts      # 与后端契约对齐的唯一类型源
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## 脚本
+
+```bash
+npm install      # postinstall 自动拷贝 RDKit WASM 到 public/rdkit/
+npm run dev      # http://localhost:5173（/api 代理到 :8000，后端先启动）
+npm test         # Vitest（一次性：npm test -- --run）
+npm run build    # tsc -b + vite build → dist/（index.html + assets + rdkit WASM）
+npm run preview  # 本地预览 dist/
+npm run lint     # oxlint
+```
+
+## 测试
+
+54 个测试覆盖：路由守卫、认证页、提交页（RDKit mock）、任务列表/详情页、
+路线树画布与布局算法、状态徽章、Layout 顶栏（登录/登出/admin）。运行：
+`npm test -- --run`。
+
+## 生产构建
+
+`npm run build` 产出 `dist/` 静态文件（含 `dist/rdkit/RDKit_minimal.wasm`），
+由 Nginx 托管（M5 部署阶段接入）。
