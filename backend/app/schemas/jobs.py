@@ -30,3 +30,10 @@ class JobOut(BaseModel):
     started_at: datetime | None = None
     finished_at: datetime | None = None
     model_config = {"from_attributes": True}
+
+
+class ResultOut(BaseModel):
+    job: JobOut
+    visualization: dict | None = None
+    terminals: list | None = None
+    metrics: dict | None = None

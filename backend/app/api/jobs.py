@@ -1,11 +1,13 @@
 import shutil
+from pathlib import Path
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 from app.api.deps import get_current_user, get_db
 from app.core.config import get_settings
 from app.db.models import Job, JobStatus, JobStep, User
-from app.schemas.jobs import JobIn, JobOut, JobStepOut
+from app.schemas.jobs import JobIn, JobOut, JobStepOut, ResultOut
+from app.services.artifacts import parse_export
 from app.services.jobs import count_active, set_status
 from app.services.smiles import heavy_atoms, validate_smiles
 from app.worker.tasks import run_retro_job
@@ -52,6 +54,19 @@ def _get_own_job(db: Session, job_id: str, user: User) -> Job:
     if job is None or (job.user_id != user.id and user.role != "admin"):
         raise HTTPException(404, "job not found")
     return job
+
+
+@router.get("/{job_id}/result", response_model=ResultOut, response_model_exclude_none=True)
+def result(job_id: str, user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    job = _get_own_job(db, job_id, user)
+    out = ResultOut(job=JobOut.model_validate(job))
+    export_dir = (job.stats or {}).get("export_dir")
+    if export_dir and Path(export_dir).exists():
+        parsed = parse_export(Path(export_dir))
+        out.visualization = parsed.get("visualization")
+        out.terminals = parsed.get("terminals")
+        out.metrics = parsed.get("metrics")
+    return out
 
 
 @router.get("/{job_id}/trace")

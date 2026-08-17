@@ -18,7 +18,13 @@ def _ensure_engine():
     from app.db.base import Base
     import app.db.models  # register tables on Base
     from sqlalchemy import inspect
-    dbs.init_engine()
+    if dbs.engine is None:
+        # 测试可能已把 SessionLocal 绑到测试引擎：init_engine 会 configure(bind=默认库)，
+        # 需保留原 bind，否则 worker 读写会落到 dev.db（幂等：engine 已绑定则直接返回）。
+        bound = dbs.SessionLocal.kw.get("bind")
+        dbs.init_engine()
+        if bound is not None and dbs.SessionLocal.kw.get("bind") is not bound:
+            dbs.SessionLocal.configure(bind=bound)
     insp = inspect(dbs.engine)
     if not insp.get_table_names():
         Base.metadata.create_all(dbs.engine)

@@ -124,8 +124,11 @@ class AgentDriver:
             except Exception:
                 pass
             self._finalized = True
+        args = {"name": self.name}
+        if self.workspace is not None:
+            args["output_dir"] = str(self.workspace / "export")
         try:
-            r = self.retro.execute("export", {"name": self.name})
+            r = self.retro.execute("export", args)
             return r if isinstance(r, dict) else {}
         except Exception:
             return {}
