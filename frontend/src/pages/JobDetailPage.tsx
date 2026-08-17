@@ -7,6 +7,7 @@ import { StatusBadge } from "../components/StatusBadge";
 import { MoleculeView } from "../components/MoleculeView";
 import { useJob, useResult } from "../api/hooks";
 import { formatDuration } from "../lib/format";
+import RouteTreeCanvas from "../components/RouteTreeCanvas";
 
 const TABS = [
   { key: "tree", label: "路线树" },
@@ -93,8 +94,14 @@ export default function JobDetailPage() {
       {hasResult && (
         <div className="space-y-3">
           <Tabs tabs={TABS} active={active} onChange={setActive} />
-          <div data-testid="tab-tree" hidden={active !== "tree"} className="rounded-lg border border-dashed border-slate-300 p-8 text-center text-sm text-slate-400">
-            路线树将在此渲染
+          <div data-testid="tab-tree" hidden={active !== "tree"}>
+            {result?.visualization?.nodes?.length ? (
+              <RouteTreeCanvas vis={result.visualization} />
+            ) : (
+              <div className="rounded-lg border border-dashed border-slate-300 p-8 text-center text-sm text-slate-400">
+                产物不完整
+              </div>
+            )}
           </div>
           <div data-testid="tab-report" hidden={active !== "report"} className="rounded-lg border border-dashed border-slate-300 p-8 text-center text-sm text-slate-400">
             报告将在此嵌入
