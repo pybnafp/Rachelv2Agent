@@ -19,6 +19,7 @@ class Settings(BaseSettings):
     max_heavy_atoms: int = 80
     max_running_per_user: int = 3
     testing: bool = False
+    pubchem_offline: bool = False
 
 
 @lru_cache

@@ -11,6 +11,7 @@ from fastapi.testclient import TestClient
 @pytest.fixture(autouse=True)
 def _testing(monkeypatch):
     monkeypatch.setenv("TESTING", "true")
+    monkeypatch.setenv("PUBCHEM_OFFLINE", "true")  # 测试永不触网；审计 offline 参数仍可显式覆盖
     from app.core.config import get_settings
     get_settings.cache_clear()
     yield

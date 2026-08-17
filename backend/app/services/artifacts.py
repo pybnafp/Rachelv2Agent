@@ -17,5 +17,8 @@ def parse_export(export_dir: Path) -> dict:
     if terminals is not None:
         out["terminals"] = terminals
         out.setdefault("metrics", {})["n_terminals"] = len(terminals)
+    ta = _load(export_dir / "terminal_audit.json")
+    if ta is not None:
+        out["terminal_audit"] = ta
     out["incomplete"] = not ("visualization" in out and "terminals" in out)
     return out

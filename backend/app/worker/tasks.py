@@ -83,6 +83,12 @@ def run_retro_job(self, job_id: str) -> str:
                 parsed = parse_export(export_dir)
                 stats["artifacts"] = parsed.get("metrics", {})
                 stats["artifacts"]["incomplete"] = parsed.get("incomplete", False)
+        if result.export_result.get("output_dir"):
+            from app.services.terminal_audit import run_terminal_audit
+            export_dir = Path(result.export_result["output_dir"])
+            audit_payload = run_terminal_audit(export_dir)  # offline 取 settings（测试=PUBCHEM_OFFLINE）
+            stats["terminal_audit_summary"] = audit_payload.get("summary") or {
+                "available": audit_payload.get("available")}
         set_status(db, job_id, result.status, stats_patch=stats)
         return result.status
     except Exception as e:

@@ -37,3 +37,4 @@ class ResultOut(BaseModel):
     visualization: dict | None = None
     terminals: list | None = None
     metrics: dict | None = None
+    terminal_audit: dict | None = None

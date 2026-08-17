@@ -72,6 +72,7 @@ def result(job_id: str, user: User = Depends(get_current_user), db: Session = De
             out.visualization = parsed.get("visualization")
             out.terminals = parsed.get("terminals")
             out.metrics = parsed.get("metrics")
+            out.terminal_audit = parsed.get("terminal_audit")
     return out
 
 
