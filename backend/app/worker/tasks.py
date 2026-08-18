@@ -83,7 +83,11 @@ def run_retro_job(self, job_id: str) -> str:
                 parsed = parse_export(export_dir)
                 stats["artifacts"] = parsed.get("metrics", {})
                 stats["artifacts"]["incomplete"] = parsed.get("incomplete", False)
-        set_status(db, job_id, result.status, stats_patch=stats)
+        if result.status == JobStatus.FAILED:
+            set_status(db, job_id, JobStatus.FAILED,
+                       error=result.reason or "driver failed", stats_patch=stats)
+        else:
+            set_status(db, job_id, result.status, stats_patch=stats)
         # 路线已完成、状态已翻转，再跑可降级审计（不阻塞用户看到结果）
         if result.export_result.get("output_dir"):
             from app.services.terminal_audit import run_terminal_audit
