@@ -1,5 +1,5 @@
 [Unit]
-Description=Rachel v2 Celery worker (concurrency=1)
+Description=Rachel v2 Celery worker (concurrency=3)
 After=network.target redis-server.service postgresql.service
 Requires=network.target
 Wants=redis-server.service postgresql.service
@@ -10,7 +10,7 @@ User=root
 WorkingDirectory=/root/Rachelv2Agent
 EnvironmentFile=/root/Rachelv2Agent/.env
 Environment=PYTHONPATH=/root/Rachelv2Agent/Rachel-v2
-ExecStart=/root/miniconda3/envs/rachel-v2/bin/celery -A app.worker.celery_app worker --concurrency=1 --loglevel=info
+ExecStart=/root/miniconda3/envs/rachel-v2/bin/celery -A app.worker.celery_app worker --concurrency=3 --loglevel=info
 Restart=on-failure
 RestartSec=3
 
