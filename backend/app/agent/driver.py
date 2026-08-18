@@ -64,12 +64,21 @@ class AgentDriver:
                 usage_total.completion_tokens += getattr(u, "completion_tokens", 0)
             if not turn.tool_calls:
                 text_only_strikes += 1
+                self._log_json({"kind": "text_only", "strike": text_only_strikes,
+                                "finish_reason": getattr(turn, "finish_reason", ""),
+                                "content": (turn.content or "")[:4000]})
                 if text_only_strikes >= 2:
                     return self._finish("failed", "no tool calls in two consecutive turns",
                                         usage_total, "no_tool_calls")
                 self.messages.append({"role": "assistant", "content": turn.content or ""})
-                self.messages.append({"role": "user", "content":
-                                      "Continue by calling one of the tools. When the route is complete, call finish."})
+                if getattr(turn, "finish_reason", "") == "length":
+                    nudge = ("Your previous reply was cut off by the output token limit before any "
+                             "tool call was emitted. Be concise and call a tool now (short reasoning, "
+                             "then the tool call).")
+                else:
+                    nudge = ("Continue by calling one of the tools. "
+                             "When the route is complete, call finish.")
+                self.messages.append({"role": "user", "content": nudge})
                 continue
             text_only_strikes = 0
             self.messages.append({"role": "assistant", "content": turn.content or "",
@@ -157,10 +166,12 @@ class AgentDriver:
             m["content"] = m.get("_summary", "(summarized)")
             m["_compacted"] = True
 
-    def _log_message(self, turn) -> None:
+    def _log_json(self, obj: dict) -> None:
         if self.workspace is None:
             return
         with open(self.workspace / "messages.jsonl", "a", encoding="utf-8") as f:
-            f.write(json.dumps({"tool_calls": [{"name": c.name, "args": c.args}
-                                               for c in turn.tool_calls]},
-                               ensure_ascii=False, default=str) + "\n")
+            f.write(json.dumps(obj, ensure_ascii=False, default=str) + "\n")
+
+    def _log_message(self, turn) -> None:
+        self._log_json({"tool_calls": [{"name": c.name, "args": c.args}
+                                       for c in turn.tool_calls]})

@@ -16,6 +16,7 @@ class Usage:
 @dataclass
 class ChatTurn:
     content: str = ""; tool_calls: list = field(default_factory=list); usage: Usage = field(default_factory=Usage)
+    finish_reason: str = ""
 
 
 class OpenAICompatClient:
@@ -39,7 +40,9 @@ class OpenAICompatClient:
             calls.append(ToolCall(id=tc.id, name=tc.function.name, args=args))
         u = getattr(resp, "usage", None)
         usage = Usage(u.prompt_tokens if u else 0, u.completion_tokens if u else 0)
-        return ChatTurn(content=msg.content or "", tool_calls=calls, usage=usage)
+        finish_reason = getattr(resp.choices[0], "finish_reason", "") or ""
+        return ChatTurn(content=msg.content or "", tool_calls=calls, usage=usage,
+                        finish_reason=finish_reason)
 
 
 class MockLLMClient:
