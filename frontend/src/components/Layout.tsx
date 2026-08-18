@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../stores/auth";
 import { useMe } from "../api/hooks";
 import { Badge } from "./ui/Badge";
 import { Button } from "./ui/Button";
+import { ChangePasswordModal } from "./ChangePasswordModal";
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   `text-sm hover:text-sky-600 ${isActive ? "text-sky-600 font-medium" : "text-slate-600"}`;
@@ -13,6 +15,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const logout = useAuthStore((s) => s.logout);
   const navigate = useNavigate();
   const { data: me } = useMe(!!token);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [changePwOpen, setChangePwOpen] = useState(false);
 
   return (
     <div>
@@ -34,9 +38,35 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </nav>
           <div className="ml-auto flex items-center gap-3">
             {token !== null && me && (
-              <span data-testid="account-name" className="text-sm text-slate-700 font-medium">
-                {me.username}
-              </span>
+              <div className="relative">
+                {menuOpen && (
+                  <div className="fixed inset-0 z-10" onClick={() => setMenuOpen(false)} />
+                )}
+                <button
+                  data-testid="account-menu-trigger"
+                  className="flex items-center gap-1 text-sm font-medium text-slate-700 hover:text-sky-600"
+                  onClick={() => setMenuOpen((v) => !v)}
+                >
+                  <span data-testid="account-name">{me.username}</span>
+                  <span aria-hidden>▾</span>
+                </button>
+                {menuOpen && (
+                  <div
+                    data-testid="account-menu"
+                    className="absolute right-0 z-20 mt-1 w-32 rounded-md border border-slate-200 bg-white py-1 shadow-lg"
+                  >
+                    <button
+                      className="block w-full px-3 py-1.5 text-left text-sm text-slate-700 hover:bg-slate-50"
+                      onClick={() => {
+                        setMenuOpen(false);
+                        setChangePwOpen(true);
+                      }}
+                    >
+                      修改密码
+                    </button>
+                  </div>
+                )}
+              </div>
             )}
             {role === "admin" && <Badge color="sky">admin</Badge>}
             {token === null ? (
@@ -65,6 +95,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
       </header>
       <main className="max-w-7xl mx-auto px-4 py-6">{children}</main>
+      {changePwOpen && <ChangePasswordModal onClose={() => setChangePwOpen(false)} />}
     </div>
   );
 }
