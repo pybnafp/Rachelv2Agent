@@ -7,7 +7,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import FileResponse, StreamingResponse
 from fastapi.security import HTTPAuthorizationCredentials
-from sqlalchemy import select
+from sqlalchemy import delete as sa_delete, select
 from sqlalchemy.orm import Session
 from app.api.deps import bearer, get_current_user, get_db, resolve_token_user
 from app.core.config import get_settings
@@ -225,8 +225,9 @@ def cancel(job_id: str, user: User = Depends(get_current_user), db: Session = De
 @router.delete("/{job_id}")
 def delete(job_id: str, user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     job = _get_own_job(db, job_id, user)
-    for row in db.scalars(select(JobStep).where(JobStep.job_id == job.id)):
-        db.delete(row)
+    # 立即批量删除子行：ORM 逐行 delete 会先 flush 父对象，PostgreSQL 上触发
+    # job_steps_job_id_fkey 违反（模型未声明 relationship，unit-of-work 顺序不定）。
+    db.execute(sa_delete(JobStep).where(JobStep.job_id == job.id))
     db.delete(job)
     db.commit()
     ws = get_settings().data_dir / job.id

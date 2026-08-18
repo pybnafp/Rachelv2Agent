@@ -54,7 +54,12 @@ class _FakeDriver:
 def _make_job(db, monkeypatch):
     from sqlalchemy.orm import sessionmaker
     import app.db.session as dbs
+    from app.db.models import User
     monkeypatch.setattr(dbs, "SessionLocal", sessionmaker(bind=db.get_bind()))
+    # FK 强制开启后（make_engine PRAGMA foreign_keys=ON），user_id 必须指向真实用户
+    if db.get(User, 1) is None:
+        db.add(User(id=1, username="t13b", password_hash="x"))
+        db.commit()
     job = Job(name="t", smiles="CCO", user_id=1)
     db.add(job)
     db.commit()

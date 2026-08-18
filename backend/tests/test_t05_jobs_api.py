@@ -51,3 +51,29 @@ def test_running_quota_429(client, db, auth_headers_user, monkeypatch):
     d.add(Job(id="manual1", user_id=u, smiles="CCO", status="running")); d.commit()
     assert client.post("/api/jobs", headers=auth_headers_user, json={"smiles": "CCOc1ccccc1"}).status_code == 429
     get_settings.cache_clear()
+
+
+def _submit_job_with_steps(client, db, auth_headers_user, monkeypatch):
+    """eager 模式跑一个带 job_steps 的任务（M2 同款 mock provider 注入）。"""
+    from app.api.admin import seed_default_provider
+    from app.agent.llm_client import MockLLMClient, ToolCall
+    import app.api.admin as admin
+    seed_default_provider(db)
+    monkeypatch.setattr(admin, "get_active_client",
+                        lambda db: MockLLMClient(script=[[ToolCall("c1", "init", {"target": PARACETAMOL})],
+                                                         [ToolCall("c2", "finish", {"summary": "mock"})]]))
+    return client.post("/api/jobs", headers=auth_headers_user,
+                       json={"smiles": PARACETAMOL, "name": "fk"}).json()["id"]
+
+
+def test_delete_job_with_steps(client, db, auth_headers_user, monkeypatch):
+    # 生产 bug 复现：PostgreSQL 上 job_steps_job_id_fkey 违反 → 500。
+    # sqlite 外键现已强制开启（make_engine PRAGMA），本测试在修复前应失败。
+    from sqlalchemy import func, select
+    from app.db.models import Job, JobStep
+    jid = _submit_job_with_steps(client, db, auth_headers_user, monkeypatch)
+    assert db.scalar(select(func.count()).select_from(JobStep).where(JobStep.job_id == jid)) > 0
+    r = client.delete(f"/api/jobs/{jid}", headers=auth_headers_user)
+    assert r.status_code == 200
+    assert db.get(Job, jid) is None
+    assert db.scalar(select(func.count()).select_from(JobStep).where(JobStep.job_id == jid)) == 0
