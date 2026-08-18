@@ -61,3 +61,11 @@
 - LLM 证据：`data/jobs/{id}/messages.jsonl`（tool_calls 轮 + text_only 轮含 finish_reason）；步骤轨迹：`GET /api/jobs/{id}/trace`。
 - 发布流程：工作树 tar 直传 → `deploy/update.sh`；**勿用 git archive**（见 §3）。
 - 国内镜像：conda 用 TUNA（`.condarc` 只留 pkgs/main + cloud/conda-forge，pkgs/r 已 404）；npm 用 npmmirror；pip 用 TUNA。
+
+## 7. 生产：succeeded/failed 任务无法删除（2026-08-18）
+
+- **现象**：网页删除成功/失败任务无反应，任务仍在列表；cancelled 任务可删。
+- **根因**：`DELETE /api/jobs/{id}` 对含 job_steps 的任务在 PG 上 500（`ForeignKeyViolation`）——模型只有裸 FK 列无 relationship，SQLAlchemy flush 时父表先于子表删除；**SQLite 默认不执行外键约束**，测试全绿成盲区。前端删除按钮无 onError，500 被静默吞掉。
+- **修复**：① 删除端点先 `db.execute(delete(JobStep)...)` 批量删子记录再删任务 ② `make_engine` 对 SQLite 连接启用 `PRAGMA foreign_keys=ON`（测试从此具备 FK 检查能力——顺带揪出 2 个依赖无 FK 宽松行为的测试并修正）③ 前端删除失败显示红色错误（delete-error）。
+- **验证**：此前删不掉的 succeeded/failed 任务 200 删除成功、列表消失。
+- **教训**：SQLite 测试 ≠ PG 生产语义；凡涉及级联删除/约束，测试引擎必须开 FK。
