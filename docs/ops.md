@@ -69,3 +69,10 @@
 - **修复**：① 删除端点先 `db.execute(delete(JobStep)...)` 批量删子记录再删任务 ② `make_engine` 对 SQLite 连接启用 `PRAGMA foreign_keys=ON`（测试从此具备 FK 检查能力——顺带揪出 2 个依赖无 FK 宽松行为的测试并修正）③ 前端删除失败显示红色错误（delete-error）。
 - **验证**：此前删不掉的 succeeded/failed 任务 200 删除成功、列表消失。
 - **教训**：SQLite 测试 ≠ PG 生产语义；凡涉及级联删除/约束，测试引擎必须开 FK。
+
+## 8. 部署事故：scp 同名文件覆盖导致 API 崩溃（2026-08-18）
+
+- **现象**：部署"修改密码"功能后 rachel-api 启动循环失败：`ImportError: cannot import name 'router' from 'app.api.auth'`。
+- **根因**：一条命令里 `scp backend/app/api/auth.py backend/app/schemas/auth.py root@…:/tmp/` ——两个**同名不同目录**的文件落到 /tmp 相互覆盖，随后 `cp /tmp/auth.py` 把 schemas 的内容写进了 api/auth.py。
+- **修复**：逐文件 scp 到各自完整目标路径，重启恢复。
+- **教训**：多文件 scp 必须目标到目录结构（`scp file server:/精确/路径/`）或先打 tar；同名文件严禁共用扁平中转目录。部署后必查 `systemctl is-active` + `/health`。
