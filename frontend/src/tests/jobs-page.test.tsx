@@ -102,6 +102,18 @@ describe("JobsPage", () => {
     expect(screen.getByTestId("status-succeeded")).toBeInTheDocument();
   });
 
+  it("shows delete error message when delete request fails", async () => {
+    fetchMock.mockImplementation((path: string) =>
+      path === "/api/jobs/j-run"
+        ? Promise.resolve({ ok: false, status: 500, json: () => Promise.resolve({ error: "fk violation" }) })
+        : jsonResp(path.startsWith("/api/jobs?") ? [RUNNING, DONE] : {})
+    );
+    renderPage();
+    await screen.findByTestId("status-running");
+    await user.click(screen.getAllByRole("button", { name: "删除" })[0]);
+    expect(await screen.findByTestId("delete-error")).toHaveTextContent("fk violation");
+  });
+
   it("shows empty state for empty list", async () => {
     fetchMock.mockImplementation(() => jsonResp([]));
     renderPage();

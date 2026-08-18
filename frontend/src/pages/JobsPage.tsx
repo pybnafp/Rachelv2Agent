@@ -56,11 +56,19 @@ function JobRow({ job }: { job: JobOut }) {
             size="sm"
             disabled={del.isPending}
             onClick={() => {
-              if (window.confirm("确定删除该任务？")) del.mutate();
+              if (window.confirm("确定删除该任务？")) {
+                del.reset();
+                del.mutate();
+              }
             }}
           >
             删除
           </Button>
+          {del.isError && (
+            <span data-testid="delete-error" className="self-center text-xs text-red-600">
+              {del.error instanceof Error ? del.error.message : "删除失败"}
+            </span>
+          )}
         </div>
       </td>
     </tr>
