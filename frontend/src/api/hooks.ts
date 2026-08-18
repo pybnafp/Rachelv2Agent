@@ -111,6 +111,16 @@ export function useJobEvents(opts: JobEventsOpts): { mode: "sse" | "polling" | "
   return { mode };
 }
 
+export function useMe(enabled = true) {
+  return useQuery<{ id: number; username: string; role: string }>({
+    queryKey: ["me"],
+    queryFn: () => apiGet<{ id: number; username: string; role: string }>("/api/auth/me"),
+    enabled,
+    staleTime: 5 * 60_000,
+    retry: false,
+  });
+}
+
 export const useJobs = () =>
   useQuery<JobOut[]>({
     queryKey: ["jobs"],

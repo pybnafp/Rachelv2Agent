@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../stores/auth";
+import { useMe } from "../api/hooks";
 import { Badge } from "./ui/Badge";
 import { Button } from "./ui/Button";
 
@@ -11,6 +12,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const role = useAuthStore((s) => s.role);
   const logout = useAuthStore((s) => s.logout);
   const navigate = useNavigate();
+  const { data: me } = useMe(!!token);
 
   return (
     <div>
@@ -31,6 +33,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             )}
           </nav>
           <div className="ml-auto flex items-center gap-3">
+            {token !== null && me && (
+              <span data-testid="account-name" className="text-sm text-slate-700 font-medium">
+                {me.username}
+              </span>
+            )}
             {role === "admin" && <Badge color="sky">admin</Badge>}
             {token === null ? (
               <div className="flex items-center gap-3 text-sm">
