@@ -66,7 +66,7 @@ describe("Layout", () => {
 
   it("shows account name without admin badge for regular user", async () => {
     useAuthStore.setState({ token: "t", role: "user" });
-    renderLayout({ id: 2, username: "123456", role: "user" });
+    renderLayout({ id: 2, email: "123456@t.local", role: "user" });
     await waitFor(() => {
       expect(screen.getByTestId("account-name")).toHaveTextContent("123456");
     });
@@ -76,7 +76,7 @@ describe("Layout", () => {
 
   it("shows account name and admin badge for admin", async () => {
     useAuthStore.setState({ token: "t", role: "admin" });
-    renderLayout({ id: 1, username: "adm", role: "admin" });
+    renderLayout({ id: 1, email: "adm@t.local", role: "admin" });
     await waitFor(() => {
       expect(screen.getByTestId("account-name")).toHaveTextContent("adm");
     });

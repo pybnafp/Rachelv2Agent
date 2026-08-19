@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import { AuthForm } from "../components/AuthForm";
+import { LoginForm } from "../components/AuthForm";
 
 export default function LoginPage() {
   const [searchParams] = useSearchParams();
@@ -14,7 +14,11 @@ export default function LoginPage() {
           密码已修改，请用新密码重新登录
         </div>
       )}
-      <AuthForm mode="login" />
+      <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4">
+        <div className="w-full max-w-sm">
+          <LoginForm />
+        </div>
+      </div>
     </div>
   );
 }

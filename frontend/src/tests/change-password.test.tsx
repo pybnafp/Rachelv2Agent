@@ -64,7 +64,7 @@ beforeEach(() => {
 describe("change password", () => {
   it("opens modal from account menu trigger", async () => {
     useAuthStore.setState({ token: "t", role: "user" });
-    stubFetch({ id: 1, username: "alice", role: "user" });
+    stubFetch({ id: 1, email: "alice@t.local", role: "user" });
     const user = userEvent.setup();
     renderApp();
     await waitFor(() => expect(screen.getByTestId("account-menu-trigger")).toHaveTextContent("alice"));
@@ -76,7 +76,7 @@ describe("change password", () => {
 
   it("disables submit with hint when confirm mismatches", async () => {
     useAuthStore.setState({ token: "t", role: "user" });
-    const fetchSpy = vi.fn((path: string) => jsonResp(200, path === "/api/auth/me" ? { id: 1, username: "alice", role: "user" } : {}));
+    const fetchSpy = vi.fn((path: string) => jsonResp(200, path === "/api/auth/me" ? { id: 1, email: "alice@t.local", role: "user" } : {}));
     vi.stubGlobal("fetch", fetchSpy);
     const user = userEvent.setup();
     renderApp();
@@ -92,7 +92,7 @@ describe("change password", () => {
 
   it("shows error banner on 400 旧密码不正确", async () => {
     useAuthStore.setState({ token: "t", role: "user" });
-    stubFetch({ id: 1, username: "alice", role: "user" }, () => jsonResp(400, { error: "旧密码不正确" }) as unknown as Response);
+    stubFetch({ id: 1, email: "alice@t.local", role: "user" }, () => jsonResp(400, { error: "旧密码不正确" }) as unknown as Response);
     const user = userEvent.setup();
     renderApp();
     await waitFor(() => expect(screen.getByTestId("account-menu-trigger")).toBeInTheDocument());
@@ -106,7 +106,7 @@ describe("change password", () => {
     useAuthStore.setState({ token: "t", role: "user" });
     let changed = false;
     const fetchSpy = vi.fn((path: string) => {
-      if (path === "/api/auth/me") return jsonResp(200, changed ? null : { id: 1, username: "alice", role: "user" });
+      if (path === "/api/auth/me") return jsonResp(200, changed ? null : { id: 1, email: "alice@t.local", role: "user" });
       return jsonResp(200, { ok: true });
     });
     vi.stubGlobal("fetch", fetchSpy);

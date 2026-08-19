@@ -47,7 +47,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   className="flex items-center gap-1 text-sm font-medium text-slate-700 hover:text-sky-600"
                   onClick={() => setMenuOpen((v) => !v)}
                 >
-                  <span data-testid="account-name">{me.username}</span>
+                  <span data-testid="account-name">{me.email}</span>
                   <span aria-hidden>▾</span>
                 </button>
                 {menuOpen && (
