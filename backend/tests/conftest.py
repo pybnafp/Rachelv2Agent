@@ -26,6 +26,15 @@ def data_dir(tmp_path, monkeypatch):
     monkeypatch.setattr(cfg.Settings, "data_dir", property(lambda self: tmp_path), raising=False)
 
 
+@pytest.fixture(autouse=True)
+def _clear_sent():
+    """每个测试重置 console 邮件后端的发送记录。"""
+    from app.services.email import SENT
+    SENT.clear()
+    yield
+    SENT.clear()
+
+
 @pytest.fixture
 def client(db):
     from sqlalchemy.orm import sessionmaker
@@ -64,15 +73,24 @@ def db():
     s.close()
 
 
+def verify_email(client, email: str) -> dict:
+    """读取 console 后端 SENT 中该邮箱最新验证码并完成 verify，返回响应 JSON。"""
+    from app.services.email import SENT
+    code = [e for e in SENT if e["email"] == email][-1]["code"]
+    r = client.post("/api/auth/verify", json={"email": email, "code": code})
+    assert r.status_code == 200, r.text
+    return r.json()
+
+
 @pytest.fixture
 def auth_headers_admin(client, db):
-    client.post("/api/auth/register", json={"username": "adm", "password": "pw1"})  # 首个= admin
-    tok = client.post("/api/auth/login", json={"username": "adm", "password": "pw1"}).json()["access_token"]
+    client.post("/api/auth/register", json={"email": "adm@t.local", "password": "admpass1"})
+    tok = verify_email(client, "adm@t.local")["access_token"]  # 首个验证用户 = admin
     return {"Authorization": f"Bearer {tok}"}
 
 
 @pytest.fixture
 def auth_headers_user(client, db, auth_headers_admin):
-    client.post("/api/auth/register", json={"username": "usr", "password": "pw2"})
-    tok = client.post("/api/auth/login", json={"username": "usr", "password": "pw2"}).json()["access_token"]
+    client.post("/api/auth/register", json={"email": "usr@t.local", "password": "usrpass2"})
+    tok = verify_email(client, "usr@t.local")["access_token"]
     return {"Authorization": f"Bearer {tok}"}

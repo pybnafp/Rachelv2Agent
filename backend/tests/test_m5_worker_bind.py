@@ -24,7 +24,7 @@ def test_run_retro_job_binds_engine_before_session(tmp_path, monkeypatch):
     S = sessionmaker(bind=eng)
     s = S()
     from app.db.models import User, Job
-    u = User(username="prodsim", password_hash="x", role="user")
+    u = User(email="prodsim@t.local", password_hash="x", role="user")
     s.add(u)
     s.commit()
     s.add(Job(id="jprod", user_id=u.id, smiles="CCO", status="queued"))

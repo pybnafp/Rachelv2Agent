@@ -18,6 +18,14 @@ class Settings(BaseSettings):
     default_llm_name: str = "deepseek"
     max_heavy_atoms: int = 80
     max_running_per_user: int = 3
+    email_backend: str = "console"
+    smtp_host: str = ""
+    smtp_port: int = 465
+    smtp_user: str = ""
+    smtp_pass: str = ""
+    smtp_from: str = ""
+    code_ttl_min: int = 10
+    resend_cooldown_sec: int = 60
     testing: bool = False
     pubchem_offline: bool = False
 

@@ -12,7 +12,7 @@ def test_summarize_result():
 def test_db_trace_sink_roundtrip(db):
     from app.agent.trace import DbTraceSink
     from app.db.models import Job, JobStep, User
-    db.add(User(username="t", password_hash="x")); db.flush()
+    db.add(User(email="t@t.local", password_hash="x")); db.flush()
     db.add(Job(id="j9", user_id=1, smiles="CCO")); db.commit()
     from sqlalchemy.orm import sessionmaker
     sink = DbTraceSink(sessionmaker(bind=db.get_bind()), "j9")

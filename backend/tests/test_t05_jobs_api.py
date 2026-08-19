@@ -1,3 +1,4 @@
+from tests.conftest import verify_email
 PARACETAMOL = "CC(=O)Nc1ccc(O)cc1"
 
 
@@ -35,8 +36,8 @@ def test_detail_of_other_user_404(client, db, auth_headers_admin, auth_headers_u
     assert client.get(f"/api/jobs/{jid}", headers=auth_headers_admin).status_code in (200, 404)
     assert client.get(f"/api/jobs/{jid}", headers=auth_headers_admin).status_code == 200  # admin 可见
     # 第三个无关用户不可见
-    client.post("/api/auth/register", json={"username": "eve", "password": "pw3"})
-    tok = client.post("/api/auth/login", json={"username": "eve", "password": "pw3"}).json()["access_token"]
+    client.post("/api/auth/register", json={"email": "eve@t.local", "password": "evepass3"})
+    tok = verify_email(client, "eve@t.local")["access_token"]
     assert client.get(f"/api/jobs/{jid}", headers={"Authorization": f"Bearer {tok}"}).status_code == 404
 
 

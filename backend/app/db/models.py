@@ -18,7 +18,8 @@ class JobStatus:
 class User(Base):
     __tablename__ = "users"
     id: Mapped[int] = mapped_column(primary_key=True)
-    username: Mapped[str] = mapped_column(sa.String(64), unique=True, index=True)
+    email: Mapped[str] = mapped_column(sa.String(255), unique=True, index=True)
+    is_verified: Mapped[bool] = mapped_column(sa.Boolean, default=False)
     password_hash: Mapped[str] = mapped_column(sa.String(128))
     role: Mapped[str] = mapped_column(sa.String(16), default="user")
     created_at: Mapped[datetime] = mapped_column(sa.DateTime(timezone=True), default=utcnow)
@@ -64,4 +65,16 @@ class JobStep(Base):
     status: Mapped[str] = mapped_column(sa.String(16), default="ok")
     tokens: Mapped[int] = mapped_column(sa.Integer, default=0)
     duration_ms: Mapped[int] = mapped_column(sa.Integer, default=0)
+    created_at: Mapped[datetime] = mapped_column(sa.DateTime(timezone=True), default=utcnow)
+
+
+class EmailCode(Base):
+    __tablename__ = "email_codes"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    email: Mapped[str] = mapped_column(sa.String(255), index=True)
+    code_hash: Mapped[str] = mapped_column(sa.String(64))
+    purpose: Mapped[str] = mapped_column(sa.String(32), default="register")
+    expires_at: Mapped[datetime] = mapped_column(sa.DateTime(timezone=True))
+    used: Mapped[bool] = mapped_column(sa.Boolean, default=False)
+    attempts: Mapped[int] = mapped_column(sa.Integer, default=0)
     created_at: Mapped[datetime] = mapped_column(sa.DateTime(timezone=True), default=utcnow)

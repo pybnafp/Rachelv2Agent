@@ -1,3 +1,4 @@
+from tests.conftest import verify_email
 PARA = "CC(=O)Nc1ccc(O)cc1"
 
 
@@ -54,6 +55,6 @@ def test_delete_job_removes_dir(client, db, auth_headers_user, tmp_path):
 
 def test_trace_of_other_user_404(client, db, auth_headers_admin, auth_headers_user):
     jid = client.post("/api/jobs", headers=auth_headers_user, json={"smiles": PARA}).json()["id"]
-    client.post("/api/auth/register", json={"username": "eve2", "password": "pw4"})
-    tok = client.post("/api/auth/login", json={"username": "eve2", "password": "pw4"}).json()["access_token"]
+    client.post("/api/auth/register", json={"email": "eve2@t.local", "password": "eve2pass4"})
+    tok = verify_email(client, "eve2@t.local")["access_token"]
     assert client.get(f"/api/jobs/{jid}/trace", headers={"Authorization": f"Bearer {tok}"}).status_code == 404

@@ -1,10 +1,11 @@
 import pytest
+from tests.conftest import verify_email
 
 
 @pytest.fixture
 def user_headers(client, db):
-    client.post("/api/auth/register", json={"username": "alice", "password": "secret1"})
-    tok = client.post("/api/auth/login", json={"username": "alice", "password": "secret1"}).json()["access_token"]
+    client.post("/api/auth/register", json={"email": "alice@t.local", "password": "secret1"})
+    tok = verify_email(client, "alice@t.local")["access_token"]
     return {"Authorization": f"Bearer {tok}"}
 
 
@@ -41,7 +42,7 @@ def test_change_password_success(client, db, user_headers):
     )
     assert r.status_code == 200 and r.json() == {"ok": True}
     # 旧密码失效
-    assert client.post("/api/auth/login", json={"username": "alice", "password": "secret1"}).status_code == 401
+    assert client.post("/api/auth/login", json={"email": "alice@t.local", "password": "secret1"}).status_code == 401
     # 新密码可登录并返回 token
-    tok = client.post("/api/auth/login", json={"username": "alice", "password": "newpass1"}).json()["access_token"]
+    tok = client.post("/api/auth/login", json={"email": "alice@t.local", "password": "newpass1"}).json()["access_token"]
     assert tok

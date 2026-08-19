@@ -1,6 +1,6 @@
 def test_job_step_roundtrip(db):
     from app.db.models import User, Job, JobStep
-    u = User(username="alice", password_hash="x", role="admin")
+    u = User(email="alice@t.local", password_hash="x", role="admin")
     db.add(u); db.flush()
     j = Job(id="j1", user_id=u.id, smiles="CCO", name="ethanol")
     db.add(j); db.flush()

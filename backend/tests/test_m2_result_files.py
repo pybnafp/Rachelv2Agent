@@ -1,3 +1,4 @@
+from tests.conftest import verify_email
 """M2-T1: GET /api/jobs/{id}/result + driver export into workspace; M2-T2: /files."""
 
 PARA = "CC(=O)Nc1ccc(O)cc1"
@@ -51,7 +52,7 @@ def test_result_aggregates_artifacts(client, db, auth_headers_user, tmp_path, mo
 
 def test_result_degrades_without_artifacts(client, db, auth_headers_user):
     from app.db.models import Job, User
-    u = db.query(User).filter_by(username="usr").first()  # 请求方用户（first() 是 admin）
+    u = db.query(User).filter_by(email="usr@t.local").first()  # 请求方用户（first() 是 admin）
     db.add(Job(id="jx", user_id=u.id, smiles="CCO", status="running")); db.commit()
     r = client.get("/api/jobs/jx/result", headers=auth_headers_user)
     assert r.status_code == 200 and r.json()["job"]["id"] == "jx"
@@ -62,7 +63,7 @@ def test_result_export_dir_outside_data_dir_degrades(client, db, auth_headers_us
     # Minor-7：stats 中的 export_dir 指向 data_dir 之外的目录 → 视为无产物降级，不 500
     from app.db.models import Job, User
     from app.core.config import get_settings
-    u = db.query(User).filter_by(username="usr").first()
+    u = db.query(User).filter_by(email="usr@t.local").first()
     outside = tmp_path.parent / "m2-outside" / "export"  # data_dir(=tmp_path) 之外
     outside.mkdir(parents=True)
     (outside / "visualization.json").write_text('{"nodes": [{"id": "x"}]}', encoding="utf-8")
@@ -77,8 +78,8 @@ def test_result_export_dir_outside_data_dir_degrades(client, db, auth_headers_us
 
 def test_result_other_user_404(client, db, auth_headers_admin, auth_headers_user):
     jid = client.post("/api/jobs", headers=auth_headers_user, json={"smiles": "CCO"}).json()["id"]
-    client.post("/api/auth/register", json={"username": "m2eve", "password": "pw9"})
-    tok = client.post("/api/auth/login", json={"username": "m2eve", "password": "pw9"}).json()["access_token"]
+    client.post("/api/auth/register", json={"email": "m2eve@t.local", "password": "m2pass9"})
+    tok = verify_email(client, "m2eve@t.local")["access_token"]
     assert client.get(f"/api/jobs/{jid}/result",
                       headers={"Authorization": f"Bearer {tok}"}).status_code == 404
 
@@ -109,7 +110,7 @@ def test_files_token_query_param(client, db, auth_headers_user, tmp_path):
     ws = tmp_path / jid; ws.mkdir(parents=True, exist_ok=True)
     (ws / "export").mkdir()
     (ws / "export" / "SYNTHESIS_REPORT.html").write_text("<html>r</html>", encoding="utf-8")
-    login = client.post("/api/auth/login", json={"username": "usr", "password": "pw2"}).json()
+    login = client.post("/api/auth/login", json={"email": "usr@t.local", "password": "usrpass2"}).json()
     tok = login["access_token"]
     r = client.get(f"/api/jobs/{jid}/files/export/SYNTHESIS_REPORT.html?token={tok}")
     assert r.status_code == 200 and "text/html" in r.headers["content-type"]
