@@ -125,3 +125,11 @@ def test_issue_code_cooldown_and_ttl(db, monkeypatch):
         es.issue_code(db, E)  # 冷却
     assert es.verify_code(db, E, code) is True
     assert es.verify_code(db, E, code) is False  # 一次性
+
+
+def test_email_case_insensitive_register_and_login(client, db):
+    # 注册用大小写混合，登录用小写应能成功
+    _register(client, email="Alice@X.COM")
+    verify_email(client, "alice@x.com")  # 归一化后按小写邮箱验证
+    r = client.post("/api/auth/login", json={"email": "alice@x.com", "password": "secret1"})
+    assert r.status_code == 200

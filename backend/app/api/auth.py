@@ -13,7 +13,8 @@ router = APIRouter(prefix="/api/auth", tags=["auth"])
 
 
 def _send_or_500(db: Session, email_addr: str) -> None:
-    """签发并发送验证码；冷却 429；发送失败则不留活跃验证码并 500。"""
+    """签发并发送验证码；冷却 429；发送失败则 500（验证码已入库但用户收不到，
+    等待冷却结束后可通过 resend 重发）。"""
     try:
         code = email_svc.issue_code(db, email_addr)
     except ValueError as e:  # 重发冷却
@@ -21,35 +22,36 @@ def _send_or_500(db: Session, email_addr: str) -> None:
     try:
         email_svc.send_code(email_addr, code)
     except Exception:
-        db.rollback()
         raise HTTPException(500, "邮件发送失败，请稍后重试")
 
 
 @router.post("/register", status_code=202)
 def register(body: RegisterIn, db: Session = Depends(get_db)):
-    if not email_svc.EMAIL_RE.match(body.email):
+    email = body.email.strip().lower()
+    if not email_svc.EMAIL_RE.match(email):
         raise HTTPException(400, "邮箱格式不正确")
     if len(body.password) < 6:
         raise HTTPException(400, "密码至少 6 位")
-    u = db.scalar(select(User).where(User.email == body.email))
+    u = db.scalar(select(User).where(User.email == email))
     if u and u.is_verified:
         raise HTTPException(409, "邮箱已注册")
     if u:  # 未验证：更新密码后重发验证码（冷却适用）
         u.password_hash = hash_password(body.password)
         db.commit()
     else:
-        u = User(email=body.email, password_hash=hash_password(body.password),
+        u = User(email=email, password_hash=hash_password(body.password),
                  role="user", is_verified=False)
         db.add(u)
         db.commit()
-    _send_or_500(db, body.email)
+    _send_or_500(db, email)
     return {"ok": True, "message": "验证码已发送至邮箱"}
 
 
 @router.post("/verify", response_model=TokenOut)
 def verify(body: VerifyIn, db: Session = Depends(get_db)):
-    u = db.scalar(select(User).where(User.email == body.email))
-    if not u or u.is_verified or not email_svc.verify_code(db, body.email, body.code):
+    email = body.email.strip().lower()
+    u = db.scalar(select(User).where(User.email == email))
+    if not u or u.is_verified or not email_svc.verify_code(db, email, body.code):
         raise HTTPException(400, "验证码错误或已过期")
     u.is_verified = True
     others_verified = db.scalar(
@@ -62,18 +64,20 @@ def verify(body: VerifyIn, db: Session = Depends(get_db)):
 
 @router.post("/resend")
 def resend(body: ResendIn, db: Session = Depends(get_db)):
-    u = db.scalar(select(User).where(User.email == body.email))
+    email = body.email.strip().lower()
+    u = db.scalar(select(User).where(User.email == email))
     if not u:
         raise HTTPException(404, "邮箱未注册")
     if u.is_verified:
         raise HTTPException(409, "已验证，请直接登录")
-    _send_or_500(db, body.email)
+    _send_or_500(db, email)
     return {"ok": True}
 
 
 @router.post("/login", response_model=TokenOut)
 def login(body: LoginIn, db: Session = Depends(get_db)):
-    u = db.scalar(select(User).where(User.email == body.email))
+    email = body.email.strip().lower()
+    u = db.scalar(select(User).where(User.email == email))
     if not u or not verify_password(body.password, u.password_hash):
         raise HTTPException(401, "邮箱或密码错误")
     if not u.is_verified:
