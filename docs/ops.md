@@ -76,3 +76,10 @@
 - **根因**：一条命令里 `scp backend/app/api/auth.py backend/app/schemas/auth.py root@…:/tmp/` ——两个**同名不同目录**的文件落到 /tmp 相互覆盖，随后 `cp /tmp/auth.py` 把 schemas 的内容写进了 api/auth.py。
 - **修复**：逐文件 scp 到各自完整目标路径，重启恢复。
 - **教训**：多文件 scp 必须目标到目录结构（`scp file server:/精确/路径/`）或先打 tar；同名文件严禁共用扁平中转目录。部署后必查 `systemctl is-active` + `/health`。
+
+## 9. 邮箱验证账号体系上线（2026-08-19）
+
+- **变更**：注册=邮箱+密码→6位验证码（10min TTL/60s 重发冷却/5 次尝试/sha256 存储）→验证激活；登录=邮箱+密码（未验证→403 引导到验证步）；首个完成验证者获 admin。迁移 0003 清空旧 users/jobs（保留 llm_providers）。
+- **发信**：QQ 邮箱 SMTP **465/SSL**（`smtp.qq.com`，授权码在 .env）。**不需要开 25 端口**——阿里云对 25 有平台级封禁（开安全组也不够需解封申请），465 出方向默认放行。`EMAIL_BACKEND=console` 模式验证码打 api 日志（排障/无凭据时用）。
+- **验证**：SMTP 直发 OK；注册 202 发码；未验证登录 403 引导。
+- **注意**：邮箱统一小写归一；未验证邮箱重复注册会更新密码并受 60s 冷却；验证码尝试 5 次后作废需重发。
