@@ -34,6 +34,15 @@ describe("RouteTreeCanvas", () => {
     expect(screen.getAllByTestId("mock-mol")).toHaveLength(17);
   });
 
+  // 回归：自定义节点必须渲染 <Handle>，否则真实浏览器里 React Flow 一条边都不会画
+  // （2026-08-20 线上发现；jsdom 中 RF 的边渲染依赖节点尺寸测量，无法直接断言边元素）
+  it("renders top+bottom Handles on every node (edge attachment points)", async () => {
+    const { container } = render(<RouteTreeCanvas vis={vis} />);
+    await waitFor(() => {
+      expect(container.querySelectorAll(".react-flow__handle")).toHaveLength(vis.nodes.length * 2);
+    });
+  });
+
   it("renders a reaction pill containing 'Reductive amination'", () => {
     render(<RouteTreeCanvas vis={vis} />);
     const pill = screen.getByTestId("rxn-pill-rxn_1");

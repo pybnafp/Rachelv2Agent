@@ -1,7 +1,8 @@
 import shutil
 from pathlib import Path
 
-FIXT = Path("examples/result_demo/export")
+# 锚定仓库根，避免 pytest 从 backend/ 等目录启动时相对路径落空
+FIXT = Path(__file__).resolve().parents[2] / "examples" / "result_demo" / "export"
 PARA = "CC(=O)Nc1ccc(O)cc1"
 
 

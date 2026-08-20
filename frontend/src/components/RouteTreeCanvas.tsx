@@ -4,7 +4,9 @@ import {
   Background,
   Controls,
   ControlButton,
+  Handle,
   MarkerType,
+  Position,
   type Edge,
   type Node,
   type NodeProps,
@@ -29,14 +31,18 @@ const ROLE_BADGE: Record<VisMolNode["role"], string> = {
   terminal: "bg-emerald-600 text-white",
 };
 
+/** 边的附着点（深度向下递增：上方收边 target、下方发边 source）。缺 Handle 时 React Flow 不会渲染任何边。 */
+const HANDLE_CLS = "!h-1.5 !w-1.5 !border-0 !bg-slate-400 !opacity-70";
+
 function MoleculeCard({ data }: { data: VisMolNode }) {
   const clsZh = classificationZh(data.classification);
   return (
     <div
       data-testid={`mol-card-${data.id}`}
-      className={`w-44 overflow-hidden rounded-xl border-2 shadow-sm ${ROLE_STYLE[data.role] ?? ROLE_STYLE.intermediate}`}
+      className={`w-44 overflow-visible rounded-xl border-2 shadow-sm ${ROLE_STYLE[data.role] ?? ROLE_STYLE.intermediate}`}
     >
-      <div className="flex items-center justify-center bg-surface p-1">
+      <Handle type="target" position={Position.Top} isConnectable={false} className={HANDLE_CLS} />
+      <div className="flex items-center justify-center rounded-t-[10px] bg-surface p-1">
         <MoleculeView smiles={data.smiles} width={160} height={110} />
       </div>
       <div className="flex items-center justify-between gap-1 px-2 py-1">
@@ -57,6 +63,7 @@ function MoleculeCard({ data }: { data: VisMolNode }) {
           </span>
         </span>
       </div>
+      <Handle type="source" position={Position.Bottom} isConnectable={false} className={HANDLE_CLS} />
     </div>
   );
 }
@@ -70,6 +77,7 @@ function ReactionCard({ data }: { data: VisRxnNode }) {
       title={data.label}
       className="w-44 cursor-pointer rounded-xl border border-amber-400 bg-amber-50 p-2 text-center shadow-sm"
     >
+      <Handle type="target" position={Position.Top} isConnectable={false} className={HANDLE_CLS} />
       <p className="break-words text-xs font-medium leading-snug text-amber-900">{data.label}</p>
       <div className="mt-1 flex items-center justify-center gap-2 text-[10px]">
         {listed ? (
@@ -96,6 +104,7 @@ function ReactionCard({ data }: { data: VisRxnNode }) {
           ))}
         </div>
       )}
+      <Handle type="source" position={Position.Bottom} isConnectable={false} className={HANDLE_CLS} />
     </div>
   );
 }

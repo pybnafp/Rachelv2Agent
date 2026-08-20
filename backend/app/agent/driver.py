@@ -37,6 +37,7 @@ class AgentDriver:
         ]
         self._seq = 0
         self._finalized = False
+        self._finish_summary = ""  # LLM 在 finish 工具里给出的路线总结（用于自动 finalize）
         self._llm_consecutive_errors = 0
         self._consecutive_errors: dict[str, int] = {}
 
@@ -101,6 +102,11 @@ class AgentDriver:
                                       "_summary": summary, "_seq": self._seq})
                 if call.name == "finish":
                     finish_requested = True
+                    summary = str(call.args.get("summary") or "")
+                    if summary:
+                        self._finish_summary = summary
+                elif call.name == "finalize":
+                    self._finalized = True  # LLM 已自行 finalize，自动收尾不得再覆盖
                 self._track_errors(call.name, result)
                 hot = max(self._consecutive_errors.values(), default=0)
                 if hot >= 10:
@@ -129,7 +135,8 @@ class AgentDriver:
     def _finalize_export(self) -> dict:
         if not self._finalized:
             try:
-                self.retro.execute("finalize", {"summary": f"auto-finalize ({self.name})"})
+                summary = self._finish_summary or f"auto-finalize ({self.name})"
+                self.retro.execute("finalize", {"summary": summary})
             except Exception:
                 pass
             self._finalized = True

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { ArrowLeft, Download, ExternalLink, RotateCcw } from "lucide-react";
@@ -44,6 +44,16 @@ export default function JobDetailPage() {
   const hasResult = job?.status === "succeeded" || job?.status === "partial";
   const { data: result } = useResult(id, !!hasResult);
   const [active, setActive] = useState("tree");
+  // 终点审计在状态翻转之后数秒才落盘（设计上不阻塞结果展示）→ 成功态且 audit 未返回时限时轮询补抓
+  useEffect(() => {
+    if (!hasResult || result?.terminal_audit) return;
+    const tick = setInterval(() => qc.invalidateQueries({ queryKey: ["result", id] }), 5000);
+    const stop = setTimeout(() => clearInterval(tick), 60_000);
+    return () => {
+      clearInterval(tick);
+      clearTimeout(stop);
+    };
+  }, [hasResult, result?.terminal_audit?.available, id, qc]);
   const token = useAuthStore((s) => s.token) ?? "";
   const fileUrl = (p: string) => `/api/jobs/${id}/files/${p}?token=${encodeURIComponent(token)}`;
   const reportUrl = fileUrl("export/SYNTHESIS_REPORT.html");

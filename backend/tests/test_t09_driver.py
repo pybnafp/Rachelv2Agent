@@ -18,6 +18,37 @@ def test_finish_triggers_finalize_export():
     assert r.steps == 2
 
 
+def test_finish_summary_used_for_autofinalize():
+    """finish 自带的路线总结应写进 finalize，而不是被 auto-finalize 固定文案覆盖。"""
+    d, retro, trace = _driver([[("next", {})], [("finish", {"summary": "路线：4 步汇聚 SNAr"})]])
+    r = d.run()
+    assert r.status == "succeeded"
+    fins = [c for c in retro.calls if c[0] == "finalize"]
+    assert len(fins) == 1
+    assert fins[0][1].get("summary") == "路线：4 步汇聚 SNAr"
+
+
+def test_explicit_finalize_not_overwritten_by_autofinalize():
+    """LLM 显式调用过 finalize 后，driver 不得再次 finalize 覆盖其总结。"""
+    d, retro, trace = _driver([[("finalize", {"summary": "LLM 自己的总结"})], [("finish", {"summary": "x"})]])
+    r = d.run()
+    assert r.status == "succeeded"
+    fins = [c for c in retro.calls if c[0] == "finalize"]
+    assert len(fins) == 1
+    assert fins[0][1].get("summary") == "LLM 自己的总结"
+
+
+def test_autofinalize_default_text_without_any_summary():
+    """救援路径（max_steps 截断）无 finish/无 finalize 时，保留默认 auto-finalize 文案。"""
+    script = [[("status", {})] for _ in range(3)]
+    d, retro, trace = _driver(script, limits=DriverLimits(max_steps=2, wall_clock_sec=600, keep_recent=10))
+    r = d.run()
+    assert r.status == "partial"
+    fins = [c for c in retro.calls if c[0] == "finalize"]
+    assert len(fins) == 1
+    assert fins[0][1].get("summary") == "auto-finalize (t)"
+
+
 def test_max_steps_partial_rescue():
     script = [[("status", {})] for _ in range(5)]
     d, retro, trace = _driver(script, limits=DriverLimits(max_steps=3, wall_clock_sec=600, keep_recent=10))

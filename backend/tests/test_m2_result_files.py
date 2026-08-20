@@ -38,7 +38,7 @@ def test_result_aggregates_artifacts(client, db, auth_headers_user, tmp_path, mo
                       json={"smiles": PARA, "name": "para"}).json()["id"]
     export = tmp_path / jid / "export"
     assert export.is_dir()  # driver 已把 export 导到 workspace/export
-    src = Path("examples/result_demo/export")
+    src = Path(__file__).resolve().parents[2] / "examples" / "result_demo" / "export"
     for f in ("visualization.json", "terminals.json"):
         (export / f).write_text((src / f).read_text(encoding="utf-8"), encoding="utf-8")
     r = client.get(f"/api/jobs/{jid}/result", headers=auth_headers_user)
