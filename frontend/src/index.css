@@ -2,13 +2,128 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+   设计令牌层（诊断书 P0-01/02）
+   浅色值 = Tailwind 原始色（对现有界面零漂移）；
+   深色值在 prefers-color-scheme: dark 下整体反转，
+   tailwind.config.js 已把用到的色阶映射到这些变量。
+   ============================================================ */
 :root {
-  --color-primary: #0ea5e9; /* sky-500 */
-  --color-deep: #1e40af; /* blue-800 */
-  --color-bg: #f8fafc; /* slate-50 */
+  /* 语义令牌 */
+  --c-bg: #f8fafc;
+  --c-surface: #ffffff;
+  --c-surface-2: #f1f5f9;
+  --c-primary: #0ea5e9;
+  --c-primary-deep: #1e40af;
+
+  /* slate 色阶 */
+  --slate-50: #f8fafc; --slate-100: #f1f5f9; --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1; --slate-400: #94a3b8; --slate-500: #64748b;
+  --slate-600: #475569; --slate-700: #334155; --slate-800: #1e293b;
+  --slate-900: #0f172a;
+
+  /* sky */
+  --sky-50: #f0f9ff; --sky-100: #e0f2fe; --sky-200: #bae6fd;
+  --sky-300: #7dd3fc; --sky-400: #38bdf8; --sky-500: #0ea5e9;
+  --sky-600: #0284c7; --sky-700: #0369a1;
+
+  /* emerald */
+  --emerald-50: #ecfdf5; --emerald-100: #d1fae5; --emerald-200: #a7f3d0;
+  --emerald-500: #10b981; --emerald-600: #059669; --emerald-700: #047857;
+
+  /* red */
+  --red-50: #fef2f2; --red-100: #fee2e2; --red-200: #fecaca;
+  --red-400: #f87171; --red-500: #ef4444; --red-600: #dc2626;
+  --red-700: #b91c1c;
+
+  /* amber */
+  --amber-50: #fffbeb; --amber-100: #fef3c7; --amber-200: #fde68a;
+  --amber-300: #fcd34d; --amber-400: #fbbf24; --amber-500: #f59e0b;
+  --amber-600: #d97706; --amber-700: #b45309; --amber-800: #92400e;
+  --amber-900: #78350f;
+
+  /* blue */
+  --blue-50: #eff6ff; --blue-100: #dbeafe; --blue-600: #2563eb;
+  --blue-700: #1d4ed8;
+
+  /* zinc */
+  --zinc-50: #fafafa; --zinc-100: #f4f4f5; --zinc-200: #e4e4e7;
+  --zinc-400: #a1a1aa; --zinc-600: #52525b; --zinc-700: #3f3f46;
+
+  /* violet（工单 T11 custom 二级标记专用，避开三色角色系统） */
+  --violet-50: #f5f3ff; --violet-100: #ede9fe; --violet-600: #7c3aed;
+  --violet-700: #6d28d9;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* 语义令牌：页面底色最深、卡面浅一级、软填充再浅一级 */
+    --c-bg: #0f1826;
+    --c-surface: #1a2332;
+    --c-surface-2: #223046;
+    --c-primary: #38bdf8;
+    --c-primary-deep: #5c8ff5;
+
+    /* slate 反转：档位越高文字越亮 */
+    --slate-50: #131e2f; --slate-100: #223046; --slate-200: #2c3b52;
+    --slate-300: #3d4f68; --slate-400: #7d8ca6; --slate-500: #93a1b8;
+    --slate-600: #a8b4c8; --slate-700: #cbd5e4; --slate-800: #e4e9f2;
+    --slate-900: #f1f5fa;
+
+    /* sky：深底上提亮 */
+    --sky-50: #0c2740; --sky-100: #12324f; --sky-200: #12324f;
+    --sky-300: #1b3a55; --sky-400: #38bdf8; --sky-500: #0ea5e9;
+    --sky-600: #38bdf8; --sky-700: #7dd3fc;
+
+    /* emerald */
+    --emerald-50: #0c2a1e; --emerald-100: #123626; --emerald-200: #1b4332;
+    --emerald-500: #10b981; --emerald-600: #34d399; --emerald-700: #6ee7b7;
+
+    /* red */
+    --red-50: #2a1215; --red-100: #39181c; --red-200: #3f1d22;
+    --red-400: #f87171; --red-500: #ef4444; --red-600: #f87171;
+    --red-700: #fca5a5;
+
+    /* amber */
+    --amber-50: #2a2110; --amber-100: #332812; --amber-200: #453514;
+    --amber-300: #57411a; --amber-400: #6b521f; --amber-500: #f59e0b;
+    --amber-600: #fbbf24; --amber-700: #fcd34d; --amber-800: #fde68a;
+    --amber-900: #fde68a;
+
+    /* blue */
+    --blue-50: #12243f; --blue-100: #1a3055; --blue-600: #3b82f6;
+    --blue-700: #93c5fd;
+
+    /* zinc */
+    --zinc-50: #1c1c1f; --zinc-100: #27272a; --zinc-200: #3f3f46;
+    --zinc-400: #a1a1aa; --zinc-600: #d4d4d8; --zinc-700: #e4e4e7;
+
+    /* violet */
+    --violet-50: #1e1633; --violet-100: #291d47; --violet-600: #a78bfa;
+    --violet-700: #c4b5fd;
+
+    color-scheme: dark;
+  }
 }
 
 body {
   margin: 0;
-  background-color: var(--color-bg);
+  background-color: var(--c-bg);
+}
+
+/* React Flow 控件跟随主题（默认白底，深色下不协调） */
+@media (prefers-color-scheme: dark) {
+  .react-flow__controls-button {
+    background: var(--c-surface-2);
+    border-bottom: 1px solid var(--slate-200);
+    color: var(--slate-400);
+  }
+  .react-flow__controls-button:hover {
+    background: var(--slate-100);
+  }
+  .react-flow__controls-button svg {
+    fill: currentColor;
+  }
 }

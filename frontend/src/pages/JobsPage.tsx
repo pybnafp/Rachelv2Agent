@@ -1,5 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
+import { Ban, Eye, Plus, Trash2 } from "lucide-react";
 import { Button } from "../components/ui/Button";
+import { EmptyState } from "../components/ui/EmptyState";
+import { TableSkeleton } from "../components/ui/Skeleton";
 import { StatusBadge } from "../components/StatusBadge";
 import { MoleculeView } from "../components/MoleculeView";
 import { useJobs, useCancel, useDelete } from "../api/hooks";
@@ -36,7 +39,10 @@ function JobRow({ job }: { job: JobOut }) {
         <div className="flex gap-2">
           <Link to={`/jobs/${job.id}`}>
             <Button variant="primary" size="sm">
-              查看
+              <span className="inline-flex items-center gap-1">
+                <Eye size={13} aria-hidden />
+                查看
+              </span>
             </Button>
           </Link>
           {canCancel && (
@@ -48,7 +54,10 @@ function JobRow({ job }: { job: JobOut }) {
                 if (window.confirm("确定取消该任务？")) cancel.mutate();
               }}
             >
-              取消
+              <span className="inline-flex items-center gap-1">
+                <Ban size={13} aria-hidden />
+                取消
+              </span>
             </Button>
           )}
           <Button
@@ -62,7 +71,10 @@ function JobRow({ job }: { job: JobOut }) {
               }
             }}
           >
-            删除
+            <span className="inline-flex items-center gap-1">
+              <Trash2 size={13} aria-hidden />
+              删除
+            </span>
           </Button>
           {del.isError && (
             <span data-testid="delete-error" className="self-center text-xs text-red-600">
@@ -84,21 +96,27 @@ export default function JobsPage() {
       <div className="mb-4 flex items-center justify-between">
         <h1 className="text-lg font-semibold text-slate-800">我的任务</h1>
         <Button variant="primary" size="sm" onClick={() => navigate("/")}>
-          提交任务
+          <span className="inline-flex items-center gap-1">
+            <Plus size={13} aria-hidden />
+            提交任务
+          </span>
         </Button>
       </div>
 
       {isLoading ? (
-        <div className="py-12 text-center text-sm text-slate-500">加载中…</div>
+        <TableSkeleton rows={3} />
       ) : !jobs || jobs.length === 0 ? (
-        <div className="flex flex-col items-center gap-3 py-16">
-          <p className="text-sm text-slate-500">还没有任务</p>
-          <Button variant="primary" size="sm" onClick={() => navigate("/")}>
-            去提交
-          </Button>
-        </div>
+        <EmptyState
+          title="还没有任务"
+          hint="提交一个目标分子，开始第一次逆合成规划"
+          action={
+            <Button variant="primary" size="sm" onClick={() => navigate("/")}>
+              去提交
+            </Button>
+          }
+        />
       ) : (
-        <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white shadow-sm">
+        <div className="overflow-x-auto rounded-xl border border-slate-200 bg-surface shadow-sm">
           <table className="w-full min-w-[720px]">
             <thead>
               <tr className="border-b border-slate-200 text-left text-xs text-slate-500">

@@ -399,7 +399,21 @@ def to_visualization_data(tree: RetrosynthesisTree) -> Dict[str, Any]:
             "label": label,
             "depth": rxn.depth,
             "reaction_smiles": rxn.reaction_smiles,
+            # 工单 T10：试剂 SMILES 列表（前端渲染小结构图）
+            "reagents": list(rxn.reagents),
         }
+        # 工单 T11：template_evidence 存在即 listed（有已知模板依据），缺省即 custom
+        if rxn.template_evidence:
+            rxn_data["template_evidence"] = rxn.template_evidence.to_dict()
+        # 工单 T12：LLM 决策理由（只透传抽屉展示所需子集，避免 decision_audit 大对象进图数据）
+        if rxn.llm_decision:
+            dec = rxn.llm_decision.to_dict()
+            rxn_data["llm_decision"] = {
+                "selection_reasoning": dec.get("selection_reasoning", ""),
+                "confidence": dec.get("confidence", ""),
+                "risk_assessment": dec.get("risk_assessment", ""),
+                "rejected_alternatives": dec.get("rejected_alternatives", []),
+            }
         nodes.append(rxn_data)
 
         # 产物 → 反应节点

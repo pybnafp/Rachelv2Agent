@@ -83,7 +83,7 @@ export function ProgressPanel({ jobId, onTerminal }: { jobId: string; onTerminal
       <div
         ref={streamRef}
         data-testid="cmd-stream"
-        className="max-h-72 overflow-y-auto rounded-md border border-slate-100 bg-slate-50/60 p-2"
+        className="max-h-72 overflow-y-auto rounded-md border border-slate-100 bg-surface-2 p-2"
       >
         {recent.length === 0 ? (
           <p className="py-6 text-center text-xs text-slate-400">等待第一批命令…</p>

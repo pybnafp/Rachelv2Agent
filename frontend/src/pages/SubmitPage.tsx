@@ -154,12 +154,20 @@ export default function SubmitPage() {
                 className="rounded-md border border-slate-300 px-3 py-2 font-mono text-sm outline-none focus:ring-2 focus:ring-sky-400"
               />
             </div>
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-slate-400">示例：</span>
+            <div className="grid grid-cols-3 gap-2" data-testid="example-cards">
               {EXAMPLES.map((ex) => (
-                <Button key={ex.label} type="button" size="sm" variant="outline" onClick={() => setSmiles(ex.smiles)}>
-                  {ex.label}
-                </Button>
+                <button
+                  key={ex.label}
+                  type="button"
+                  onClick={() => setSmiles(ex.smiles)}
+                  title={`填入 ${ex.label}：${ex.smiles}`}
+                  className="group flex flex-col items-center gap-1 rounded-xl border border-slate-200 bg-surface p-2 text-center transition-colors hover:border-sky-400"
+                >
+                  <MoleculeView smiles={ex.smiles} width={130} height={80} />
+                  <span className="text-xs font-medium text-slate-600 group-hover:text-sky-600">
+                    {ex.label}
+                  </span>
+                </button>
               ))}
             </div>
             <div className={`text-sm font-medium ${validityClass(validity)}`} data-testid="validity">

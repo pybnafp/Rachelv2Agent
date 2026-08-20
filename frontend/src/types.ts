@@ -4,7 +4,26 @@ export interface JobOut {
   stats: Record<string, any>; created_at: string; started_at: string | null; finished_at: string | null;
 }
 export interface VisMolNode { id: string; type: "molecule"; smiles: string; role: "target" | "intermediate" | "terminal"; depth: number; cs_score?: number; classification?: string; }
-export interface VisRxnNode { id: string; type: "reaction"; label: string; depth: number; reaction_smiles?: string; }
+
+/** 工单 Track2：retro_tree.py TemplateEvidence 的透传子集（旧任务可能缺省）。 */
+export interface TemplateEvidence {
+  template_id?: string;
+  template_name?: string;
+  reaction_category?: string;
+}
+/** 工单 Track2：retro_tree.py LLMDecision 的透传子集（旧任务可能缺省）。 */
+export interface LlmDecision {
+  selection_reasoning?: string;
+  confidence?: string;
+  risk_assessment?: string;
+  rejected_alternatives?: Array<Record<string, string>>;
+}
+export interface VisRxnNode {
+  id: string; type: "reaction"; label: string; depth: number; reaction_smiles?: string;
+  reagents?: string[];
+  template_evidence?: TemplateEvidence | null;
+  llm_decision?: LlmDecision | null;
+}
 export type VisNode = VisMolNode | VisRxnNode;
 export interface VisEdge { source: string; target: string; type?: string; }
 export interface Visualization { nodes: VisNode[]; edges: VisEdge[]; meta?: Record<string, any>; }

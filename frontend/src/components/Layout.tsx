@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { ChevronDown, KeyRound, LogOut } from "lucide-react";
 import { useAuthStore } from "../stores/auth";
 import { useMe } from "../api/hooks";
 import { Badge } from "./ui/Badge";
@@ -20,7 +21,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div>
-      <header className="sticky top-0 z-10 bg-white border-b border-slate-200">
+      <header className="sticky top-0 z-10 bg-surface border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 h-14 flex items-center gap-6">
           <span className="font-semibold text-sky-600">Rachel-v2 Platform</span>
           <nav className="flex items-center gap-4">
@@ -48,12 +49,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   onClick={() => setMenuOpen((v) => !v)}
                 >
                   <span data-testid="account-name">{me.email}</span>
-                  <span aria-hidden>▾</span>
+                  <ChevronDown size={13} aria-hidden />
                 </button>
                 {menuOpen && (
                   <div
                     data-testid="account-menu"
-                    className="absolute right-0 z-20 mt-1 w-32 rounded-md border border-slate-200 bg-white py-1 shadow-lg"
+                    className="absolute right-0 z-20 mt-1 w-32 rounded-md border border-slate-200 bg-surface py-1 shadow-lg"
                   >
                     <button
                       className="block w-full px-3 py-1.5 text-left text-sm text-slate-700 hover:bg-slate-50"
@@ -62,7 +63,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         setChangePwOpen(true);
                       }}
                     >
-                      修改密码
+                      <span className="inline-flex items-center gap-1.5">
+                        <KeyRound size={13} aria-hidden />
+                        修改密码
+                      </span>
                     </button>
                   </div>
                 )}
@@ -88,7 +92,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   navigate("/login");
                 }}
               >
-                登出
+                <span className="inline-flex items-center gap-1">
+                  <LogOut size={13} aria-hidden />
+                  登出
+                </span>
               </Button>
             )}
           </div>

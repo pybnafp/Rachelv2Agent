@@ -111,7 +111,7 @@ describe("JobDetailPage", () => {
     await user.click(screen.getByRole("tab", { name: "文件" }));
     await waitFor(() => expect(screen.getByText("28")).toBeInTheDocument());
     expect(screen.getByText("27")).toBeInTheDocument();
-    expect(screen.getByText("6")).toBeInTheDocument();
+    expect(screen.getByTestId("metric-terminals")).toHaveTextContent("6");
   });
 
   it("report tab embeds synthesis report iframe with token query", async () => {

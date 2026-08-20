@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
+import { ArrowLeft, Download, ExternalLink, RotateCcw } from "lucide-react";
 import { Button } from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
+import { Skeleton } from "../components/ui/Skeleton";
 import { Tabs } from "../components/ui/Tabs";
 import { StatusBadge } from "../components/StatusBadge";
 import { MoleculeView } from "../components/MoleculeView";
@@ -48,8 +50,20 @@ export default function JobDetailPage() {
 
   if (isLoading) {
     return (
-      <div data-testid="page-job-detail" className="mx-auto max-w-4xl px-4 py-6">
-        <p className="py-12 text-center text-sm text-slate-500">加载中…</p>
+      <div data-testid="page-job-detail" className="mx-auto max-w-4xl space-y-4 px-4 py-6">
+        <Card data-testid="detail-skeleton">
+          <div className="mb-3 space-y-2">
+            <Skeleton className="h-4 w-40" />
+          </div>
+          <div className="flex flex-col gap-4 sm:flex-row">
+            <Skeleton className="h-[160px] w-[240px]" />
+            <div className="min-w-0 flex-1 space-y-2">
+              <Skeleton className="h-3 w-2/3" />
+              <Skeleton className="h-3 w-1/2" />
+              <Skeleton className="h-3 w-1/3" />
+            </div>
+          </div>
+        </Card>
       </div>
     );
   }
@@ -71,8 +85,9 @@ export default function JobDetailPage() {
     <div data-testid="page-job-detail" className="mx-auto max-w-4xl space-y-4 px-4 py-6">
       <Card>
         <div className="mb-3 flex items-center gap-3">
-          <Link to="/jobs" className="text-sm text-sky-600 hover:underline">
-            ← 任务列表
+          <Link to="/jobs" className="inline-flex items-center gap-1 text-sm text-sky-600 hover:underline">
+            <ArrowLeft size={14} aria-hidden />
+            任务列表
           </Link>
           <h1 className="text-lg font-semibold text-slate-800">{job.name || "(未命名)"}</h1>
           <StatusBadge status={job.status} />
@@ -125,7 +140,39 @@ export default function JobDetailPage() {
               </div>
             )}
           </div>
-          <div data-testid="tab-report" hidden={active !== "report"} className="space-y-2">
+          <div data-testid="tab-report" hidden={active !== "report"} className="space-y-3">
+            <div data-testid="metrics-dashboard" className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+              <div className="rounded-xl bg-surface-2 p-3 text-center">
+                <p className="text-xs text-slate-500">路线步数</p>
+                <p data-testid="metric-steps" className="text-2xl font-semibold text-slate-800">
+                  {String(job.stats.steps ?? 0)}
+                </p>
+              </div>
+              <div className="rounded-xl bg-surface-2 p-3 text-center">
+                <p className="text-xs text-slate-500">起始原料</p>
+                <p data-testid="metric-terminals" className="text-2xl font-semibold text-slate-800">
+                  {String(result?.metrics?.n_terminals ?? "—")}
+                </p>
+              </div>
+              <div className="rounded-xl bg-surface-2 p-3 text-center">
+                <p className="text-xs text-slate-500">tokens 输入</p>
+                <p data-testid="metric-tokens-in" className="text-2xl font-semibold text-slate-800">
+                  {(job.stats.tokens_in ?? 0).toLocaleString()}
+                </p>
+              </div>
+              <div className="rounded-xl bg-surface-2 p-3 text-center">
+                <p className="text-xs text-slate-500">tokens 输出</p>
+                <p data-testid="metric-tokens-out" className="text-2xl font-semibold text-slate-800">
+                  {(job.stats.tokens_out ?? 0).toLocaleString()}
+                </p>
+              </div>
+              <div className="rounded-xl bg-surface-2 p-3 text-center">
+                <p className="text-xs text-slate-500">耗时</p>
+                <p data-testid="metric-duration" className="text-2xl font-semibold text-slate-800">
+                  {formatDuration(job.started_at, job.finished_at)}
+                </p>
+              </div>
+            </div>
             <div className="flex items-center justify-between">
               <p className="text-sm font-medium text-slate-700">合成报告</p>
               <a
@@ -133,8 +180,9 @@ export default function JobDetailPage() {
                 href={reportUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-sky-600 hover:underline"
+                className="inline-flex items-center gap-1 text-sm text-sky-600 hover:underline"
               >
+                <ExternalLink size={13} aria-hidden />
                 新窗口打开
               </a>
             </div>
@@ -184,8 +232,9 @@ export default function JobDetailPage() {
                       data-testid={`dl-${f.name}`}
                       href={fileUrl(f.path)}
                       download
-                      className="font-mono text-sm text-sky-600 hover:underline"
+                      className="inline-flex items-center gap-1 font-mono text-sm text-sky-600 hover:underline"
                     >
+                      <Download size={12} aria-hidden />
                       {f.name}
                     </a>
                     <span className="text-xs text-slate-500">{f.label}</span>
@@ -202,7 +251,10 @@ export default function JobDetailPage() {
         <Card>
           <p className="mb-3 text-sm text-slate-600">该任务已取消。</p>
           <Button variant="primary" size="sm" onClick={() => navigate(`/?smiles=${encodeURIComponent(job.smiles)}`)}>
-            重新提交
+            <span className="inline-flex items-center gap-1">
+              <RotateCcw size={13} aria-hidden />
+              重新提交
+            </span>
           </Button>
         </Card>
       )}
