@@ -1,0 +1,324 @@
+<title>Rachel 路线树改造工单</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f5f8; --surface:#ffffff; --surface-2:#eceef3; --surface-3:#e2e5ed;
+    --border:#d6dae3; --border-strong:#b7bdca;
+    --text:#161a22; --text-dim:#565f70; --text-faint:#8993a5;
+    --accent:#a3620f; --accent-soft:#f2e2c9; --accent-strong:#7c4a0a;
+    --t1:#3a7d4f; --t1-soft:#dcefe1;
+    --t2:#2f5f8a; --t2-soft:#dbe6f0;
+    --t3:#7a4fa0; --t3-soft:#ece2f3;
+    --warn:#a3620f; --warn-soft:#f2e2c9;
+    --shadow: 0 1px 2px rgba(20,24,32,.06), 0 8px 24px -12px rgba(20,24,32,.12);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0f1218; --surface:#161a22; --surface-2:#1d222c; --surface-3:#252b37;
+      --border:#2b3140; --border-strong:#3a4254;
+      --text:#e9ebf1; --text-dim:#a3aabb; --text-faint:#707892;
+      --accent:#e0a458; --accent-soft:#3a2c16; --accent-strong:#f0bd7c;
+      --t1:#6fbf8b; --t1-soft:#173322;
+      --t2:#7fb0dd; --t2-soft:#1c2c3a;
+      --t3:#b99bdb; --t3-soft:#2a2038;
+      --warn:#e0a458; --warn-soft:#3a2c16;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 28px -14px rgba(0,0,0,.6);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0f1218; --surface:#161a22; --surface-2:#1d222c; --surface-3:#252b37;
+    --border:#2b3140; --border-strong:#3a4254;
+    --text:#e9ebf1; --text-dim:#a3aabb; --text-faint:#707892;
+    --accent:#e0a458; --accent-soft:#3a2c16; --accent-strong:#f0bd7c;
+    --t1:#6fbf8b; --t1-soft:#173322;
+    --t2:#7fb0dd; --t2-soft:#1c2c3a;
+    --t3:#b99bdb; --t3-soft:#2a2038;
+    --warn:#e0a458; --warn-soft:#3a2c16;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 28px -14px rgba(0,0,0,.6);
+    color-scheme: dark;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:'Noto Sans SC','IBM Plex Mono',ui-sans-serif,system-ui,sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--accent-soft); color:var(--accent-strong); }
+  .mono{ font-family:'IBM Plex Mono',ui-monospace,monospace; }
+  a{ color:var(--t2); }
+
+  .wrap{ max-width:960px; margin:0 auto; padding:0 24px 120px; }
+
+  header.hero{ border-bottom:1px solid var(--border); background:linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%); }
+  .hero-inner{ max-width:960px; margin:0 auto; padding:52px 24px 36px; }
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--text-faint); display:flex; align-items:center; gap:10px; margin-bottom:18px; }
+  .eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); }
+  h1{ font-size:clamp(24px,3.8vw,36px); font-weight:900; letter-spacing:-.01em; line-height:1.2; text-wrap:balance; margin:0 0 14px; }
+  .hero p.lede{ font-size:16px; color:var(--text-dim); max-width:68ch; margin:0 0 22px; }
+  .hero-meta{ display:flex; flex-wrap:wrap; gap:10px; font-size:12.5px; }
+  .tag{ font-family:'IBM Plex Mono',monospace; padding:5px 11px; border:1px solid var(--border-strong); border-radius:999px; color:var(--text-dim); background:var(--surface); }
+  .tag a{ color:inherit; text-decoration:none; }
+
+  .discovery{ display:flex; gap:14px; padding:18px 20px; background:var(--warn-soft); border:1px solid var(--border); border-left:4px solid var(--warn); font-size:14px; color:var(--text-dim); margin-top:26px; }
+  .discovery b{ color:var(--text); }
+  .discovery code{ font-family:'IBM Plex Mono',monospace; background:var(--surface); padding:1px 5px; font-size:12.5px; border:1px solid var(--border); }
+
+  section{ padding:44px 0; border-bottom:1px solid var(--border); }
+  section:last-of-type{ border-bottom:none; }
+  .sec-head{ margin-bottom:20px; }
+  .sec-num{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-faint); letter-spacing:.1em; }
+  h2{ font-size:23px; font-weight:900; margin:6px 0 8px; letter-spacing:-.01em; }
+  .sec-desc{ color:var(--text-dim); font-size:14.5px; max-width:70ch; }
+
+  /* -------- ticket -------- */
+  .ticket{ background:var(--surface); border:1px solid var(--border); box-shadow:var(--shadow); margin-bottom:16px; }
+  .ticket-head{ display:flex; align-items:center; gap:12px; padding:14px 18px; border-bottom:1px solid var(--border); flex-wrap:wrap; }
+  .tid{ font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:700; color:var(--text-faint); flex:none; }
+  .ticket-head h3{ margin:0; font-size:15.5px; font-weight:700; flex:1; min-width:180px; }
+  .effort{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; padding:3px 9px; border-radius:999px; white-space:nowrap; flex:none; }
+  .effort.xs{ background:var(--t1-soft); color:var(--t1); }
+  .effort.s{ background:var(--t2-soft); color:var(--t2); }
+  .effort.m{ background:var(--warn-soft); color:var(--warn); }
+  .effort.l{ background:var(--t3-soft); color:var(--t3); }
+  .ticket-body{ padding:16px 18px; display:grid; gap:12px; }
+  .field{ display:grid; grid-template-columns:96px 1fr; gap:10px; font-size:13.5px; }
+  .field dt{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--text-faint); padding-top:2px; }
+  .field dd{ margin:0; color:var(--text-dim); }
+  .field dd b{ color:var(--text); font-weight:500; }
+  .field dd code{ font-family:'IBM Plex Mono',monospace; background:var(--surface-2); padding:1px 5px; font-size:12px; border:1px solid var(--border); }
+  .field.criteria dd ul{ margin:0; padding-left:16px; }
+  .field.criteria dd li{ margin-bottom:3px; }
+  .codeblock{ font-family:'IBM Plex Mono',monospace; font-size:12px; background:var(--surface-2); border:1px solid var(--border); padding:10px 12px; overflow-x:auto; white-space:pre; color:var(--text); }
+
+  .track-label{ display:inline-flex; align-items:center; gap:8px; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; padding:5px 12px; border-radius:999px; margin-bottom:14px; }
+  .track-label.t1{ background:var(--t1-soft); color:var(--t1); }
+  .track-label.t2{ background:var(--t2-soft); color:var(--t2); }
+  .track-label.t3{ background:var(--t3-soft); color:var(--t3); }
+
+  .tbl-scroll{ overflow-x:auto; margin-top:16px; border:1px solid var(--border); }
+  table{ border-collapse:collapse; width:100%; min-width:640px; font-size:13px; }
+  thead th{ text-align:left; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--text-faint); background:var(--surface-2); padding:10px 14px; border-bottom:1px solid var(--border); white-space:nowrap; }
+  tbody td{ padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top; color:var(--text-dim); }
+  tbody td:first-child{ font-family:'IBM Plex Mono',monospace; color:var(--accent-strong); font-weight:500; white-space:nowrap; }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  footer{ max-width:960px; margin:0 auto; padding:28px 24px 60px; color:var(--text-faint); font-size:12.5px; }
+</style>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow"><span class="dot"></span>开发工单 · 路线树 / Job 详情页</div>
+    <h1>把前两份诊断落成可以直接派工的 15 个改动</h1>
+    <p class="lede">
+      这份是给实际动手改代码的人看的，不是给决策看的——前因、取舍、参考案例在前两份诊断书里，这里只留「改什么、
+      在哪改、改成什么样、怎么算做完」。三个 Track 按「现在就能做」→「先确认一个字段是否已经有」→「值得立项但要先做原型」排列。
+    </p>
+    <div class="hero-meta">
+      <span class="tag">2026-08-19</span>
+      <span class="tag">前置阅读：Rachel 设计诊断书 / Rachel 路线树诊断书</span>
+      <span class="tag">执行者：拿到 Rachel-v2 前端仓库权限的开发者</span>
+    </div>
+
+    <div class="discovery">
+      <span>★</span>
+      <span>
+        <b>写工单之前又挖了一层，发现一件事值得先说：</b>写路线树诊断书时我以为「试剂/条件/证据来源」这些字段在后端完全不存在，
+        需要新增数据模型。结果去读了 Rachel 的 Python Skill 源码（<code>Rachel/main/retro_tree.py</code>）才发现<b>这些字段其实已经在了</b>：
+        <code>ReactionNode.reagents</code>（试剂 SMILES 列表）、<code>template_evidence</code>（模板 id / 名称 / 知识引用，
+        本质就是「listed vs custom」的判据）、<code>llm_decision</code>（选择理由 / 置信度 high-medium-low / 风险评估）。
+        问题很可能不是「没数据」，是「web 平台的 API 层没把这些字段转发给前端，或者前端拿到了但没读」——
+        这把 Track 2 里好几张原本以为要「先立项做数据模型」的工单，降级成了「先打一次接口确认」。见 <b>T10–T12</b>。
+      </span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ===== Track 1 ===== -->
+  <section>
+    <div class="sec-head">
+      <span class="track-label t1">Track 1 · 纯前端，现在就能做</span>
+      <h2>不依赖任何后端确认的 9 个改动</h2>
+    </div>
+
+    <div class="ticket">
+      <div class="ticket-head"><span class="tid">T1</span><h3>箭头方向反转</h3><span class="effort xs">改动量：约 1 行</span></div>
+      <div class="ticket-body">
+        <div class="field"><dt>定位</dt><dd>路线树画布组件里构造 <code>edges</code> 的那一段，边对象带 <code>markerEnd:{`{type:ArrowClosed}`}</code></dd></div>
+        <div class="field"><dt>现状</dt><dd>边的 <code>source</code> 是较浅（更接近目标）一端，<code>target</code> 是较深（更接近原料）一端；<code>markerEnd</code> 把箭头画在 <code>target</code> 端，视觉上箭头从目标指向原料</dd></div>
+        <div class="field"><dt>改法</dt><dd>把 <code>markerEnd:{`{type:ArrowClosed}`}</code> 换成 <code>markerStart:{`{type:ArrowClosed}`}</code>；不改布局算法、不反转 source/target 字段本身</dd></div>
+        <div class="field criteria"><dt>验收</dt><dd><ul>
+          <li>任取一条边，箭头指向蓝色（target）方向，不是背离</li>
+          <li>找一条有汇聚步骤（多个前体合并成一个中间体）的真实路线，确认分支汇聚处箭头依然清楚不重叠</li>
+        </ul></dd></div>
+      </div>
+    </div>
+
+    <div class="ticket">
+      <div class="ticket-head"><span class="tid">T2</span><h3>反应式渲染成图，不再是原始文本</h3><span class="effort s">改动量：小，复用已有渲染管线</span></div>
+      <div class="ticket-body">
+        <div class="field"><dt>定位</dt><dd>侧边详情抽屉里 <code>data-testid="drawer-rxn-smiles"</code> 那个 <code>&lt;code&gt;</code> 块，现在直接输出 <code>reaction_smiles</code> 原始字符串</dd></div>
+        <div class="field"><dt>改法</dt><dd>找到画分子结构图用的那个 RDKit 封装组件（分子卡片和抽屉里画 <code>smiles</code> 的那个），确认它是否也能接反应 SMILES（<code>"A.B&gt;&gt;C"</code> 格式，RDKit.js 原生支持 <code>get_rxn</code> 系渲染）；能的话直接复用同一渲染函数把 <code>reaction_smiles</code> 画成反应物→箭头→产物的图式，替换掉抽屉里的等宽文本块（原始文本可以保留在图下面一行，供复制）</dd></div>
+        <div class="field criteria"><dt>验收</dt><dd><ul>
+          <li>点开任意反应节点，抽屉里看到的是渲染出来的反应图式，不是一行字符串</li>
+          <li>反应式解析失败时有兜底（显示原始文本 + 提示，不能白屏）</li>
+        </ul></dd></div>
+      </div>
+    </div>
+
+    <div class="ticket">
+      <div class="ticket-head"><span class="tid">T3</span><h3>反应节点从药丸升级成卡片</h3><span class="effort s">改动量：小-中</span></div>
+      <div class="ticket-body">
+        <div class="field"><dt>定位</dt><dd><code>data-testid="rxn-pill-{`{id}`}"</code> 组件，现在是 <code>rounded-full border-amber-500 bg-amber-100</code> 的药丸，文本超 18 字符截断加省略号</dd></div>
+        <div class="field"><dt>改法</dt><dd>改成跟分子卡片同量级的卡片（不用做成一样大，但要放得下完整反应名）；文本来源建议用后端的 <code>reaction_type</code> 字段（人类可读的反应家族名），不要再截断；如果 T10 确认 <code>reagents</code> 字段已透传，直接把试剂小结构图一并画进这张卡片</dd></div>
+        <div class="field criteria"><dt>验收</dt><dd>找一个反应家族名较长（&gt;18 字符）的真实节点，全名可见，不用 hover 也能读</dd></div>
+      </div>
+    </div>
+
+    <div class="ticket">
+      <div class="ticket-head"><span class="tid">T4</span><h3>去掉/重定向边的空信息面板</h3><span class="effort xs">改动量：小</span></div>
+      <div class="ticket-body">
+        <div class="field"><dt>定位</dt><dd>画布的 <code>onEdgeClick</code> 处理函数，现在打开的抽屉只显示 <code>source</code> / <code>target</code> / <code>type: smoothstep</code></dd></div>
+        <div class="field"><dt>改法</dt><dd>两选一：① 直接去掉边的 <code>onClick</code>；② 点边时改成打开这条边相邻反应节点的详情（等价于点了那个反应卡片）</dd></div>
+        <div class="field criteria"><dt>验收</dt><dd>点连线不再弹出「type: smoothstep」这种无意义信息</dd></div>
+      </div>
+    </div>
+
+    <div class="ticket">
+      <div class="ticket-head"><span class="tid">T5</span><h3>画布常驻图例</h3><span class="effort xs">改动量：小</span></div>
+      <div class="ticket-body">
+        <div class="field"><dt>改法</dt><dd>画布上方或角落加一行常驻小图例：● 目标（蓝）　● 中间体（灰）　● 可购买原料（绿）；如果 T11 做了 listed/custom 区分，一并加进同一行图例</dd></div>
+        <div class="field criteria"><dt>验收</dt><dd>不点任何节点，新用户也能看懂三种颜色分别是什么</dd></div>
+      </div>
+    </div>
+
+    <div class="ticket">
+      <div class="ticket-head"><span class="tid">T6</span><h3>cs_score 加说明</h3><span class="effort xs">改动量：小，文案已确认</span></div>
+      <div class="ticket-body">
+        <div class="field"><dt>依据</dt><dd>后端 <code>chem_tools/cs_score.py</code>：CS = Complicated Score（分子复杂度评分），范围 1.0–10.0，越高越复杂；<code>classification</code> 三档：<code>trivial</code> / <code>moderate</code> / <code>complex</code>，<code>trivial</code> 会被自动判定为 <code>is_terminal</code></dd></div>
+        <div class="field"><dt>改法</dt><dd>分子卡片 / 抽屉里的 <code>cs_score</code> 数字加 hover tooltip 或图例条，文案可以直接用：「CS 复杂度评分（1–10，越高越复杂）」；<code>classification</code> 三档同时给出中文短标签（简单 / 中等 / 复杂）</dd></div>
+      </div>
+    </div>
+
+    <div class="ticket">
+      <div class="ticket-head"><span class="tid">T7</span><h3>删除小地图</h3><span class="effort xs">改动量：删一行</span></div>
+      <div class="ticket-body">
+        <div class="field"><dt>定位</dt><dd>画布组件里挂载 <code>&lt;MiniMap pannable zoomable /&gt;</code> 的那一行（<code>data-testid="rf__minimap"</code>），没有传 <code>position</code>/<code>width</code>/<code>height</code>，吃 React Flow 默认值 200×150px 右下角</dd></div>
+        <div class="field"><dt>改法</dt><dd>直接删掉这行挂载，保留 <code>&lt;Controls/&gt;</code>（缩放/适应视图）</dd></div>
+        <div class="field criteria"><dt>验收</dt><dd>画布右下角不再有缩略图色块；对一棵真实的大路线树（几十个节点）确认没有任何东西被之前小地图的位置挡住</dd></div>
+      </div>
+    </div>
+
+    <div class="ticket">
+      <div class="ticket-head"><span class="tid">T8</span><h3>锁定按钮改接画布冻结，不再切换「节点可拖动」</h3><span class="effort m">改动量：中</span></div>
+      <div class="ticket-body">
+        <div class="field"><dt>定位</dt><dd><code>data-testid="rf__controls"</code> 里那个锁形按钮，是 React Flow <code>Controls</code> 组件自带的「交互开关」，默认逻辑是 <code>setState({`{nodesDraggable:!h, nodesConnectable:!h, elementsSelectable:!h}`})</code></dd></div>
+        <div class="field"><dt>现状</dt><dd>画布组件本身已经把 <code>nodesDraggable</code> 写死成 <code>false</code>，节点也没有连线/多选场景，所以这个按钮点击后切换的三个状态对视觉没有任何影响，等同于「点了没反应」</dd></div>
+        <div class="field"><dt>改法</dt><dd>把 <code>&lt;Controls showInteractive={`{false}`}/&gt;</code> 关掉默认的锁按钮，自己加一个 <code>&lt;ControlButton/&gt;</code>（React Flow 有导出这个子组件），用本地 state 控制，锁定时把 <code>&lt;ReactFlow/&gt;</code> 的 <code>panOnDrag</code> / <code>zoomOnScroll</code> / <code>zoomOnPinch</code> / <code>zoomOnDoubleClick</code> 一起设为 <code>false</code>，图标复用现成的锁形</dd></div>
+        <div class="field criteria"><dt>验收</dt><dd>点击锁定后，鼠标滚轮 / 拖拽 / 双击都不能再改变画布的平移缩放位置；再点一次能解锁</dd></div>
+      </div>
+    </div>
+
+    <div class="ticket">
+      <div class="ticket-head"><span class="tid">T9</span><h3>classification 从抽屉搬到卡片</h3><span class="effort xs">改动量：小</span></div>
+      <div class="ticket-body">
+        <div class="field"><dt>纠正</dt><dd>上一份诊断书猜测这个字段「大概率经常是空值」——核实后是错的：<code>classification</code> 来自后端真实计算（trivial / moderate / complex 三档），不是空占位</dd></div>
+        <div class="field"><dt>改法</dt><dd>在分子卡片上加一个小标签展示这三档（复用 T6 的中文短标签），不用非得点进抽屉才能看到</dd></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Track 2 ===== -->
+  <section>
+    <div class="sec-head">
+      <span class="track-label t2">Track 2 · 先确认字段是否已经透传</span>
+      <h2>大概率不需要新数据模型的 3 个改动</h2>
+      <p class="sec-desc">
+        下面三张工单都依赖同一个前置动作：<b>登录后打一次真实的 <code class="mono">GET /api/jobs/{`{id}`}</code>，看返回的 reaction 节点 JSON 里有没有
+        <code class="mono">reagents</code> / <code class="mono">template_evidence</code> / <code class="mono">llm_decision</code> 这几个 key。</b>
+      </p>
+    </div>
+
+    <div class="tbl-scroll">
+      <table>
+        <thead><tr><th>后端字段（retro_tree.py 里已确认存在）</th><th>形态</th><th>如果 API 里有</th><th>如果 API 里没有</th></tr></thead>
+        <tbody>
+          <tr><td>reagents</td><td>SMILES 字符串列表</td><td>前端加渲染逻辑即可（T10）</td><td>去查 web 平台自己的 API/BFF 层（不在这份 skill 代码包里）的序列化逻辑，是不是把这个字段过滤掉了</td></tr>
+          <tr><td>template_evidence</td><td>对象：template_id / template_name / reaction_category / knowledge_refs</td><td>存在即 listed，缺省即 custom（T11）</td><td>同上，先查 API 层</td></tr>
+          <tr><td>llm_decision</td><td>对象：selection_reasoning / confidence(high/medium/low) / risk_assessment</td><td>加进抽屉新区块（T12）</td><td>同上，先查 API 层</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ticket" style="margin-top:20px;">
+      <div class="ticket-head"><span class="tid">T10</span><h3>试剂画成图，贴在反应箭头上方</h3><span class="effort s">改动量：小（若字段已透传）</span></div>
+      <div class="ticket-body">
+        <div class="field"><dt>做法</dt><dd><code>reagents</code> 是 SMILES 列表，不是自由文本——用跟 T2 一样的 RDKit 渲染管线，把每个试剂画成一个小结构图标，贴在反应卡片/反应图式的箭头上方，就是论文合成图式那种画法，不用额外设计新的展示形式</dd></div>
+        <div class="field criteria"><dt>验收</dt><dd>找一个 <code>reagents</code> 非空的真实反应节点，能看到试剂结构图标，不是空的</dd></div>
+      </div>
+    </div>
+
+    <div class="ticket">
+      <div class="ticket-head"><span class="tid">T11</span><h3>listed / custom 二级颜色区分</h3><span class="effort s">改动量：小（若字段已透传）</span></div>
+      <div class="ticket-body">
+        <div class="field"><dt>判据</dt><dd><code>template_evidence</code> 字段存在（即有 <code>template_id</code>/<code>template_name</code>）→ listed，有已知模板依据；不存在 → custom，LLM 现推的新假设</dd></div>
+        <div class="field"><dt>做法</dt><dd>反应卡片加一个二级视觉标记（图标或细边框颜色，不要跟三色角色系统的主色冲突），listed 用偏「已验证」的颜色、custom 用偏「待观察」的颜色；<code>knowledge_refs</code>（知识引用列表）如果有值，在抽屉里列出来，类似参考文献链接</dd></div>
+        <div class="field criteria"><dt>验收</dt><dd>能在画布上不点开任何节点，直接看出「这一步有模板依据」还是「这一步是本次探索现推出来的」</dd></div>
+      </div>
+    </div>
+
+    <div class="ticket">
+      <div class="ticket-head"><span class="tid">T12</span><h3>抽屉里加「为什么这么设计」区块</h3><span class="effort s">改动量：小（若字段已透传）</span></div>
+      <div class="ticket-body">
+        <div class="field"><dt>做法</dt><dd>反应节点抽屉新增一个区块，展示 <code>llm_decision.selection_reasoning</code>（选择理由）、<code>confidence</code>（转成中文：高/中/低）、<code>risk_assessment</code>（风险评估）；<code>rejected_alternatives</code> 如果有值，可以做成一个可展开的「其他考虑过的方案」列表</dd></div>
+        <div class="field criteria"><dt>验收</dt><dd>点开一个反应节点，能读到当时为什么选这一步、有多大把握、有什么风险，不需要再去问后端团队</dd></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Track 3 ===== -->
+  <section>
+    <div class="sec-head">
+      <span class="track-label t3">Track 3 · 先做原型再立项</span>
+      <h2>工程量较大的 3 项</h2>
+    </div>
+
+    <div class="ticket">
+      <div class="ticket-head"><span class="tid">T13</span><h3>主线视图 / 完整探索图，双视图切换</h3><span class="effort l">改动量：大</span></div>
+      <div class="ticket-body">
+        <div class="field"><dt>做法</dt><dd>新增一个默认视图：只画从底物到目标分子的那条被 <code>commit</code>/<code>accept</code> 的主线，按 <code>depth</code> 分层的线性/瀑布布局，用普通 flex/grid 实现，不需要 React Flow；现有的画布组件保留，作为「查看完整探索过程」的第二个视图（tab 切换），不要删掉</dd></div>
+        <div class="field criteria"><dt>验收</dt><dd>两个视图能来回切换，数据一致；主线视图下不需要小地图/锁定这类画布控件，因为它本来就不是无限画布</dd></div>
+      </div>
+    </div>
+
+    <div class="ticket">
+      <div class="ticket-head"><span class="tid">T14</span><h3>结构图放大查看器</h3><span class="effort m">改动量：中，先确认渲染模式</span></div>
+      <div class="ticket-body">
+        <div class="field"><dt>前置确认</dt><dd>RDKit 封装组件当前输出的是 SVG 还是位图（canvas/PNG）——如果是 SVG，缩放到任意倍数都不会糊，放大查看器只需要一个可滚动/缩放的容器；如果是位图，放大查看器需要在用户改变缩放级别时用新的 width/height 重新调用 RDKit 生成，不能把小图直接拉伸</dd></div>
+        <div class="field"><dt>做法</dt><dd>点击任意分子/反应结构图 → 弹出一个支持滚轮缩放、拖拽平移的大图查看器</dd></div>
+      </div>
+    </div>
+
+    <div class="ticket">
+      <div class="ticket-head"><span class="tid">T15</span><h3>候选路线对比页</h3><span class="effort l">改动量：大，仅在「多候选路线」需求成立时做</span></div>
+      <div class="ticket-body">
+        <div class="field"><dt>触发条件</dt><dd>只有当产品需要给用户展示多条候选路线供选择时才做，如果目前每个 job 本来就只产出一条最终路线，这项不需要</dd></div>
+        <div class="field"><dt>做法</dt><dd>参考 Reaxys 的 Routes Overview：候选路线列表页，每条路线一行，配一张路线复杂度缩略图 + 所需起始原料清单，用户先在这一层选路线，再进入 T13 的详细视图</dd></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  依据来源：Rachel-v2 web 平台的编译前端产物（<span class="mono">index-*.js/css</span>，静态分析非截图走查）+
+  Rachel Python Skill 源码 <span class="mono">Rachel-2.11-20260816</span> 里的 <span class="mono">Rachel/main/retro_tree.py</span>、
+  <span class="mono">Rachel/chem_tools/cs_score.py</span>。两者是否共用同一套字段命名/序列化逻辑未做真机验证（job API 需要登录态），
+  Track 2 的判断方法已写清楚，交给有权限的开发者一次接口调用即可确认。
+</footer>

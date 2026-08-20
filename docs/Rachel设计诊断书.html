@@ -1,0 +1,693 @@
+<title>Rachel 设计诊断书</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f5f8;
+    --surface:#ffffff;
+    --surface-2:#eceef3;
+    --surface-3:#e2e5ed;
+    --border:#d6dae3;
+    --border-strong:#b7bdca;
+    --text:#161a22;
+    --text-dim:#565f70;
+    --text-faint:#8993a5;
+    --accent:#a3620f;
+    --accent-soft:#f2e2c9;
+    --accent-strong:#7c4a0a;
+    --p0:#a3620f;
+    --p0-soft:#f2e2c9;
+    --p1:#2f5f8a;
+    --p1-soft:#dbe6f0;
+    --p2:#586074;
+    --p2-soft:#e4e6ec;
+    --rachel:#0ea5e9;
+    --rachel-deep:#1e40af;
+    --af-blue:#0053cc;
+    --shadow: 0 1px 2px rgba(20,24,32,.06), 0 8px 24px -12px rgba(20,24,32,.12);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0f1218;
+      --surface:#161a22;
+      --surface-2:#1d222c;
+      --surface-3:#252b37;
+      --border:#2b3140;
+      --border-strong:#3a4254;
+      --text:#e9ebf1;
+      --text-dim:#a3aabb;
+      --text-faint:#707892;
+      --accent:#e0a458;
+      --accent-soft:#3a2c16;
+      --accent-strong:#f0bd7c;
+      --p0:#e0a458;
+      --p0-soft:#3a2c16;
+      --p1:#7fb0dd;
+      --p1-soft:#1c2c3a;
+      --p2:#9aa2b6;
+      --p2-soft:#232838;
+      --rachel:#38bdf8;
+      --rachel-deep:#5c8ff5;
+      --af-blue:#5c9dff;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 28px -14px rgba(0,0,0,.6);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0f1218;
+    --surface:#161a22;
+    --surface-2:#1d222c;
+    --surface-3:#252b37;
+    --border:#2b3140;
+    --border-strong:#3a4254;
+    --text:#e9ebf1;
+    --text-dim:#a3aabb;
+    --text-faint:#707892;
+    --accent:#e0a458;
+    --accent-soft:#3a2c16;
+    --accent-strong:#f0bd7c;
+    --p0:#e0a458;
+    --p0-soft:#3a2c16;
+    --p1:#7fb0dd;
+    --p1-soft:#1c2c3a;
+    --p2:#9aa2b6;
+    --p2-soft:#232838;
+    --rachel:#38bdf8;
+    --rachel-deep:#5c8ff5;
+    --af-blue:#5c9dff;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 28px -14px rgba(0,0,0,.6);
+    color-scheme: dark;
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Noto Sans SC', 'IBM Plex Mono', ui-sans-serif, system-ui, sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--accent-soft); color:var(--accent-strong); }
+
+  .mono{ font-family:'IBM Plex Mono', ui-monospace, monospace; }
+
+  a{ color:var(--p1); }
+
+  .wrap{
+    max-width:920px;
+    margin:0 auto;
+    padding:0 24px 120px;
+  }
+
+  /* ---------- header ---------- */
+  header.hero{
+    border-bottom:1px solid var(--border);
+    background:
+      linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+  }
+  .hero-inner{
+    max-width:920px;
+    margin:0 auto;
+    padding:56px 24px 40px;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:var(--p0); }
+  h1{
+    font-size:clamp(28px, 4.4vw, 42px);
+    font-weight:900;
+    letter-spacing:-.01em;
+    line-height:1.15;
+    text-wrap:balance;
+    margin:0 0 16px;
+  }
+  .hero p.lede{
+    font-size:17px;
+    color:var(--text-dim);
+    max-width:62ch;
+    margin:0 0 28px;
+  }
+  .hero-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    font-size:12.5px;
+  }
+  .tag{
+    font-family:'IBM Plex Mono', monospace;
+    padding:5px 11px;
+    border:1px solid var(--border-strong);
+    border-radius:999px;
+    color:var(--text-dim);
+    background:var(--surface);
+  }
+
+  .tldr{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1px;
+    background:var(--border);
+    border:1px solid var(--border);
+    margin-top:32px;
+  }
+  .tldr > div{
+    background:var(--surface);
+    padding:18px 20px;
+  }
+  .tldr .k{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    margin-bottom:8px;
+  }
+  .tldr .v{ font-size:14.5px; color:var(--text); }
+
+  /* ---------- sections ---------- */
+  section{ padding:56px 0; border-bottom:1px solid var(--border); }
+  section:last-of-type{ border-bottom:none; }
+  .sec-head{ margin-bottom:28px; }
+  .sec-num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--text-faint);
+    letter-spacing:.1em;
+  }
+  h2{
+    font-size:26px;
+    font-weight:900;
+    margin:6px 0 10px;
+    letter-spacing:-.01em;
+  }
+  .sec-desc{ color:var(--text-dim); font-size:15px; max-width:66ch; }
+
+  h3{ font-size:16px; font-weight:700; margin:0 0 4px; }
+
+  p{ margin:0 0 14px; max-width:70ch; }
+
+  /* ---------- method note ---------- */
+  .note{
+    display:flex;
+    gap:14px;
+    padding:16px 18px;
+    background:var(--p1-soft);
+    border:1px solid var(--border);
+    border-left:3px solid var(--p1);
+    font-size:13.5px;
+    color:var(--text-dim);
+  }
+  .note b{ color:var(--text); }
+
+  /* ---------- compare grid ---------- */
+  .compare{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin-top:24px;
+  }
+  @media (max-width:680px){ .compare{ grid-template-columns:1fr; } }
+
+  .panel{
+    background:var(--surface);
+    border:1px solid var(--border);
+    box-shadow:var(--shadow);
+  }
+  .panel-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 18px;
+    border-bottom:1px solid var(--border);
+  }
+  .panel-head h3{ margin:0; }
+  .panel-head .src{ font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-faint); }
+  .panel-body{ padding:18px; }
+  .panel-body ul{ margin:0; padding-left:18px; font-size:13.5px; color:var(--text-dim); }
+  .panel-body li{ margin-bottom:8px; }
+  .panel-body li b{ color:var(--text); font-weight:500; }
+
+  .swatches{ display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 4px; }
+  .sw{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    padding:5px 9px 5px 5px;
+    border:1px solid var(--border);
+    background:var(--surface-2);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--text-dim);
+  }
+  .sw i{ width:16px; height:16px; display:block; border:1px solid rgba(0,0,0,.12); flex:none; }
+
+  /* ---------- gap table ---------- */
+  .tbl-scroll{ overflow-x:auto; margin-top:24px; border:1px solid var(--border); }
+  table{ border-collapse:collapse; width:100%; min-width:720px; font-size:13.5px; }
+  thead th{
+    text-align:left;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    background:var(--surface-2);
+    padding:10px 14px;
+    border-bottom:1px solid var(--border);
+    white-space:nowrap;
+  }
+  tbody td{
+    padding:12px 14px;
+    border-bottom:1px solid var(--border);
+    vertical-align:top;
+    color:var(--text-dim);
+  }
+  tbody td:first-child{ color:var(--text); font-weight:500; white-space:nowrap; }
+  tbody tr:last-child td{ border-bottom:none; }
+  tbody tr:hover td{ background:var(--surface-2); }
+  .g{ color: var(--text-faint); }
+
+  /* ---------- priority list ---------- */
+  .tier{ margin-top:34px; }
+  .tier:first-child{ margin-top:0; }
+  .tier-head{ display:flex; align-items:baseline; gap:12px; margin-bottom:14px; }
+  .tier-pill{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    font-weight:600;
+    padding:4px 10px;
+    border-radius:999px;
+  }
+  .tier-pill.p0{ background:var(--p0-soft); color:var(--p0); }
+  .tier-pill.p1{ background:var(--p1-soft); color:var(--p1); }
+  .tier-pill.p2{ background:var(--p2-soft); color:var(--p2); }
+  .tier-sub{ font-size:13px; color:var(--text-faint); }
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-left:3px solid var(--border-strong);
+    padding:16px 18px;
+    margin-bottom:10px;
+  }
+  .tier[data-t="p0"] .card{ border-left-color:var(--p0); }
+  .tier[data-t="p1"] .card{ border-left-color:var(--p1); }
+  .tier[data-t="p2"] .card{ border-left-color:var(--p2); }
+  .card h4{
+    margin:0 0 6px;
+    font-size:14.5px;
+    font-weight:700;
+    display:flex;
+    gap:8px;
+    align-items:baseline;
+  }
+  .card h4 .num{ font-family:'IBM Plex Mono',monospace; color:var(--text-faint); font-weight:500; font-size:12px; }
+  .card p{ margin:0; font-size:13.5px; color:var(--text-dim); max-width:none; }
+  .card code{
+    font-family:'IBM Plex Mono',monospace;
+    background:var(--surface-2);
+    padding:1px 5px;
+    font-size:12px;
+    border:1px solid var(--border);
+  }
+
+  /* ---------- not-doing list ---------- */
+  .skip{
+    display:flex;
+    gap:12px;
+    padding:14px 0;
+    border-top:1px solid var(--border);
+  }
+  .skip:first-child{ border-top:none; }
+  .skip .x{
+    flex:none;
+    width:20px; height:20px;
+    border:1px solid var(--border-strong);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--text-faint);
+    margin-top:1px;
+  }
+  .skip p{ margin:0; font-size:14px; color:var(--text-dim); }
+  .skip p b{ color:var(--text); font-weight:500; }
+
+  /* ---------- appendix ---------- */
+  .kv-tbl td:first-child{ font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--accent-strong); }
+  .kv-tbl td{ font-family:'IBM Plex Mono',monospace; font-size:12.5px; }
+
+  footer{
+    max-width:920px;
+    margin:0 auto;
+    padding:32px 24px 60px;
+    color:var(--text-faint);
+    font-size:12.5px;
+  }
+</style>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow"><span class="dot"></span>设计诊断 · Rachel-v2 Platform</div>
+    <h1>把 Rachel 从「能用的内部工具」<br>改造成「AlphaFold 那种产品感」</h1>
+    <p class="lede">
+      对比对象是你浏览器里同时开着的两个页面：<span class="mono">121.196.149.121:8080</span>
+      上的 Rachel-v2 逆合成平台，和 <span class="mono">alphafoldserver.com</span>。
+      本文档不是凭印象写的对比稿——两边的 CSS / JS / HTML 源文件都被直接抓下来读过，
+      下面出现的每一个色值、字号、圆角数字，都是从线上真实资源里量出来的。
+    </p>
+    <div class="hero-meta">
+      <span class="tag">2026-08-19</span>
+      <span class="tag">方法：源码抓取，非截图走查</span>
+      <span class="tag">范围：Rachel-v2 Web 前端（不含 Python Skill 后端）</span>
+    </div>
+
+    <div class="tldr">
+      <div>
+        <div class="k">Rachel 现状</div>
+        <div class="v">React + Vite + Tailwind 默认值，3 个自定义色板变量，圆角/深色模式基本没做。</div>
+      </div>
+      <div>
+        <div class="k">AlphaFold 基准</div>
+        <div class="v">Angular Material 3，Google Sans + Material Symbols，完整明暗双主题 tonal 色阶。</div>
+      </div>
+      <div>
+        <div class="k">建议路径</div>
+        <div class="v">不换技术栈，补一层设计令牌 + 结构化输入，性价比最高的 5 件事先做。</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ============ 01 现状快照 ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-num">01 · 现状快照</div>
+      <h2>Rachel-v2 现在长什么样</h2>
+      <p class="sec-desc">
+        从 <span class="mono">index.html</span> 引用的 <span class="mono">index-DL9q63xt.js</span> /
+        <span class="mono">index-Ddy2iZUO.css</span> 反推：Vite 打包的 React 单页应用，路线树用
+        <span class="mono">@xyflow/react</span>（React Flow），分子结构渲染直接内嵌了
+        <span class="mono">RDKit_minimal.js</span>。整体是 Tailwind 默认值上加了三个自定义变量，
+        没有再往下建立完整的设计令牌层。
+      </p>
+    </div>
+
+    <div class="compare" style="grid-template-columns:1fr;">
+      <div class="panel">
+        <div class="panel-head">
+          <h3>信息架构（从 JS 里的界面文案还原）</h3>
+          <span class="src">遍历中文字符串提取</span>
+        </div>
+        <div class="panel-body">
+          <ul>
+            <li><b>登录 / 注册</b> — 邮箱 + 密码 + 验证码，独立的修改密码流程</li>
+            <li><b>提交任务</b> — 任务名（可选）+「结构」输入框，纯文字示例「阿司匹林」「扑热息痛」，「开始预览」，「高级」里可选供应商（标注只读）</li>
+            <li><b>我的任务</b> — 表格：名称 / 结构 / 状态 / 进度 / 创建时间 / 操作（查看·取消·删除），空状态是纯文字「还没有任务」</li>
+            <li><b>任务详情</b> — 阶段状态机：初始化 → 路线规划 → 策略调整 → 收尾 → 导出 → 完成，配合「实时 / 轮询降级 / 已结束」等连接状态文案，全部是纯文本</li>
+            <li><b>结果 4 个 Tab</b> — 路线树（分子节点 / 反应节点 / 边信息面板）、报告（文本 / 合成树 / 起始原料 / 消息日志等文件列表，「合成报告」按钮新窗口打开）、决策审计、终点审计</li>
+            <li><b>供应商管理</b> — 仅管理员，新增 / 编辑 / 设为当前</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="compare">
+      <div class="panel">
+        <div class="panel-head">
+          <h3>视觉令牌（实测）</h3>
+          <span class="src">index-Ddy2iZUO.css</span>
+        </div>
+        <div class="panel-body">
+          <ul>
+            <li>自定义色板只有 3 个变量，其余全是 Tailwind 默认调色板</li>
+            <li>字体栈是浏览器默认 <span class="mono">ui-sans-serif, system-ui</span>，没有引入任何品牌字体</li>
+            <li>圆角混用 <span class="mono">4px / 6px / 8px / 9999px</span>，没有明确的层级规则</li>
+            <li>33KB 的 CSS 里<b>只有 1 条</b> <span class="mono">.dark{}</span> 规则 —— 深色模式基本等于没实现</li>
+            <li>没有自定义阴影 / 渐变，层级感全靠 Tailwind 的 <span class="mono">ring</span> 焦点态和 React Flow 自带的节点高亮</li>
+          </ul>
+          <div class="swatches">
+            <span class="sw"><i style="background:#0ea5e9"></i>--color-primary</span>
+            <span class="sw"><i style="background:#1e40af"></i>--color-deep</span>
+            <span class="sw"><i style="background:#f8fafc;border-color:#d6dae3"></i>--color-bg</span>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">
+          <h3>已经具备、但没用足的能力</h3>
+        </div>
+        <div class="panel-body">
+          <ul>
+            <li><span class="mono">RDKit_minimal.js</span> 全局加载 —— 客户端已经能画分子 2D 结构，但提交页示例、任务列表里的「结构」列都还是纯文字 / SMILES</li>
+            <li><span class="mono">@xyflow/react</span> 自带节点 hover / selected 阴影变量已经存在于 CSS 里，只是没有被应用到自定义节点卡片上</li>
+            <li>阶段状态机（初始化…完成）数据结构已经是枚举好的 6 步，只差一层可视化组件</li>
+            <li><span class="mono">.dark</span> 类名和 Tailwind <span class="mono">dark:</span> 前缀的编译产物已经在，说明脚手架层面预留过深色模式，只是没接完</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 对照基准 ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-num">02 · 对照基准</div>
+      <h2>AlphaFold Server 的设计语言从哪来</h2>
+      <p class="sec-desc">
+        AlphaFold Server 是 Angular + Angular Material 构建的（页面里能看到大量
+        <span class="mono">mat-mdc-*</span> 类名）。它的「产品感」不是靠一次性视觉设计堆出来的，
+        而是直接继承了 Google Material Design 3 的整套体系：色彩、字体、形状、图标、动效全部是
+        平台级组件自带的，团队只需要往组件里填内容。
+      </p>
+    </div>
+
+    <div class="compare">
+      <div class="panel">
+        <div class="panel-head">
+          <h3>色彩系统</h3>
+          <span class="src">--dmat-blue-* 变量</span>
+        </div>
+        <div class="panel-body">
+          <p style="font-size:13.5px;">
+            不是几个孤立的色值，而是一整条 tonal 色阶（0/5/10/…/100），每一级还配一个
+            <span class="mono">-auto-contrast</span> 版本自动算前景色。背景在浅色 <span class="mono">#fdfdfd</span>
+            和深色 <span class="mono">#0a0a0a</span> 之间整体切换，不是补丁式的深色规则。
+          </p>
+          <div class="swatches">
+            <span class="sw"><i style="background:#001233"></i>blue-10</span>
+            <span class="sw"><i style="background:#003b99"></i>blue-30</span>
+            <span class="sw"><i style="background:#0053cc"></i>blue-40</span>
+            <span class="sw"><i style="background:#3386ff"></i>blue-50</span>
+            <span class="sw"><i style="background:#99beff"></i>blue-70</span>
+            <span class="sw"><i style="background:#ccdeff"></i>blue-90</span>
+            <span class="sw"><i style="background:#f8fbff;border-color:#d6dae3"></i>blue-97</span>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">
+          <h3>字体 / 形状 / 图标</h3>
+        </div>
+        <div class="panel-body">
+          <ul>
+            <li><b>字体</b> — <span class="mono">Google Sans / Google Sans Display / Google Sans Mono</span>，正文、标题、数据分别用不同字重的品牌字体，不是系统默认栈</li>
+            <li><b>圆角</b> — 从 <span class="mono">4px</span> 一路到 <span class="mono">28px</span>，卡片 / 对话框 / Chip 用大圆角，输入控件保持适中，形成明确的「容器大圆、控件小圆」规则</li>
+            <li><b>图标</b> — <span class="mono">Material Symbols</span>，可变字重的图标字体，全站图标粗细统一</li>
+            <li><b>输入方式</b> — 序列 / 结构不是塞进一个大文本框，而是 <span class="mono">mat-mdc-chip</span> + <span class="mono">autocomplete</span> 组成的「可增删结构化单元」</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="note" style="margin-top:20px;">
+      <span>ⓘ</span>
+      <span><b>这套体系不是可以直接抄的</b> —— Google Sans 是 Google 内部字体，HCT 自动对比算法是 Material 3 的私有工具链。
+      下面的建议会取「同样的效果」而不是「同样的实现」：分层色阶、明确的圆角规则、结构化输入，这三件事在 Tailwind 里半天就能搭起来，不需要迁移到 Angular Material。</span>
+    </div>
+  </section>
+
+  <!-- ============ 03 差距表 ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-num">03 · 逐项差距</div>
+      <h2>九个维度，一次性摊开看</h2>
+    </div>
+    <div class="tbl-scroll">
+      <table>
+        <thead>
+          <tr><th>维度</th><th>Rachel-v2 现状</th><th>AlphaFold Server</th><th>改造成本</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>色彩系统</td><td>3 个孤立变量 + Tailwind 默认色板</td><td>完整 tonal 色阶 + 自动对比</td><td class="g">低</td></tr>
+          <tr><td>深色模式</td><td>33KB CSS 中仅 1 条 .dark 规则</td><td>系统级双主题</td><td class="g">低</td></tr>
+          <tr><td>字体</td><td>浏览器默认 ui-sans-serif 栈</td><td>Google Sans 全家族</td><td class="g">低</td></tr>
+          <tr><td>圆角 / 形状语言</td><td>4/6/8/9999px 混用无规则</td><td>4–28px 分层，容器大圆控件小圆</td><td class="g">低</td></tr>
+          <tr><td>输入方式</td><td>纯文字示例 + 单一文本框</td><td>结构化 chip + 可视预览</td><td class="g">中</td></tr>
+          <tr><td>任务状态呈现</td><td>6 阶段纯文字状态机</td><td>可视化进度 / 分数卡片</td><td class="g">中</td></tr>
+          <tr><td>结果呈现</td><td>文件列表 + 新窗口打开报告</td><td>页内仪表盘 + 关键指标卡片</td><td class="g">中</td></tr>
+          <tr><td>图标系统</td><td>基本靠文字按钮，无统一图标库</td><td>Material Symbols 全站统一</td><td class="g">中</td></tr>
+          <tr><td>空 / 加载状态</td><td>纯文字「还没有任务」「加载中」</td><td>组件化空状态 + skeleton</td><td class="g">低</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ 04 优先级建议 ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-num">04 · 改造建议</div>
+      <h2>按性价比排序，不是按重要性排序</h2>
+      <p class="sec-desc">
+        分三档。P0 都是「一两天能改完、视觉观感立刻不一样」的事；P1 需要新写一点组件；
+        P2 是值得排进季度计划但不急的投入。技术栈全程不动：还是 React + Tailwind + React Flow + RDKit.js。
+      </p>
+    </div>
+
+    <div class="tier" data-t="p0">
+      <div class="tier-head">
+        <span class="tier-pill p0">P0 · 现在就能做</span>
+        <span class="tier-sub">低成本，视觉感知最强</span>
+      </div>
+
+      <div class="card">
+        <h4><span class="num">01</span>把 3 个色变量扩成一整套令牌</h4>
+        <p>在现有 <code>--color-primary / --color-deep / --color-bg</code> 基础上补出 <code>--surface / --border / --text-dim / --success / --warning / --danger</code> 这一层语义令牌，灰阶延续现在 slate 系带一点蓝的偏色，不用引入 Material 那套自动对比算法。</p>
+      </div>
+      <div class="card">
+        <h4><span class="num">02</span>把深色模式从「1 条规则」接成「1 套令牌」</h4>
+        <p>令牌层做好之后，加一个 <code>@media (prefers-color-scheme: dark)</code> 覆盖同一批变量即可。这是目前投入产出比最高的一步——现在的深色模式本质上是没做的。</p>
+      </div>
+      <div class="card">
+        <h4><span class="num">03</span>统一圆角：容器大圆、控件小圆</h4>
+        <p>输入框 / 按钮保持现在的 6–8px，卡片、任务详情面板、弹窗升级到 12–16px。不是所有地方都放大圆角，是分两级，制造出主次层次。</p>
+      </div>
+      <div class="card">
+        <h4><span class="num">04</span>示例从纯文字换成可点结构卡片</h4>
+        <p>提交页的「阿司匹林」「扑热息痛」用 <code>RDKit_minimal.js</code>（已经全局加载了）现场渲染成 2D 结构缩略图，点击直接填充，而不是纯文字。这是最贴近 AlphaFold「结构化实体输入」体验、且成本最低的一条，因为渲染能力已经在跑了，只是没接到示例上。</p>
+      </div>
+      <div class="card">
+        <h4><span class="num">05</span>空状态 / 加载态组件化</h4>
+        <p>「还没有任务」配一个小图标 + 「去提交」按钮的组合卡片；「加载中」换成灰色骨架块（哪怕只是任务列表的 3 行占位矩形）。改动量很小，但立刻减少「内部工具感」。</p>
+      </div>
+    </div>
+
+    <div class="tier" data-t="p1">
+      <div class="tier-head">
+        <span class="tier-pill p1">P1 · 值得投入</span>
+        <span class="tier-sub">需要新写组件，一到两周量级</span>
+      </div>
+
+      <div class="card">
+        <h4><span class="num">06</span>阶段状态机做成横向 Stepper</h4>
+        <p>初始化 → 路线规划 → 策略调整 → 收尾 → 导出 → 完成，这 6 步已经是现成的枚举，包一层横向进度条组件（当前高亮、已完成打勾），「实时 / 轮询降级 / 已结束」这类连接状态改成一个带颜色的状态点，替换掉纯文字。</p>
+      </div>
+      <div class="card">
+        <h4><span class="num">07</span>路线树节点嵌结构缩略图</h4>
+        <p>React Flow 的「分子节点」目前是文本方框，「边信息」面板才显示结构。把 RDKit 渲染的 2D 结构图直接放进节点卡片本身，让路线树本身就是可读的化学图，而不是要点开弹窗才看得到分子长什么样。</p>
+      </div>
+      <div class="card">
+        <h4><span class="num">08</span>结果页从文件列表变仪表盘</h4>
+        <p>报告 Tab 现在是「报告文本 / 合成树 / 起始原料 / 消息日志」一串可下载文件，加「合成报告」按钮新窗口打开。把步数、耗时、产物指标做成页内的大数字卡片（呼应 AlphaFold 结果页的分数卡片），下载入口保留但降级为次要按钮，不用跳出应用看结果。</p>
+      </div>
+      <div class="card">
+        <h4><span class="num">09</span>引入一套统一图标库</h4>
+        <p>查看 / 取消 / 删除 / 刷新 / 导出这些操作现在基本是纯文字按钮。换成 Lucide 或 Heroicons 统一走一遍，不需要做到 Material Symbols 那种可变字重图标字体的程度，但至少视觉粗细要统一。</p>
+      </div>
+    </div>
+
+    <div class="tier" data-t="p2">
+      <div class="tier-head">
+        <span class="tier-pill p2">P2 · 排进长线</span>
+        <span class="tier-sub">季度级投入，非阻塞项</span>
+      </div>
+
+      <div class="card">
+        <h4><span class="num">10</span>引入一款品牌字体</h4>
+        <p>现在是纯系统默认字体栈，完全没有识别度。不需要也拿不到 Google Sans，可以选一款开源无衬线体（比如 IBM Plex Sans 或 Manrope）自托管或走 Google Fonts，建立「这是 Rachel」而不是「随便一个后台」的识别度。</p>
+      </div>
+      <div class="card">
+        <h4><span class="num">11</span>评估无样式组件库地基</h4>
+        <p>AlphaFold 的一致感很大程度来自 Angular Material 提供的成熟组件。如果 Rachel 前端还处在早期，值得评估 Radix UI / shadcn 这类无样式组件库，把现在分散的自定义弹窗 / 表单统一到一套基础组件上，减少长期维护中的视觉漂移。</p>
+      </div>
+      <div class="card">
+        <h4><span class="num">12</span>管理后台跟主流程视觉打通</h4>
+        <p>「供应商管理」目前是纯功能表单风格，跟面向科学家的任务流程是两套视觉语言，等 P0/P1 令牌层稳定之后一起收编。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 不建议做 ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-num">05 · 边界</div>
+      <h2>不建议做的事</h2>
+      <p class="sec-desc">照抄整套 Material 体系的投入产出比对一个小团队不划算，以下三件事建议明确排除在改造范围外。</p>
+    </div>
+
+    <div class="skip">
+      <span class="x">×</span>
+      <p><b>不迁移到 Angular / Angular Material。</b>AlphaFold 的「科学感」更多来自令牌一致性和结构化输入，不是框架本身。React + Tailwind + React Flow + RDKit.js 完全够撑起 P0/P1 的所有改动。</p>
+    </div>
+    <div class="skip">
+      <span class="x">×</span>
+      <p><b>不复刻 HCT 自动对比色算法。</b>那是 Material 3 内部工具链的产物，前面提到的「5–7 级色阶 + 深色模式媒体查询」已经能达到同等的视觉效果，手写一遍自动对比算法不值得。</p>
+    </div>
+    <div class="skip">
+      <span class="x">×</span>
+      <p><b>不为了「像 AlphaFold」改登录方式。</b>邮箱验证码 + 密码的认证流程本身没有问题，跟视觉改造无关，不要顺手一起改掉。</p>
+    </div>
+  </section>
+
+  <!-- ============ 附录 ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-num">附录</div>
+      <h2>抓取到的原始令牌值</h2>
+      <p class="sec-desc">供工程师直接核对 / 复用，来自两边线上资源的静态分析，非人工测量。</p>
+    </div>
+    <div class="tbl-scroll">
+      <table class="kv-tbl">
+        <thead><tr><th>来源</th><th>令牌</th><th>值</th></tr></thead>
+        <tbody>
+          <tr><td>Rachel</td><td>--color-primary</td><td>#0ea5e9</td></tr>
+          <tr><td>Rachel</td><td>--color-deep</td><td>#1e40af</td></tr>
+          <tr><td>Rachel</td><td>--color-bg</td><td>#f8fafc</td></tr>
+          <tr><td>Rachel</td><td>font-family（正文）</td><td>ui-sans-serif, system-ui, sans-serif …</td></tr>
+          <tr><td>Rachel</td><td>font-family（等宽）</td><td>ui-monospace, SFMono-Regular, Menlo …</td></tr>
+          <tr><td>Rachel</td><td>border-radius 出现值</td><td>4px / 6px / 8px / 9999px / 100%</td></tr>
+          <tr><td>Rachel</td><td>.dark 规则数量（全量 CSS）</td><td>1 / 33475 bytes</td></tr>
+          <tr><td>AlphaFold</td><td>--dmat-background（浅）</td><td>#fdfdfd</td></tr>
+          <tr><td>AlphaFold</td><td>--dmat-background（深）</td><td>#0a0a0a</td></tr>
+          <tr><td>AlphaFold</td><td>font-family（标题）</td><td>'Google Sans', 'Google Sans Display'</td></tr>
+          <tr><td>AlphaFold</td><td>font-family（数据）</td><td>'Google Sans Mono'</td></tr>
+          <tr><td>AlphaFold</td><td>图标</td><td>Material Symbols Outlined（可变字重）</td></tr>
+          <tr><td>AlphaFold</td><td>border-radius 出现值</td><td>4 / 6 / 7.5 / 8 / 9 / 12 / 16 / 18 / 23 / 28 px</td></tr>
+          <tr><td>AlphaFold</td><td>组件体系</td><td>mat-mdc-card / chip / dialog / autocomplete / checkbox</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  方法说明：直接下载并静态分析 <span class="mono">http://121.196.149.121:8080/</span> 的
+  <span class="mono">index.html / index-*.js / index-*.css</span> 与
+  <span class="mono">https://alphafoldserver.com</span> 的首屏 HTML，未做像素级截图走查（间距手感、动效细节未覆盖）。
+  Rachel-v2 还有一个独立的 Python Skill / 后端包（chem_tools 等），不在本次视觉评估范围内。
+</footer>
